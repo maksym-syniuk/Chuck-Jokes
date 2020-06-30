@@ -1,1 +1,75 @@
-/* You can add global styles to this file, and also import other style files */
+@import "./app/styles/normalize";
+@import "./app/styles/fonts";
+@import "./app/styles/global";
+
+.container__left {
+    max-width: 758px;
+    padding: 0 40px;
+    margin: 40px auto;
+}
+
+.category {
+    font-weight: 500;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #333333;
+    padding: 6px 20px;
+    background-color: #fff;
+    border-radius: 6px;
+    margin-right: 9px;
+    margin-top: 2px;
+
+    &_hidden {
+        display: none;
+    }
+    &_dark {
+        font-weight: 500;
+        font-size: 10px;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        color: #333333;
+        padding: 6px 20px;
+        background-color: #f8f8f8;
+    }
+
+    &_big {
+        font-weight: 500;
+        font-size: 12px;
+        margin-right: 8px;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        color: #ababab;
+        padding: 6px 13px;
+        background-color: #fff;
+        border: 2px solid #f8f8f8;
+
+        &-active {
+            background-color: #f8f8f8;
+            color: #333333;
+        }
+    }
+}
+
+.btn {
+    font-weight: bold;
+    font-size: 16px;
+    color: #ffffff;
+    border: none;
+    outline: none;
+    padding: 12px 40px;
+    background: linear-gradient(92.01deg, #8ea7ff 0%, #7291ff 100%);
+    border-radius: 10px;
+    cursor: pointer;
+
+    &:hover {
+        background: #6078cf;
+    }
+}
+
+@media (max-width: 834px) {
+    .container__left {
+        max-width: 833px;
+        margin: 40px auto;
+    }
+}

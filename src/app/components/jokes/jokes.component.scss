@@ -1,0 +1,151 @@
+.jokes {
+    &__header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    &__burger-btn {
+        display: none;
+    }
+
+    &__abbr {
+        font-weight: bold;
+        font-size: 20px;
+        color: #333333;
+        margin-top: 3px;
+    }
+    &__description {
+        margin-top: 73px;
+    }
+
+    &__title {
+        font-weight: bold;
+        font-size: 32px;
+        color: #333333;
+    }
+
+    &__subtitle {
+        font-weight: 500;
+        font-size: 24px;
+        color: #333333;
+        margin: 12px 0;
+    }
+
+    &__button {
+        margin-top: 17px;
+    }
+
+    &__description-controls {
+        display: flex;
+        flex-direction: column;
+        margin-top: 45px;
+
+        & .control {
+            margin-top: 10px;
+            margin-bottom: 6px;
+            font-size: 18px;
+            color: #333333;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+
+            &__pop-up {
+                width: 100%;
+                margin-top: 25px;
+
+                margin-bottom: 13px;
+                display: none;
+
+                .search-form {
+                    cursor: default;
+                    margin-top: 3px;
+                    border: 2px solid #333333;
+                    border-radius: 10px;
+                    outline: none;
+                    width: 100%;
+                    padding: 19px 15px;
+                    font-size: 16px;
+                    line-height: 22px;
+                    color: #ababab;
+                }
+            }
+
+            input {
+                cursor: pointer;
+                margin-right: 15px;
+                width: 20px;
+                height: 20px;
+
+                &[type="radio"]:checked ~ .control__pop-up {
+                    display: block;
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: 1179px) {
+    .jokes {
+        &__header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        &__abbr {
+            font-size: 20px;
+            padding: 0;
+            padding-bottom: 11px;
+        }
+
+        &__burger-btn {
+            display: block;
+            display: flex;
+            align-items: center;
+            color: #ababab;
+            font-weight: 500;
+            font-size: 20px;
+
+            span {
+                margin-right: 10px;
+                display: block;
+                height: 28px;
+                width: 28px;
+                border-radius: 50%;
+                background-color: #333333;
+                position: relative;
+
+                &::before,
+                &::after {
+                    content: "";
+                    position: absolute;
+                    left: 7px;
+                    right: 7px;
+                    height: 2px;
+                    border-radius: 2px;
+                    background-color: #fff;
+                    transition: 0.3s;
+                }
+
+                &::before {
+                    top: 10px;
+                    bottom: 16px;
+                }
+
+                &::after {
+                    top: 16px;
+                    bottom: 10px;
+                }
+            }
+
+            &_active span:before {
+                transform: translateY(3px) rotate(45deg);
+            }
+
+            &_active span:after {
+                transform: translateY(-3px) rotate(-45deg);
+            }
+        }
+    }
+}

@@ -1,0 +1,31 @@
+.main {
+    display: flex;
+    justify-content: space-between;
+    height: 100vh;
+    max-height: 100vh;
+
+    &__jokes {
+        width: 66.5%;
+        background-color: #ffffff;
+    }
+
+    &__favorite {
+        width: 33.5%;
+        background-color: #f8f8f8;
+    }
+}
+
+@media (max-width: 1179px) {
+    .main {
+        overflow: hidden;
+        &__jokes {
+            width: 100%;
+        }
+
+        &__favorite {
+            transform: translateX(100%);
+            width: 0%;
+            // display: none;
+        }
+    }
+}
