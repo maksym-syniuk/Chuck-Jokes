@@ -37,6 +37,7 @@
         font-weight: 500;
         font-size: 12px;
         margin-right: 8px;
+        margin-bottom: 8px;
         letter-spacing: 2px;
         text-transform: uppercase;
         color: #ababab;
@@ -70,6 +71,12 @@
 @media (max-width: 834px) {
     .container__left {
         max-width: 833px;
-        margin: 40px auto;
+    }
+}
+
+@media (max-width: 420px) {
+    .container__left {
+        margin: 20px auto;
+        padding: 0 20px;
     }
 }

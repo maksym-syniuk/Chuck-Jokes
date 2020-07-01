@@ -53,7 +53,6 @@
             &__pop-up {
                 width: 100%;
                 margin-top: 25px;
-
                 margin-bottom: 13px;
                 display: none;
 
@@ -78,7 +77,8 @@
                 height: 20px;
 
                 &[type="radio"]:checked ~ .control__pop-up {
-                    display: block;
+                    display: flex;
+                    flex-wrap: wrap;
                 }
             }
         }
@@ -153,5 +153,15 @@
                 transform: translateY(-3px) rotate(-45deg);
             }
         }
+    }
+}
+
+@media (max-width: 420px) {
+    .jokes__burger-btn {
+        right: 21px;
+    }
+
+    input[type="radio"]:checked ~ .control__pop-up {
+        margin-bottom: 0;
     }
 }

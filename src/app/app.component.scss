@@ -54,3 +54,33 @@
         }
     }
 }
+
+@media (max-width: 420px) {
+    .main {
+        position: relative;
+
+        &__jokes {
+            width: 100%;
+        }
+
+        &__favourite {
+            transform: translateX(100%);
+            transition: 0.5s;
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            right: 0;
+            width: 100%;
+
+            &_shown {
+                transform: translateX(0);
+                left: 0;
+                z-index: 100;
+            }
+        }
+
+        &__backdrop {
+            display: none;
+        }
+    }
+}
