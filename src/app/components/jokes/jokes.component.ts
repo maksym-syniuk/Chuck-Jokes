@@ -1,4 +1,5 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { FavouriteDisplayService } from './../../services/favourite-display.service';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-jokes',
@@ -7,14 +8,14 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 })
 export class JokesComponent implements OnInit {
   showSidebar = false;
-  // @Output() toggleSidebar: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-  constructor() { }
+  constructor(private favouriteDisplayService: FavouriteDisplayService) { }
+
   ngOnInit(): void {
   }
 
   onToggleSidebar() {
     this.showSidebar = !this.showSidebar;
-    // this.toggleSidebar.emit(this.showSidebar);
+    this.favouriteDisplayService.onToggleFavourite(this.showSidebar);
   }
 }

@@ -95,5 +95,12 @@
 @media (max-width: 1179px) {
     .joke__content_body {
         margin-right: 50px;
+        &_small {
+            font-size: 14px;
+        }
+    }
+    .joke_dark-theme {
+        border-radius: 10px;
+        padding: 43px 21px 19px 20px;
     }
 }

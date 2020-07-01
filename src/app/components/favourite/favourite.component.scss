@@ -16,3 +16,13 @@
         transform: translate(-50%, -50%);
     }
 }
+
+@media (max-width: 1179px) {
+    .favourite {
+        padding-top: 28px;
+
+        &__title {
+            display: none;
+        }
+    }
+}

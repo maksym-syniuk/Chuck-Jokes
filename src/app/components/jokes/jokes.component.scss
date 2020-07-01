@@ -87,6 +87,8 @@
 
 @media (max-width: 1179px) {
     .jokes {
+        position: relative;
+
         &__header {
             display: flex;
             justify-content: space-between;
@@ -100,12 +102,16 @@
         }
 
         &__burger-btn {
+            position: absolute;
+            top: 0;
+            right: 41px;
             display: block;
             display: flex;
             align-items: center;
             color: #ababab;
             font-weight: 500;
             font-size: 20px;
+            z-index: 200;
 
             span {
                 margin-right: 10px;
