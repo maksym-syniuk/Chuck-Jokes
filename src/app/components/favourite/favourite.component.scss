@@ -1,0 +1,35 @@
+.favourite {
+    margin: 40px;
+
+    &__title {
+        font-weight: 500;
+        font-size: 20px;
+        color: #ababab;
+        padding: 3px 0px 0px 2px;
+    }
+
+    &_btn {
+        margin-top: 40px;
+        position: relative;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+}
+
+@media (max-width: 1179px) {
+    .favourite {
+        padding-top: 28px;
+
+        &__title {
+            display: none;
+        }
+    }
+}
+
+@media (max-width: 420px) {
+    .favourite {
+        padding-top: 49px;
+        margin: 20px;
+    }
+}
