@@ -31,19 +31,28 @@
         color: #333333;
         padding: 6px 20px;
         background-color: #f8f8f8;
+        border-radius: 6px;
     }
 
     &_big {
+        border-radius: 6px;
         font-weight: 500;
         font-size: 12px;
         margin-right: 8px;
-        margin-bottom: 8px;
+        margin-bottom: 4px;
         letter-spacing: 2px;
         text-transform: uppercase;
         color: #ababab;
         padding: 6px 13px;
         background-color: #fff;
         border: 2px solid #f8f8f8;
+        cursor: pointer;
+        transition: 0.3s;
+
+        &:hover {
+            background-color: #f8f8f8;
+            color: #333333;
+        }
 
         &-active {
             background-color: #f8f8f8;
@@ -59,9 +68,10 @@
     border: none;
     outline: none;
     padding: 12px 40px;
-    background: linear-gradient(92.01deg, #8ea7ff 0%, #7291ff 100%);
+    background-color: #7291ff;
     border-radius: 10px;
     cursor: pointer;
+    transition: 0.3s ease-out;
 
     &:hover {
         background: #6078cf;

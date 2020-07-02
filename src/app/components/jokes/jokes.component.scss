@@ -16,7 +16,7 @@
         margin-top: 3px;
     }
     &__description {
-        margin-top: 73px;
+        margin-top: 84px;
     }
 
     &__title {
@@ -42,6 +42,8 @@
         margin-top: 45px;
 
         & .control {
+            position: relative;
+            overflow-y: hidden;
             margin-top: 10px;
             margin-bottom: 6px;
             font-size: 18px;
@@ -49,12 +51,47 @@
             display: flex;
             flex-wrap: wrap;
             align-items: center;
+            transition: 0.3s;
+
+            label {
+                cursor: pointer;
+            }
+
+            &__radio-btn {
+                cursor: pointer;
+                margin-right: 15px;
+                width: 20px;
+                height: 20px;
+                border: 2px solid #ababab;
+                background-color: white;
+                border-radius: 50%;
+                position: relative;
+
+                &::after {
+                    content: "";
+                    display: none;
+                    position: absolute;
+                    border-radius: 50%;
+                    top: 50%;
+                    left: 50%;
+                    width: 10px;
+                    height: 10px;
+                    background: #333333;
+                    transform: translateX(-50%) translateY(-50%);
+                }
+            }
 
             &__pop-up {
                 width: 100%;
-                margin-top: 25px;
-                margin-bottom: 13px;
+                margin-top: 23px;
+                margin-bottom: 2px;
                 display: none;
+                transform: translateX(-100%);
+
+                &_search {
+                    margin-top: 20px;
+                    margin-bottom: 0px;
+                }
 
                 .search-form {
                     cursor: default;
@@ -63,25 +100,43 @@
                     border-radius: 10px;
                     outline: none;
                     width: 100%;
-                    padding: 19px 15px;
+                    padding: 8px 15px;
                     font-size: 16px;
                     line-height: 22px;
-                    color: #ababab;
                 }
             }
 
-            input {
+            input[type="radio"] {
                 cursor: pointer;
-                margin-right: 15px;
+                position: absolute;
+                top: 0;
+                left: 0;
                 width: 20px;
                 height: 20px;
+                opacity: 0;
+                z-index: 3;
 
-                &[type="radio"]:checked ~ .control__pop-up {
+                &:checked ~ .control__pop-up {
+                    animation: slide-in 0.5s forwards;
                     display: flex;
                     flex-wrap: wrap;
                 }
+
+                &:checked + .control__radio-btn::after {
+                    display: block;
+                }
+
+                &:checked + .control__radio-btn {
+                    border: 2px solid #333333;
+                }
             }
         }
+    }
+}
+
+@keyframes slide-in {
+    100% {
+        transform: translate(0, 0);
     }
 }
 
