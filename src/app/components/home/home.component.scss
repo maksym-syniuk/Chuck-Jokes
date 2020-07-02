@@ -1,0 +1,90 @@
+@import "variables";
+
+.main {
+    display: flex;
+    justify-content: space-between;
+    height: 100vh;
+    max-height: 100vh;
+    overflow: hidden;
+
+    &__jokes {
+        overflow-y: auto;
+        width: 66.5%;
+        background-color: $primaryBackgroundColor;
+    }
+
+    &__favourite {
+        overflow-y: auto;
+        width: 33.5%;
+        transition: 0.3s;
+        background-color: $secondaryBackgroundColor;
+    }
+
+    &__backdrop {
+        transition: 0.5s;
+        position: absolute;
+        top: 0;
+        right: 0;
+        left: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.3);
+        z-index: 90;
+    }
+}
+
+@media (max-width: 1179px) {
+    .main {
+        position: relative;
+
+        &__jokes {
+            width: 100%;
+        }
+
+        &__favourite {
+            transform: translateX(100%);
+            transition: 0.5s;
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            right: 0;
+            width: 57.6%;
+
+            &_shown {
+                transform: translateX(0);
+                left: 42.4%;
+                z-index: 100;
+                width: auto;
+            }
+        }
+    }
+}
+
+@media (max-width: 420px) {
+    .main {
+        position: relative;
+
+        &__jokes {
+            width: 100%;
+        }
+
+        &__favourite {
+            transform: translateX(100%);
+            transition: 0.5s;
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            right: 0;
+            width: 100%;
+
+            &_shown {
+                transform: translateX(0);
+                left: 0;
+                z-index: 100;
+            }
+        }
+
+        &__backdrop {
+            display: none;
+        }
+    }
+}

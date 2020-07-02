@@ -1,4 +1,4 @@
-import { FavouriteDisplayService } from './../../services/favourite-display.service';
+import { FavouriteDisplayService } from './../../shared/services/favourite-display.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({

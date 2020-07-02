@@ -1,23 +1,10 @@
-import { FavouriteDisplayService } from './services/favourite-display.service';
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnDestroy {
-  showFavourite: boolean;
-  subscription: Subscription = new Subscription();
+export class AppComponent {
 
-  constructor(private favouriteDisplayService: FavouriteDisplayService) {
-    this.subscription = this.favouriteDisplayService.showFavouriteChange.subscribe(value => {
-      this.showFavourite = value;
-    });
-  }
-
-  ngOnDestroy() {
-    this.subscription.unsubscribe();
-  }
 }
