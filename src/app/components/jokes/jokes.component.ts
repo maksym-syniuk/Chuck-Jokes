@@ -6,6 +6,7 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './jokes.component.html',
   styleUrls: ['./jokes.component.scss']
 })
+
 export class JokesComponent implements OnInit {
   showSidebar = false;
 
