@@ -1,24 +1,22 @@
-<div class="joke" [ngClass]="{'joke_dark-theme': jokeAddedToFavourite}">
-    <a class="joke__message-icon" [ngClass]="{'joke__message-icon_dark': jokeAddedToFavourite}">
+<div class="joke" [ngClass]="{'joke_dark-theme': joke.favourite}">
+    <a class="joke__message-icon" [ngClass]="{'joke__message-icon_dark': joke.favourite}">
         <img src="../../../../assets/images/message.svg" alt="message-icon">
     </a>
     <div class="joke__content">
         <small class="joke__content-id">ID:
-            <a href="#">
-                XNaAxUduSw6zA
+            <a [href]="joke.id">
+                {{joke.id}}
                 <img src="../../../../assets/images/link.svg" alt="link-icon" />
             </a>
         </small>
-        <p class="joke__content-body" [ngClass]="{'joke__content-body_small': jokeAddedToFavourite}">No one truly knows
-            who's Chuck Norris' real father. No one is biologically strong
-            enough for this. He must've
-            conceived himself.</p>
+        <p class="joke__content-body" [ngClass]="{'joke__content-body_small': joke.favourite}">{{joke.value}}</p>
         <div class="joke__content-details">
-            <small class="joke__content-details_date">Last update: <strong>1923 hours ago</strong></small>
-            <span class="category" [ngClass]="{'category_hidden': jokeAddedToFavourite}">Celebrity</span>
+            <small class="joke__content-details_date">Last update:
+                <strong>{{joke.dateUpdated | date}}</strong></small>
+            <span class="category" *ngFor="let category of joke.categories">{{category}}</span>
         </div>
     </div>
-    <div class="joke__like" [ngClass]="{'joke__like_filled': jokeAddedToFavourite}">
+    <div class="joke__like" [ngClass]="{'joke__like_filled': joke.favourite}">
         <img src="../../../../assets/images/heart.svg" alt="heart-icon">
     </div>
 </div>

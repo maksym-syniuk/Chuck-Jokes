@@ -1,3 +1,4 @@
+import { IJoke } from './../../shared/interfaces/IJoke';
 import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
@@ -6,7 +7,8 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./joke-card.component.scss']
 })
 export class JokeCardComponent implements OnInit {
-  @Input() jokeAddedToFavourite: boolean;
+  @Input() joke: IJoke;
+  public date = Date.now();
   constructor() { }
 
   ngOnInit(): void {
