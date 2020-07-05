@@ -15,51 +15,17 @@ import { FormGroup, FormControl } from '@angular/forms';
 
 export class JokesComponent implements OnInit, OnDestroy {
   public jokes: IJoke[] = [];
-  public categories: string[] = [];
   public showSidebar = false;
-  public jokesForm: FormGroup;
 
   private jokesSubscription: Subscription = new Subscription();
-  private categoriesSubscription: Subscription = new Subscription();
 
   constructor(
     private favouriteDisplayService: FavouriteDisplayService,
     private jokesService: JokesService,
-    private jokesMapperService: JokesMapperService
   ) { }
 
   ngOnInit() {
-    // this.onSubmitForm();
-    // this.jokesSubscription = this.jokesService.getJokes()
-    //   .subscribe(
-    //     (response: IJokeApi) => {
-    //       this.jokes.push(this.jokesMapperService.mapJokeApiForJokes(response));
-    //     });
-
-    this.jokesService.getCategories()
-      .subscribe(
-        (categoriesArr: string[]) => {
-          this.categories = [...categoriesArr];
-        });
-
-    this.jokesForm = new FormGroup({
-      jokeOption: new FormGroup({
-        jokeControl: new FormControl(null),
-
-        categoriesGroup: new FormGroup({
-          category: new FormControl(null)
-        }),
-
-        searchGroup: new FormGroup({
-          search: new FormControl(null)
-        })
-      })
-    });
-  }
-
-  onSubmitForm() {
-    console.log(this.jokesForm);
-
+    this.jokes = this.jokesService.jokesArr;
   }
 
   onToggleSidebar() {
@@ -69,6 +35,5 @@ export class JokesComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.jokesSubscription.unsubscribe();
-    this.categoriesSubscription.unsubscribe();
   }
 }

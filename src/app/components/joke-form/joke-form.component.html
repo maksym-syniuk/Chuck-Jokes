@@ -1,0 +1,39 @@
+<div class="joke__description">
+    <h1 class="joke__title">Hey!</h1>
+    <h2 class="joke__subtitle">Let’s try to find a joke for you:</h2>
+
+    <form [formGroup]="jokeForm" (ngSubmit)="onSubmitForm()" class="joke__description-controls">
+
+        <div class="control">
+            <input formControlName="jokeControl" name="jokeControl" type="radio" id="random" value="random"/>
+            <span class="control__radio-btn"></span>
+            <label for="random">Random</label>
+        </div>
+
+        <div class="control">
+            <input formControlName="jokeControl" name="jokeControl" type="radio" id="categories" value="categories"/>
+            <span class="control__radio-btn"></span>
+            <label for="categories">From categories</label>
+            <div formGroupName="jokeCategoryGroup"  class="control__pop-up">
+                <label class="control__pop-up_category category_big" [for]="category" *ngFor="let category of categories">{{category}}
+                    <input formControlName="category" name="category" type="radio" [id]="category" [value]="category"/>
+                </label>
+            </div>
+        </div>
+
+        <div class="control">
+            <input formControlName="jokeControl" name="jokeControl" type="radio" id="search" value="search"/>
+            <span class="control__radio-btn"></span>
+            <label for="search">Search</label>
+            <div formGroupName="jokeSearchGroup"  class="control__pop-up control__pop-up_search">
+                <input formControlName="search" name="search"  class="search-form" type="text"
+                    placeholder="Free text search..." />
+                    <span class="control__invalid" *ngIf="!jokeForm.get('jokeSearchGroup.search').valid && jokeForm.get('jokeSearchGroup.search').touched">
+                        <small>*This line can not be empty</small>
+                    </span>
+            </div>
+        </div>
+
+        <button class="joke__button btn" type="submit">Get a joke</button>
+    </form>
+</div>

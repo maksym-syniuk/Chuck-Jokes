@@ -5,46 +5,12 @@
             <a class="jokes__burger-btn" href="#" (click)="onToggleSidebar()"
                 [ngClass]="{'jokes__burger-btn_active': showSidebar}"><span></span>Favourite</a>
         </div>
-        <div class="jokes__description">
-            <h1 class="jokes__title">Hey!</h1>
-            <h2 class="jokes__subtitle">Let’s try to find a joke for you:</h2>
-
-            <form [formGroup]="jokesForm" (ngSubmit)="onSubmitForm()" class="jokes__description-controls">
-                <div formGroupName="jokeOption" class="control">
-                    <input formControlName="jokeControl" type="radio" id="random" name="jokeControl"
-                        checked="checked" />
-                    <span class="control__radio-btn"></span>
-                    <label for="random">Random</label>
-                </div>
-
-                <div formGroupName="jokeOption" class="control">
-                    <input formControlName="jokeControl" type="radio" id="categories" name="jokeControl" />
-                    <span class="control__radio-btn"></span>
-                    <label for="categories">From categories</label>
-                    <div formGroupName="categoriesGroup" class="control__pop-up">
-                        <span formControlName="category" class="category_big"
-                            *ngFor="let category of categories">{{category}}
-                        </span>
-                    </div>
-                </div>
-
-                <div formGroupName="jokeOption" class="control">
-                    <input formControlName="jokeControl" type="radio" id="search" name="jokeControl" />
-                    <span class="control__radio-btn"></span>
-                    <label for="search">Search</label>
-                    <div formGroupName="searchGroup" class="control__pop-up control__pop-up_search">
-                        <input formControlName="search" class="search-form" type="text"
-                            placeholder="Free text search..." />
-                    </div>
-                </div>
-
-                <button class="jokes__button btn" type="submit">Get a joke</button>
-
-            </form>
-        </div>
+       
+        <app-joke-form></app-joke-form>
 
         <div *ngFor="let joke of jokes">
             <app-joke-card [joke]="joke"></app-joke-card>
         </div>
+        
     </div>
 </div>
