@@ -5,12 +5,12 @@
             <a class="jokes__burger-btn" href="#" (click)="onToggleSidebar()"
                 [ngClass]="{'jokes__burger-btn_active': showSidebar}"><span></span>Favourite</a>
         </div>
-       
+
         <app-joke-form></app-joke-form>
 
         <div *ngFor="let joke of jokes">
             <app-joke-card [joke]="joke"></app-joke-card>
         </div>
-        
+
     </div>
 </div>

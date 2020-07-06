@@ -5,7 +5,6 @@ import { Subscription } from 'rxjs';
 import { JokesService } from '../../shared/services/jokes.service';
 import { FavouriteDisplayService } from './../../shared/services/favourite-display.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-jokes',
@@ -25,7 +24,7 @@ export class JokesComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    this.jokes = this.jokesService.jokesArr;
+    this.jokes = this.jokesService.getJokesArr();
   }
 
   onToggleSidebar() {

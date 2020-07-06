@@ -9,14 +9,14 @@ export class FormMapperService {
 
   constructor(private apiService: ApiService) {}
 
-  mapFormDataForApiResponse(form: FormGroup): string{
-    switch (form.value.jokeControl) {
+  mapFormDataForApiResponse(value): string{
+    switch (value.jokeControl) {
       case 'random':
         return `${this.apiService.getApiString()}/random`;
       case 'categories':
-        return `${this.apiService.getApiString()}/random?category=${form.value.jokeCategoryGroup.category}`;
+        return `${this.apiService.getApiString()}/random?category=${value.jokeCategoryGroup.category}`;
       case 'search':
-        return `${this.apiService.getApiString()}/search?query=${form.value.jokeSearchGroup.search}`;
+        return `${this.apiService.getApiString()}/search?query=${value.jokeSearchGroup.search}`;
     }
   }
 }

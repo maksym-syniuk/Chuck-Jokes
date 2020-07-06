@@ -1,3 +1,4 @@
+import { IJokeApiArr } from './../../shared/interfaces/IJokeApiArr';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { JokesService } from 'src/app/shared/services/jokes.service';
@@ -24,12 +25,14 @@ export class JokeFormComponent implements OnInit, OnDestroy {
     this.jokeForm = new FormGroup({
       jokeControl: new FormControl('random'),
       jokeCategoryGroup: new FormGroup({
-        category: new FormControl(null)
+        category: new FormControl('animal')
       }),
       jokeSearchGroup: new FormGroup({
-        search: new FormControl('', [Validators.min(1)])
+        search: new FormControl('', Validators.minLength(4))
       })
     });
+
+    this.onSubmitForm();
 
     this.categoriesSubscription = this.jokesService.getCategories()
     .subscribe(
@@ -38,12 +41,26 @@ export class JokeFormComponent implements OnInit, OnDestroy {
       });
   }
 
+  get searchValue() {
+    return this.jokeForm.get('jokeSearchGroup.search');
+  }
+
   onSubmitForm(): void {
-    this.jokesService.getJokes(this.jokeForm)
-    .subscribe(
-          (jokes: IJokeApi[]) => {
-            this.jokesService.setJokes(this.jokesMapperService.mapJokeApiForJokes(jokes));
-          });
+    if (this.jokeForm.value.jokeControl === 'search' && this.searchValue.valid){
+      this.jokesService.searchJoke(this.jokeForm.value)
+        .subscribe(
+          (jokes: IJokeApiArr) => {
+            this.jokesService.setJokes(this.jokesMapperService.mapJokeApiArrForJokes(jokes));
+          }
+        );
+      this.searchValue.reset();
+    } else {
+    this.jokesService.getJokes(this.jokeForm.value)
+      .subscribe(
+            (jokes: IJokeApi) => {
+              this.jokesService.setJokes(this.jokesMapperService.mapJokeApiForJokes((Array.of(jokes))));
+      });
+    }
   }
 
   ngOnDestroy(): void{

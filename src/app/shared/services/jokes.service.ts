@@ -1,10 +1,10 @@
+import { IJokeApiArr } from './../interfaces/IJokeApiArr';
 import { IJokeApi } from './../interfaces/IJokeApi';
 import { ApiService } from './api.service';
 import { FormMapperService } from './form-mapper.service';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { FormGroup } from '@angular/forms';
 import { IJoke } from '../interfaces/IJoke';
 
 @Injectable({
@@ -21,15 +21,19 @@ export class JokesService {
   ) { }
 
   setJokes(jokesArr: IJoke[]): void {
-    this.jokes = [...jokesArr];
+    jokesArr.map((joke: IJoke) => this.jokes.unshift(joke));
   }
 
-  get jokesArr(): IJoke[]{
+  getJokesArr(): IJoke[]{
     return this.jokes;
   }
 
-  getJokes(form: FormGroup): Observable<IJokeApi[]> {
-    return this.http.get<IJokeApi[]>(this.formMapperService.mapFormDataForApiResponse(form));
+  getJokes(value: object): Observable<IJokeApi> {
+    return this.http.get<IJokeApi>(this.formMapperService.mapFormDataForApiResponse(value));
+  }
+
+  searchJoke(value: object): Observable<IJokeApiArr> {
+    return this.http.get<IJokeApiArr>(this.formMapperService.mapFormDataForApiResponse(value));
   }
 
   getCategories(): Observable<Array<string>> {
