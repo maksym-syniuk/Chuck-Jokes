@@ -1,6 +1,4 @@
-import { JokesMapperService } from './../../shared/services/jokes-mapper.service';
-import { IJokeApi } from '../../shared/interfaces/IJokeApi';
-import { IJoke } from '../../shared/interfaces/IJoke';
+import { Joke } from '../../shared/interfaces/Joke';
 import { Subscription } from 'rxjs';
 import { JokesService } from '../../shared/services/jokes.service';
 import { FavouriteDisplayService } from './../../shared/services/favourite-display.service';
@@ -13,7 +11,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 })
 
 export class JokesComponent implements OnInit, OnDestroy {
-  public jokes: IJoke[] = [];
+  public jokes: Joke[] = [];
   public showSidebar = false;
 
   private jokesSubscription: Subscription = new Subscription();

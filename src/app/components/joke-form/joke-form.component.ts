@@ -1,44 +1,51 @@
-import { IJokeApiArr } from './../../shared/interfaces/IJokeApiArr';
+import { JokeCategory } from '../../shared/enums/JokeCategory';
+import { JokeControl } from '../../shared/enums/JokeControl';
+import { JokeApiArr } from '../../shared/interfaces/JokeApiArr';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { JokesService } from 'src/app/shared/services/jokes.service';
-import { Subscription } from 'rxjs';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { JokesMapperService } from 'src/app/shared/services/jokes-mapper.service';
-import { IJokeApi } from 'src/app/shared/interfaces/IJokeApi';
+import { JokeApi } from 'src/app/shared/interfaces/JokeApi';
 
 @Component({
   selector: 'app-joke-form',
   templateUrl: './joke-form.component.html',
-  styleUrls: ['./joke-form.component.scss']
+  styleUrls: ['./joke-form.component.scss'],
 })
 export class JokeFormComponent implements OnInit, OnDestroy {
   public jokeForm: FormGroup;
   public categories: string[] = [];
-  private categoriesSubscription: Subscription = new Subscription();
+  public controlState: string;
+  public JokeControlEnum = JokeControl;
+  public JokeCategoryEnum = JokeCategory;
+  private unsubscribe$ = new Subject<void>();
 
   constructor(
     private jokesService: JokesService,
-    private jokesMapperService: JokesMapperService,
+    private jokesMapperService: JokesMapperService
   ) { }
 
   ngOnInit(): void {
     this.jokeForm = new FormGroup({
-      jokeControl: new FormControl('random'),
+      jokeControl: new FormControl(this.JokeControlEnum.random),
       jokeCategoryGroup: new FormGroup({
-        category: new FormControl('animal')
+        category: new FormControl(this.JokeCategoryEnum.animal),
       }),
       jokeSearchGroup: new FormGroup({
-        search: new FormControl('', Validators.minLength(4))
-      })
+        search: new FormControl('', Validators.minLength(4)),
+      }),
     });
+
+    this.jokeForm
+      .get('jokeControl')
+      .valueChanges.pipe(takeUntil(this.unsubscribe$))
+      .subscribe((value) => (this.controlState = value));
 
     this.onSubmitForm();
 
-    this.categoriesSubscription = this.jokesService.getCategories()
-    .subscribe(
-      (categoriesArr: string[]) => {
-        this.categories = [...categoriesArr];
-      });
+    this.getCategories();
   }
 
   get searchValue() {
@@ -46,24 +53,42 @@ export class JokeFormComponent implements OnInit, OnDestroy {
   }
 
   onSubmitForm(): void {
-    if (this.jokeForm.value.jokeControl === 'search' && this.searchValue.valid){
-      this.jokesService.searchJoke(this.jokeForm.value)
-        .subscribe(
-          (jokes: IJokeApiArr) => {
-            this.jokesService.setJokes(this.jokesMapperService.mapJokeApiArrForJokes(jokes));
-          }
-        );
+    if (
+      this.jokeForm.value.jokeControl === this.JokeControlEnum.search &&
+      this.searchValue.valid
+    ) {
+      this.jokesService
+        .searchJoke(this.jokeForm.value)
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe((jokes: JokeApiArr) => {
+          this.jokesService.setJokes(
+            this.jokesMapperService.mapJokeApiArrForJokes(jokes)
+          );
+        });
       this.searchValue.reset();
     } else {
-    this.jokesService.getJokes(this.jokeForm.value)
-      .subscribe(
-            (jokes: IJokeApi) => {
-              this.jokesService.setJokes(this.jokesMapperService.mapJokeApiForJokes((Array.of(jokes))));
-      });
+      this.jokesService
+        .getJokes(this.jokeForm.value)
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe((jokes: JokeApi) => {
+          this.jokesService.setJokes(
+            this.jokesMapperService.mapJokeApiForJokes(Array.of(jokes))
+          );
+        });
     }
   }
 
-  ngOnDestroy(): void{
-    this.categoriesSubscription.unsubscribe();
+  getCategories(): void {
+    this.jokesService
+      .getCategories()
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((categoriesArr: string[]) => {
+        this.categories = [...categoriesArr];
+      });
+  }
+
+  ngOnDestroy(): void {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 }

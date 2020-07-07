@@ -1,18 +1,18 @@
-import { IJokeApiArr } from './../interfaces/IJokeApiArr';
-import { IJokeApi } from './../interfaces/IJokeApi';
+import { JokeApiArr } from '../interfaces/JokeApiArr';
+import { JokeApi } from '../interfaces/JokeApi';
 import { ApiService } from './api.service';
 import { FormMapperService } from './form-mapper.service';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { IJoke } from '../interfaces/IJoke';
+import { Joke } from '../interfaces/Joke';
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class JokesService {
-  private jokes: IJoke[] = [];
+  private jokes: Joke[] = [];
 
   constructor(
     private http: HttpClient,
@@ -20,20 +20,20 @@ export class JokesService {
     private formMapperService: FormMapperService
   ) { }
 
-  setJokes(jokesArr: IJoke[]): void {
-    jokesArr.map((joke: IJoke) => this.jokes.unshift(joke));
+  setJokes(jokesArr: Joke[]): void {
+    jokesArr.map((joke: Joke) => this.jokes.unshift(joke));
   }
 
-  getJokesArr(): IJoke[]{
+  getJokesArr(): Joke[] {
     return this.jokes;
   }
 
-  getJokes(value: object): Observable<IJokeApi> {
-    return this.http.get<IJokeApi>(this.formMapperService.mapFormDataForApiResponse(value));
+  getJokes(value: object): Observable<JokeApi> {
+    return this.http.get<JokeApi>(this.formMapperService.mapFormDataForApiResponse(value));
   }
 
-  searchJoke(value: object): Observable<IJokeApiArr> {
-    return this.http.get<IJokeApiArr>(this.formMapperService.mapFormDataForApiResponse(value));
+  searchJoke(value: object): Observable<JokeApiArr> {
+    return this.http.get<JokeApiArr>(this.formMapperService.mapFormDataForApiResponse(value));
   }
 
   getCategories(): Observable<Array<string>> {

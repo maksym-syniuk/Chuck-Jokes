@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { FormGroup } from '@angular/forms';
 import { ApiService } from './api.service';
 
 @Injectable({
@@ -7,9 +6,9 @@ import { ApiService } from './api.service';
 })
 export class FormMapperService {
 
-  constructor(private apiService: ApiService) {}
+  constructor(private apiService: ApiService) { }
 
-  mapFormDataForApiResponse(value): string{
+  mapFormDataForApiResponse(value): string {
     switch (value.jokeControl) {
       case 'random':
         return `${this.apiService.getApiString()}/random`;

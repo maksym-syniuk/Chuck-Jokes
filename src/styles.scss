@@ -2,7 +2,6 @@
 @import "fonts";
 @import "global";
 @import "variables";
-
 .container__left {
     max-width: 758px;
     padding: 0 40px;
@@ -20,11 +19,9 @@
     border-radius: 6px;
     margin-right: 9px;
     margin-top: 2px;
-
     &_hidden {
         display: none;
     }
-
     &_dark {
         font-weight: 500;
         font-size: 10px;
@@ -35,7 +32,6 @@
         background-color: $secondaryBackgroundColor;
         border-radius: 6px;
     }
-
     &_big {
         border-radius: 6px;
         font-weight: 500;
@@ -50,12 +46,10 @@
         border: 2px solid $secondaryBackgroundColor;
         cursor: pointer;
         transition: 0.3s;
-
         &:hover {
             background-color: $secondaryBackgroundColor;
             color: $primaryTextColor;
         }
-
         &-active {
             background-color: $secondaryBackgroundColor;
             color: $primaryTextColor;
@@ -74,7 +68,6 @@
     border-radius: 10px;
     cursor: pointer;
     transition: 0.3s;
-
     &:hover {
         background: $accentBackgroundHoverColor;
     }
@@ -84,6 +77,10 @@
     max-width: 1200px;
     margin: 40px auto;
     padding: 0 40px;
+}
+
+input.ng-invalid.ng-touched {
+    border: 2px solid tomato;
 }
 
 @media (max-width: 834px) {

@@ -1,4 +1,4 @@
-export interface IJoke {
+export interface Joke {
     categories: Array<string>;
     dateCreated?: Date;
     iconUrl?: string;

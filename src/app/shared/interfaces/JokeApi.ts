@@ -1,4 +1,4 @@
-export interface IJokeApi {
+export interface JokeApi {
     categories: Array<string>;
     created_at: Date;
     icon_url: string;
