@@ -3,7 +3,6 @@
     <h2 class="joke__subtitle">Let’s try to find a joke for you:</h2>
 
     <form [formGroup]="jokeForm" (ngSubmit)="onSubmitForm()" class="joke__description-controls">
-
         <div class="control">
             <input formControlName="jokeControl" type="radio" id="random" [value]="this.JokeControlEnum.random" />
             <span class="control__radio-btn"></span>
@@ -11,13 +10,15 @@
         </div>
 
         <div class="control">
-            <input formControlName="jokeControl" type="radio" id="categories" [value]="this.JokeControlEnum.categories" />
+            <input formControlName="jokeControl" type="radio" id="categories"
+                [value]="this.JokeControlEnum.categories" />
             <span class="control__radio-btn"></span>
             <label for="categories">From categories</label>
-            <div *ngIf="this.controlState === this.JokeControlEnum.categories" formGroupName="jokeCategoryGroup" class="control__pop-up control__pop-up_category">
+            <div *ngIf="this.controlState === this.JokeControlEnum.categories" formGroupName="jokeCategoryGroup"
+                class="control__pop-up control__pop-up_category">
                 <div *ngFor="let category of categories" class="category__container">
                     <input formControlName="category" type="radio" [id]="category" [value]="category" />
-                    <label class="category_big" [for]="category">{{category}}</label>
+                    <label class="category_big" [for]="category">{{ category }}</label>
                 </div>
             </div>
         </div>
@@ -26,14 +27,18 @@
             <input formControlName="jokeControl" type="radio" id="search" [value]="this.JokeControlEnum.search" />
             <span class="control__radio-btn"></span>
             <label for="search">Search</label>
-            <div *ngIf="this.controlState === this.JokeControlEnum.search" formGroupName="jokeSearchGroup" class="control__pop-up control__pop-up_search">
-                <input formControlName="search" name="search" class="search-form" type="text" placeholder="Free text search..." />
+            <div *ngIf="this.controlState === this.JokeControlEnum.search" formGroupName="jokeSearchGroup"
+                class="control__pop-up control__pop-up_search">
+                <input formControlName="search" name="search" class="search-form" type="text"
+                    placeholder="Free text search..." />
                 <span class="control__invalid" *ngIf="!searchValue.valid && searchValue.touched">
-                        <small>*This line should be more than 3 symbols!</small>
+                    <small>*This line should be more than 3 symbols!</small>
                 </span>
             </div>
         </div>
 
-        <button class="joke__button btn" type="submit" [disabled]="searchValue.touched && !searchValue.valid">Get a joke</button>
+        <button class="joke__button btn" type="submit" [disabled]="searchValue.touched && !searchValue.valid">
+            Get a joke
+        </button>
     </form>
 </div>
