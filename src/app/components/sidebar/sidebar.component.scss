@@ -1,10 +1,12 @@
-.favourite {
+@import "variables";
+
+.sidebar {
     margin: 40px;
 
     &__title {
         font-weight: 500;
         font-size: 20px;
-        color: #ababab;
+        color: $secondaryTextColor;
         padding: 3px 0px 0px 2px;
     }
 
@@ -18,7 +20,7 @@
 }
 
 @media (max-width: 1179px) {
-    .favourite {
+    .sidebar {
         padding-top: 28px;
 
         &__title {
@@ -28,7 +30,7 @@
 }
 
 @media (max-width: 420px) {
-    .favourite {
+    .sidebar {
         padding-top: 49px;
         margin: 20px;
     }

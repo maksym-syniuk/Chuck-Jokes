@@ -1,4 +1,4 @@
-import { FavouriteDisplayService } from './../../services/favourite-display.service';
+import { FavouriteDisplayService } from './../../shared/services/favourite-display.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -6,6 +6,7 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './jokes.component.html',
   styleUrls: ['./jokes.component.scss']
 })
+
 export class JokesComponent implements OnInit {
   showSidebar = false;
 
