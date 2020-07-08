@@ -1,8 +1,7 @@
-import { JokeApiArr } from '../interfaces/JokeApiArr';
 import { JokeApi } from '../interfaces/JokeApi';
 import { ApiService } from './api.service';
 import { FormMapperService } from './form-mapper.service';
-import { Observable } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Joke } from '../interfaces/Joke';
@@ -12,7 +11,8 @@ import { Joke } from '../interfaces/Joke';
 })
 
 export class JokesService {
-  private jokes: Joke[] = [];
+  private jokes = new BehaviorSubject([]);
+  public currentJokes = this.jokes.asObservable();
 
   constructor(
     private http: HttpClient,
@@ -20,20 +20,16 @@ export class JokesService {
     private formMapperService: FormMapperService
   ) { }
 
-  setJokes(jokesArr: Joke[]): void {
-    jokesArr.map((joke: Joke) => this.jokes.unshift(joke));
+  changeJokes(jokes: Joke[]) {
+    this.jokes.next(jokes);
   }
 
-  getJokesArr(): Joke[] {
-    return this.jokes;
+  getJoke(value: object): Observable<JokeApi> {
+    return this.http.get<JokeApi>(this.formMapperService.transformFormDataToString(value));
   }
 
-  getJokes(value: object): Observable<JokeApi> {
-    return this.http.get<JokeApi>(this.formMapperService.mapFormDataForApiResponse(value));
-  }
-
-  searchJoke(value: object): Observable<JokeApiArr> {
-    return this.http.get<JokeApiArr>(this.formMapperService.mapFormDataForApiResponse(value));
+  searchJokes(value: object): Observable<JokeApi[]> {
+    return this.http.get<JokeApi[]>(this.formMapperService.transformFormDataToString(value));
   }
 
   getCategories(): Observable<Array<string>> {

@@ -1,6 +1,5 @@
 import { JokeCategory } from '../../shared/enums/JokeCategory';
 import { JokeControl } from '../../shared/enums/JokeControl';
-import { JokeApiArr } from '../../shared/interfaces/JokeApiArr';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { JokesService } from 'src/app/shared/services/jokes.service';
@@ -34,7 +33,7 @@ export class JokeFormComponent implements OnInit, OnDestroy {
         category: new FormControl(this.JokeCategoryEnum.animal),
       }),
       jokeSearchGroup: new FormGroup({
-        search: new FormControl('', Validators.minLength(4)),
+        search: new FormControl('', Validators.minLength(3)),
       }),
     });
 
@@ -58,20 +57,20 @@ export class JokeFormComponent implements OnInit, OnDestroy {
       this.searchValue.valid
     ) {
       this.jokesService
-        .searchJoke(this.jokeForm.value)
+        .searchJokes(this.jokeForm.value)
         .pipe(takeUntil(this.unsubscribe$))
-        .subscribe((jokes: JokeApiArr) => {
-          this.jokesService.setJokes(
-            this.jokesMapperService.mapJokeApiArrForJokes(jokes)
+        .subscribe((jokes: JokeApi[]) => {
+          this.jokesService.changeJokes(
+            this.jokesMapperService.mapJokeApiForJokes(jokes)
           );
         });
       this.searchValue.reset();
     } else {
       this.jokesService
-        .getJokes(this.jokeForm.value)
+        .getJoke(this.jokeForm.value)
         .pipe(takeUntil(this.unsubscribe$))
         .subscribe((jokes: JokeApi) => {
-          this.jokesService.setJokes(
+          this.jokesService.changeJokes(
             this.jokesMapperService.mapJokeApiForJokes(Array.of(jokes))
           );
         });

@@ -1,4 +1,3 @@
-import { JokeApiArr } from '../interfaces/JokeApiArr';
 import { Joke } from '../interfaces/Joke';
 import { JokeApi } from '../interfaces/JokeApi';
 import { Injectable } from '@angular/core';
@@ -13,19 +12,13 @@ export class JokesMapperService {
   mapJokeApiForJokes(jokes: JokeApi[]): Joke[] {
     return jokes.map((joke: JokeApi) => {
       return {
-        categories: joke.categories,
-        dateCreated: joke.created_at,
-        iconUrl: joke.icon_url,
         id: joke.id,
-        dateUpdated: joke.updated_at,
-        url: joke.url,
         value: joke.value,
+        url: joke.url,
+        iconUrl: joke.iconUrl,
+        categories: joke.categories,
         favourite: false
       };
     });
-  }
-
-  mapJokeApiArrForJokes(jokes: JokeApiArr): Joke[] {
-    return this.mapJokeApiForJokes(jokes.result);
   }
 }

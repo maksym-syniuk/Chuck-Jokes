@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'https://api.chucknorris.io/jokes'
+  apiUrl: 'https://reenbit-chuck-norris.azurewebsites.net/api/jokes'
 };
 
 /*

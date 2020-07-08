@@ -1,9 +1,7 @@
 export interface JokeApi {
-    categories: Array<string>;
-    created_at: Date;
-    icon_url: string;
     id: string;
-    updated_at: Date;
-    url: string;
     value: string;
+    url: string;
+    iconUrl: string;
+    categories: Array<string>;
 }

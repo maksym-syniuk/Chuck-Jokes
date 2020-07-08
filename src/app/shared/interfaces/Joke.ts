@@ -1,10 +1,10 @@
 export interface Joke {
-    categories: Array<string>;
+    id: string;
+    value: string;
     dateCreated?: Date;
     iconUrl?: string;
-    id: string;
-    dateUpdated: Date;
+    dateUpdated?: Date;
     url?: string;
-    value: string;
+    categories: Array<string>;
     favourite: boolean;
 }

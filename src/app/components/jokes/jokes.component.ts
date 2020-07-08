@@ -11,7 +11,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 })
 
 export class JokesComponent implements OnInit, OnDestroy {
-  public jokes: Joke[] = [];
+  public jokes: Joke[];
   public showSidebar = false;
 
   private jokesSubscription: Subscription = new Subscription();
@@ -22,7 +22,7 @@ export class JokesComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    this.jokes = this.jokesService.getJokesArr();
+    this.jokesService.currentJokes.subscribe(jokes => this.jokes = jokes);
   }
 
   onToggleSidebar() {

@@ -8,7 +8,7 @@ export class FormMapperService {
 
   constructor(private apiService: ApiService) { }
 
-  mapFormDataForApiResponse(value): string {
+  transformFormDataToString(value): string {
     switch (value.jokeControl) {
       case 'random':
         return `${this.apiService.getApiString()}/random`;
