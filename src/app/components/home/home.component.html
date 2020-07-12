@@ -1,10 +1,10 @@
 <main class="main">
-    <div class="main__backdrop" *ngIf="showFavourite"></div>
+    <div class="main__backdrop" *ngIf="showFavourite" (click)="closeBackdrop()"></div>
     <div class="main__jokes">
-        <app-jokes></app-jokes>
+        <app-jokes [showSidebar]="showFavourite"></app-jokes>
     </div>
 
-    <div class="main__favourite" [ngClass]="{'main__favourite_shown': showFavourite}">
-        <!-- <app-sidebar></app-sidebar> -->
+    <div class="main__favorite" [ngClass]="{'main__favorite_shown': showFavourite}">
+        <app-sidebar></app-sidebar>
     </div>
 </main>

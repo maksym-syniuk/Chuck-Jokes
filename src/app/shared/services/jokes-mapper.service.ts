@@ -2,14 +2,13 @@ import { Joke } from '../interfaces/Joke';
 import { JokeApi } from '../interfaces/JokeApi';
 import { Injectable } from '@angular/core';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
+
 export class JokesMapperService {
 
   constructor() { }
 
-  mapJokeApiForJokes(jokes: JokeApi[]): Joke[] {
+  public mapJokeApiForJokes(jokes: JokeApi[]): Joke[] {
     return jokes.map((joke: JokeApi) => {
       return {
         id: joke.id,
@@ -17,7 +16,7 @@ export class JokesMapperService {
         url: joke.url,
         iconUrl: joke.iconUrl,
         categories: joke.categories,
-        favourite: false
+        favorite: false
       };
     });
   }

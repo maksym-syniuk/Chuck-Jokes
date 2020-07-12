@@ -1,97 +1,121 @@
 @import "variables";
 
 .jokes {
-    &__header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
 
-    &__burger-btn {
-        display: none;
-    }
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
 
-    &__abbr {
-        font-weight: bold;
-        font-size: 20px;
-        color: $primaryTextColor;
-        margin-top: 3px;
-    }
+  &__burger-btn {
+    display: none;
+  }
+
+  &__abbr {
+    font-weight: bold;
+    font-size: 20px;
+    color: $primaryTextColor;
+    margin-top: 3px;
+  }
 }
 
 @media (max-width: 1179px) {
-    .jokes {
+  .jokes {
+    position: relative;
+
+    &__header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+
+    &__abbr {
+      font-size: 20px;
+      padding: 0;
+      padding-bottom: 11px;
+    }
+
+    &__burger-btn {
+      position: absolute;
+      top: 0;
+      right: 41px;
+      display: block;
+      display: flex;
+      align-items: center;
+      color: $secondaryTextColor;
+      font-weight: 500;
+      font-size: 20px;
+      z-index: 200;
+
+      span {
+        margin-right: 10px;
+        display: block;
+        height: 28px;
+        width: 28px;
+        border-radius: 50%;
+        background-color: $primaryTextColor;
         position: relative;
 
-        &__header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
+        &::before,
+        &::after {
+          content: "";
+          position: absolute;
+          left: 7px;
+          right: 7px;
+          height: 2px;
+          border-radius: 2px;
+          background-color: $primaryBackgroundColor;
+          transition: 0.3s;
         }
 
-        &__abbr {
-            font-size: 20px;
-            padding: 0;
-            padding-bottom: 11px;
+        &::before {
+          top: 10px;
+          bottom: 16px;
         }
 
-        &__burger-btn {
-            position: absolute;
-            top: 0;
-            right: 41px;
-            display: block;
-            display: flex;
-            align-items: center;
-            color: $secondaryTextColor;
-            font-weight: 500;
-            font-size: 20px;
-            z-index: 200;
-
-            span {
-                margin-right: 10px;
-                display: block;
-                height: 28px;
-                width: 28px;
-                border-radius: 50%;
-                background-color: $primaryTextColor;
-                position: relative;
-
-                &::before,
-                &::after {
-                    content: "";
-                    position: absolute;
-                    left: 7px;
-                    right: 7px;
-                    height: 2px;
-                    border-radius: 2px;
-                    background-color: $primaryBackgroundColor;
-                    transition: 0.3s;
-                }
-
-                &::before {
-                    top: 10px;
-                    bottom: 16px;
-                }
-
-                &::after {
-                    top: 16px;
-                    bottom: 10px;
-                }
-            }
-
-            &_active span:before {
-                transform: translateY(3px) rotate(45deg);
-            }
-
-            &_active span:after {
-                transform: translateY(-3px) rotate(-45deg);
-            }
+        &::after {
+          top: 16px;
+          bottom: 10px;
         }
+      }
+
+      &_active p {
+        z-index: 200;
+      }
+
+      &_active:before {
+        content: "";
+        position: fixed;
+        top: 0;
+        left: 42.4%;
+        right: 0;
+        height: 85px;
+        background-color: $secondaryBackgroundColor;
+        transform: translateX(100%);
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        animation: slideIn .5s forwards;
+      }
+
+      &_active span:before {
+        transform: translateY(3px) rotate(45deg);
+      }
+
+      &_active span:after {
+        transform: translateY(-3px) rotate(-45deg);
+      }
     }
+  }
+}
+
+@keyframes slideIn {
+  100% {
+    transform: translateX(0);
+  }
 }
 
 @media (max-width: 420px) {
-    .jokes__burger-btn {
-        right: 21px;
-    }
+  .jokes__burger-btn {
+    right: 21px;
+  }
 }

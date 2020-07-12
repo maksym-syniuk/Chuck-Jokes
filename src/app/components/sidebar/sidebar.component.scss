@@ -1,37 +1,37 @@
 @import "variables";
 
 .sidebar {
-    margin: 40px;
+  margin: 40px;
 
-    &__title {
-        font-weight: 500;
-        font-size: 20px;
-        color: $secondaryTextColor;
-        padding: 3px 0px 0px 2px;
-    }
+  &__title {
+    font-weight: 500;
+    font-size: 20px;
+    color: $secondaryTextColor;
+    padding: 3px 0px 0px 2px;
+  }
 
-    &_btn {
-        margin-top: 40px;
-        position: relative;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-    }
+  &_btn {
+    margin-top: 40px;
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
 }
 
 @media (max-width: 1179px) {
-    .sidebar {
-        padding-top: 28px;
+  .sidebar {
+    padding-top: 45px;
 
-        &__title {
-            display: none;
-        }
+    &__title {
+      display: none;
     }
+  }
 }
 
 @media (max-width: 420px) {
-    .sidebar {
-        padding-top: 49px;
-        margin: 20px;
-    }
+  .sidebar {
+    padding-top: 49px;
+    margin: 20px;
+  }
 }
