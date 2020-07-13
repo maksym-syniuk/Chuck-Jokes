@@ -17,6 +17,9 @@ export class HomeComponent implements OnDestroy {
       this.showFavourite = value;
     });
   }
+  public closeBackdrop(): void {
+    this.favouriteDisplayService.onToggleFavourite(false);
+  }
 
   ngOnDestroy() {
     this.subscription.unsubscribe();

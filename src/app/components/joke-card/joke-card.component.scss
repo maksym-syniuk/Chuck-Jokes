@@ -17,7 +17,7 @@
         box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
     }
 
-    &__like {
+    &__heart {
         position: absolute;
         top: 40px;
         right: 38px;
@@ -58,6 +58,7 @@
 
     &__content {
         width: 100%;
+        max-width: 100%;
         &-id {
             color: $secondaryTextColor;
             font-weight: 500;
@@ -111,7 +112,7 @@
     .joke {
         padding: 40px 27px 20px 21px;
 
-        &__like {
+        &__heart {
             top: 17px;
             right: 20px;
         }

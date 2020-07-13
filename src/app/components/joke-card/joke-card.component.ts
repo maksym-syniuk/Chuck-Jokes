@@ -1,3 +1,5 @@
+import { JokesService } from 'src/app/shared/services/jokes.service';
+import { FavoriteJokeService } from './../../shared/services/favorite-joke.service';
 import { Joke } from '../../shared/interfaces/Joke';
 import { Component, OnInit, Input } from '@angular/core';
 
@@ -8,9 +10,21 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class JokeCardComponent implements OnInit {
   @Input() joke: Joke;
-  constructor() { }
+  @Input() favorites: boolean;
+  jokeAddedToFavorite = false;
+  constructor(
+    private favoriteJokeService: FavoriteJokeService,
+    private jokesService: JokesService
+  ) { }
 
   ngOnInit(): void {
+    if (!this.favorites) {
+      this.joke = this.jokesService.checkIfJokeIsFavorite(this.joke);
+    }
   }
 
+  addToFavorite() {
+    this.favoriteJokeService.onAddJokeToFavorite(this.joke);
+    this.jokeAddedToFavorite = !this.jokeAddedToFavorite;
+  }
 }

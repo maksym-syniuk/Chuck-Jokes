@@ -1,4 +1,4 @@
-export enum JokeCategory {
+export enum JokeCategoryEnum {
     animal = 'animal',
     career = 'career',
     celebrity = 'celebrity',

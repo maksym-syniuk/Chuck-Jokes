@@ -1,0 +1,4 @@
+<div class="container">
+    <button class="btn" routerLink="/">Back to Home Page</button>
+    <app-joke-card *ngFor="let joke of favoriteJokes" [joke]="joke" [favorites]="true"></app-joke-card>
+</div>

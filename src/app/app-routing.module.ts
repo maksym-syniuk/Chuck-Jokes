@@ -6,8 +6,8 @@ import { Routes, RouterModule } from '@angular/router';
 const routes: Routes = [
   { path: '', component: HomeComponent, pathMatch: 'full' },
   {
-    path: 'favourites',
-    loadChildren: () => import('./components/favourites/favourites.module').then(m => m.FavouritesModule)
+    path: 'favorites',
+    loadChildren: () => import('./components/favorites/favorites.module').then(m => m.FavoritesModule)
   },
   {
     path: 'error',

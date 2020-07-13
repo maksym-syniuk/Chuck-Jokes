@@ -6,5 +6,5 @@ export interface Joke {
     dateUpdated?: Date;
     url?: string;
     categories: Array<string>;
-    favourite: boolean;
+    favorite: boolean;
 }
