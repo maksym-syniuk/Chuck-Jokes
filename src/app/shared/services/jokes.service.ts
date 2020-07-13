@@ -4,7 +4,7 @@ import { FavoriteJokeService } from './favorite-joke.service';
 import { JokeApi } from '../interfaces/JokeApi';
 import { ApiService } from './api.service';
 import { Observable, BehaviorSubject } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Joke } from '../interfaces/Joke';
 
@@ -19,6 +19,9 @@ export class JokesService {
   private loadingState = new BehaviorSubject(false);
   public currentLoadingState = this.loadingState.asObservable();
 
+  private errorMessage = new BehaviorSubject('');
+  public currentErrorMessage = this.errorMessage.asObservable();
+
   constructor(
     private http: HttpClient,
     private apiService: ApiService,
@@ -32,6 +35,10 @@ export class JokesService {
       case JokeTypeEnum.categories:
         return `${this.apiService.getApiString()}/random?category=${category}`;
     }
+  }
+
+  public changeError(error: string) {
+    this.errorMessage.next(error);
   }
 
   public changeJokes(jokes: Joke[]) {
