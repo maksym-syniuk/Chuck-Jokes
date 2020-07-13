@@ -6,7 +6,6 @@
     background-color: $secondaryBackgroundColor;
     border-radius: 20px;
     display: flex;
-    justify-content: center;
     position: relative;
 
     &_dark-theme {
@@ -58,6 +57,7 @@
     }
 
     &__content {
+        width: 100%;
         &-id {
             color: $secondaryTextColor;
             font-weight: 500;

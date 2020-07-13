@@ -5,41 +5,11 @@
             <a class="jokes__burger-btn" href="#" (click)="onToggleSidebar()"
                 [ngClass]="{'jokes__burger-btn_active': showSidebar}"><span></span>Favourite</a>
         </div>
-        <div class="jokes__description">
-            <h1 class="jokes__title">Hey!</h1>
-            <h2 class="jokes__subtitle">Let’s try to find a joke for you:</h2>
-            <div class="jokes__description-controls">
-                <div class="control">
-                    <input type="radio" id="random" name="joke" checked="checked" />
-                    <span class="control__radio-btn"></span>
-                    <label for="random">Random</label>
-                </div>
 
-                <div class="control">
-                    <input type="radio" id="categories" name="joke" />
-                    <span class="control__radio-btn"></span>
-                    <label for="categories">From categories</label>
-                    <div class="control__pop-up">
-                        <span class="category_big">Animal</span>
-                        <span class="category_big">Career</span>
-                        <span class="category_big category_big-active">Celebrity</span>
-                        <span class="category_big">Dev</span>
-                    </div>
-                </div>
+        <app-joke-form></app-joke-form>
 
-                <div class="control">
-                    <input type="radio" id="search" name="joke" />
-                    <span class="control__radio-btn"></span>
-                    <label for="search">Search</label>
-                    <div class="control__pop-up control__pop-up_search">
-                        <input class="search-form" type="text" placeholder="Free text search..." />
-                    </div>
-                </div>
-            </div>
-
-            <button class="jokes__button btn">Get a joke</button>
+        <div *ngFor="let joke of jokes">
+            <app-joke-card [joke]="joke"></app-joke-card>
         </div>
-
-        <app-joke-card [jokeAddedToFavourite]="false"></app-joke-card>
     </div>
 </div>

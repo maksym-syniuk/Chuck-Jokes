@@ -1,5 +1,8 @@
+import { Joke } from '../../shared/interfaces/Joke';
+import { Subscription } from 'rxjs';
+import { JokesService } from '../../shared/services/jokes.service';
 import { FavouriteDisplayService } from './../../shared/services/favourite-display.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 
 @Component({
   selector: 'app-jokes',
@@ -7,16 +10,27 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./jokes.component.scss']
 })
 
-export class JokesComponent implements OnInit {
-  showSidebar = false;
+export class JokesComponent implements OnInit, OnDestroy {
+  public jokes: Joke[];
+  public showSidebar = false;
 
-  constructor(private favouriteDisplayService: FavouriteDisplayService) { }
+  private jokesSubscription: Subscription = new Subscription();
 
-  ngOnInit(): void {
+  constructor(
+    private favouriteDisplayService: FavouriteDisplayService,
+    private jokesService: JokesService,
+  ) { }
+
+  ngOnInit() {
+    this.jokesService.currentJokes.subscribe(jokes => this.jokes = jokes);
   }
 
   onToggleSidebar() {
     this.showSidebar = !this.showSidebar;
     this.favouriteDisplayService.onToggleFavourite(this.showSidebar);
+  }
+
+  ngOnDestroy() {
+    this.jokesSubscription.unsubscribe();
   }
 }

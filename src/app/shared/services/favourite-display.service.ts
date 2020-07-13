@@ -9,6 +9,8 @@ export class FavouriteDisplayService {
   showFavourite: boolean;
   showFavouriteChange: Subject<boolean> = new Subject<boolean>();
 
+  constructor() { }
+
   onToggleFavourite(state: boolean) {
     this.showFavouriteChange.next(state);
     this.showFavourite = state;
@@ -18,5 +20,4 @@ export class FavouriteDisplayService {
     return this.showFavourite;
   }
 
-  constructor() { }
 }
