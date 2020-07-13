@@ -18,6 +18,19 @@
     color: $primaryTextColor;
     margin-top: 3px;
   }
+
+  .error {
+    text-align: center;
+    margin-top: 20px;
+
+    img {
+      max-width: 80px;
+    }
+
+    p {
+      color: $primaryTextColor;
+    }
+  }
 }
 
 @media (max-width: 1179px) {

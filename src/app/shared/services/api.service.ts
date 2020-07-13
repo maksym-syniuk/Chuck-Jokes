@@ -5,10 +5,9 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class ApiService {
-
   constructor() { }
 
-  getApiString() {
+  public getApiString() {
     return environment.apiUrl;
   }
 }

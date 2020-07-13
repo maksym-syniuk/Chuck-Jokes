@@ -13,6 +13,13 @@
 
         <app-loader *ngIf="loading"></app-loader>
 
-        <app-joke-card *ngFor="let joke of jokes" [joke]="joke" [favorites]="false"></app-joke-card>
+        <div class="error" *ngIf="errorMessage.length; else showJokes">
+            <img src="../../../assets/images/error.svg" alt="error">
+            <p>O-oops, joke not found</p>
+        </div>
+
+        <ng-template #showJokes>
+            <app-joke-card *ngFor="let joke of jokes" [joke]="joke" [favorites]="false"></app-joke-card>
+        </ng-template>
     </div>
 </div>

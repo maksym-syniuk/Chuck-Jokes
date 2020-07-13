@@ -19,7 +19,6 @@ export class JokeFormComponent implements OnInit, OnDestroy {
   public categories: string[] = [];
   public jokeTypeEnum = JokeTypeEnum;
   public jokeTypeState: string;
-  public errorMessage: HttpErrorResponse;
   private unsubscribe = new Subject<void>();
 
   private formSubmitResolver = {
@@ -39,8 +38,7 @@ export class JokeFormComponent implements OnInit, OnDestroy {
       .getJoke(type, categoryValue)
       .pipe(
         delay(500),
-        takeUntil(this.unsubscribe)
-      )
+        takeUntil(this.unsubscribe))
       .subscribe(
         (joke: JokeApi) => {
           this.jokesService.changeJokes(
@@ -49,7 +47,8 @@ export class JokeFormComponent implements OnInit, OnDestroy {
           this.jokesService.changeLoadingState(false);
         },
         (error: HttpErrorResponse) => {
-          this.errorMessage = error;
+          this.jokesService.changeError(error.message);
+          this.jokesService.changeLoadingState(false);
         });
   }
 
@@ -59,14 +58,19 @@ export class JokeFormComponent implements OnInit, OnDestroy {
       .searchJokes(searchValue)
       .pipe(
         delay(500),
-        takeUntil(this.unsubscribe)
-      )
+        takeUntil(this.unsubscribe))
       .subscribe((jokes: JokeApi[]) => {
         this.jokesService.changeJokes(
           this.jokesMapperService.mapJokeApiForJokes(jokes)
         );
         this.jokesService.changeLoadingState(false);
-      });
+      },
+        (error: HttpErrorResponse) => {
+          console.log(error);
+
+          this.jokesService.changeError(error.message);
+          this.jokesService.changeLoadingState(false);
+        });
   }
 
   private initForm(): void {
@@ -104,6 +108,7 @@ export class JokeFormComponent implements OnInit, OnDestroy {
   }
 
   public submitForm(): void {
+    this.jokesService.changeError('');
     if (this.jokeForm.valid) {
       this.formSubmitResolver[this.jokeForm.get('type').value]();
     }

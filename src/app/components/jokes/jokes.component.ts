@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { JokeApi } from 'src/app/shared/interfaces/JokeApi';
 import { JokeTypeEnum } from './../../shared/enums/joke-type.enum';
 import { JokesMapperService } from 'src/app/shared/services/jokes-mapper.service';
@@ -17,6 +18,7 @@ export class JokesComponent implements OnInit, OnDestroy {
   @Input() showSidebar: boolean;
   public jokes: Joke[];
   public loading: boolean;
+  public errorMessage: string;
   private jokesSubscription: Subscription = new Subscription();
 
   constructor(
@@ -34,6 +36,7 @@ export class JokesComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.jokesService.currentLoadingState.subscribe(state => this.loading = state);
     this.jokesService.currentJokes.subscribe(jokes => this.jokes = jokes);
+    this.jokesService.currentErrorMessage.subscribe(message => this.errorMessage = message);
     this.getRandomJoke();
   }
 
