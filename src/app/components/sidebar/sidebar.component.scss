@@ -17,6 +17,16 @@
     left: 50%;
     transform: translate(-50%, -50%);
   }
+
+  .unregister {
+    margin-top: 60px;
+    color: $primaryTextColor;
+    text-align: center;
+
+    &__title {
+      margin-bottom: 30px;
+    }
+  }
 }
 
 @media (max-width: 1179px) {

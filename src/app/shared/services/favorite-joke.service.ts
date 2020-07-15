@@ -1,5 +1,4 @@
-import { JokesService } from 'src/app/shared/services/jokes.service';
-import { Joke } from './../interfaces/Joke';
+import { Joke } from '../interfaces/joke.interface';
 import { BehaviorSubject } from 'rxjs';
 import { Injectable } from '@angular/core';
 

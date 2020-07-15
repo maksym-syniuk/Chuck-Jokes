@@ -2,7 +2,7 @@
 
 .joke {
   &__description {
-    margin-top: 84px;
+    margin-top: 40px;
   }
 
   &__title {
@@ -19,7 +19,7 @@
   }
 
   &__button {
-    margin-top: 17px;
+    margin-top: 30px;
     max-width: 152px;
 
     &:disabled {
@@ -31,7 +31,7 @@
   &__description-controls {
     display: flex;
     flex-direction: column;
-    margin-top: 45px;
+    margin-top: 30px;
 
     & .control {
       position: relative;
@@ -50,7 +50,7 @@
 
       &__invalid {
         position: absolute;
-        bottom: -20px;
+        bottom: -26px;
         left: 15px;
         color: tomato;
       }
@@ -97,7 +97,7 @@
             margin-bottom: 20px;
           }
 
-          input[type="radio"]:checked + label {
+          input[type="radio"]:checked+label {
             background-color: $secondaryBackgroundColor;
             color: $primaryTextColor;
           }
@@ -126,11 +126,11 @@
         opacity: 0;
         z-index: 3;
 
-        &:checked + .control__radio-btn::after {
+        &:checked+.control__radio-btn::after {
           display: block;
         }
 
-        &:checked + .control__radio-btn {
+        &:checked+.control__radio-btn {
           border: 2px solid $primaryTextColor;
         }
       }
@@ -139,7 +139,7 @@
 }
 
 @media (max-width: 420px) {
-  input[type="radio"]:checked ~ .control__pop-up {
+  input[type="radio"]:checked~.control__pop-up {
     margin-bottom: 0;
   }
 }

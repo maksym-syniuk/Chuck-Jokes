@@ -13,6 +13,14 @@ const routes: Routes = [
     path: 'error',
     loadChildren: () => import('./components/error-page/error-page.module').then(m => m.ErrorPageModule)
   },
+  {
+    path: 'login',
+    loadChildren: () => import('./components/login/login.module').then(m => m.LoginModule)
+  },
+  {
+    path: 'register',
+    loadChildren: () => import('./components/register/register.module').then(m => m.RegisterModule)
+  },
   { path: '**', redirectTo: '/error' }
 ];
 

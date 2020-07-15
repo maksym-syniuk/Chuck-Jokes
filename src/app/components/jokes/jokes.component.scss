@@ -8,6 +8,18 @@
     align-items: center;
   }
 
+  &__user {
+    a {
+      cursor: pointer;
+      text-decoration: underline;
+      color: $accentBackgroundColor;
+
+      &:hover {
+        color: $accentBackgroundHoverColor;
+      }
+    }
+  }
+
   &__burger-btn {
     display: none;
   }
@@ -21,13 +33,14 @@
 
   .error {
     text-align: center;
-    margin-top: 20px;
+    margin: 40px 0;
 
     img {
       max-width: 80px;
     }
 
     p {
+      margin-top: 10px;
       color: $primaryTextColor;
     }
   }
@@ -39,7 +52,7 @@
 
     &__header {
       display: flex;
-      justify-content: space-between;
+      flex-direction: column;
       align-items: flex-start;
     }
 
@@ -60,6 +73,10 @@
       font-weight: 500;
       font-size: 20px;
       z-index: 200;
+      cursor: pointer;
+      background-color: transparent;
+      outline: none;
+      border: none;
 
       span {
         margin-right: 10px;
@@ -130,5 +147,10 @@
 @media (max-width: 420px) {
   .jokes__burger-btn {
     right: 21px;
+
+    &_active:before {
+      left: 0;
+      height: 70px;
+    }
   }
 }

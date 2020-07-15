@@ -6,7 +6,7 @@ import { JokesService } from 'src/app/shared/services/jokes.service';
 import { Subject } from 'rxjs';
 import { takeUntil, delay } from 'rxjs/operators';
 import { JokesMapperService } from 'src/app/shared/services/jokes-mapper.service';
-import { JokeApi } from 'src/app/shared/interfaces/JokeApi';
+import { JokeApi } from 'src/app/shared/interfaces/jokeApi.interface';
 import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
@@ -31,6 +31,40 @@ export class JokeFormComponent implements OnInit, OnDestroy {
     private jokesService: JokesService,
     private jokesMapperService: JokesMapperService
   ) { }
+
+  ngOnInit(): void {
+    this.initForm();
+    this.getCategories();
+    this.subscribeToFormTypeValueChanges();
+  }
+
+  private initForm(): void {
+    this.jokeForm = new FormGroup({
+      type: new FormControl(JokeTypeEnum.random),
+      category: new FormControl(JokeCategoryEnum.animal),
+      search: new FormControl(null, Validators.minLength(3)),
+    });
+  }
+
+  private getCategories(): void {
+    this.jokesService
+      .getCategories()
+      .pipe(takeUntil(this.unsubscribe))
+      .subscribe((categoriesArr: string[]) => {
+        this.categories = [...categoriesArr];
+      });
+  }
+
+  private subscribeToFormTypeValueChanges(): void {
+    this.jokeForm.get('type').valueChanges
+      .pipe(takeUntil(this.unsubscribe))
+      .subscribe(type => {
+        this.jokeTypeState = type;
+        if (type !== JokeTypeEnum.search) {
+          this.jokeForm.get('search').reset();
+        }
+      });
+  }
 
   private getRandomOrByCategoryJoke(type: JokeTypeEnum, categoryValue: JokeCategoryEnum): void {
     this.jokesService.changeLoadingState(true);
@@ -66,45 +100,9 @@ export class JokeFormComponent implements OnInit, OnDestroy {
         this.jokesService.changeLoadingState(false);
       },
         (error: HttpErrorResponse) => {
-          console.log(error);
-
           this.jokesService.changeError(error.message);
           this.jokesService.changeLoadingState(false);
         });
-  }
-
-  private initForm(): void {
-    this.jokeForm = new FormGroup({
-      type: new FormControl(JokeTypeEnum.random),
-      category: new FormControl(JokeCategoryEnum.animal),
-      search: new FormControl(null, Validators.minLength(3)),
-    });
-  }
-
-  private getCategories(): void {
-    this.jokesService
-      .getCategories()
-      .pipe(takeUntil(this.unsubscribe))
-      .subscribe((categoriesArr: string[]) => {
-        this.categories = [...categoriesArr];
-      });
-  }
-
-  private onValueChanges(): void {
-    this.jokeForm.get('type').valueChanges
-      .pipe(takeUntil(this.unsubscribe))
-      .subscribe(type => {
-        this.jokeTypeState = type;
-        if (type !== JokeTypeEnum.search) {
-          this.jokeForm.get('search').reset();
-        }
-      });
-  }
-
-  ngOnInit(): void {
-    this.initForm();
-    this.getCategories();
-    this.onValueChanges();
   }
 
   public submitForm(): void {

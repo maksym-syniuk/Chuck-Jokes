@@ -1,12 +1,12 @@
 import { JokeCategoryEnum } from './../enums/joke-category.enum';
 import { JokeTypeEnum } from './../enums/joke-type.enum';
 import { FavoriteJokeService } from './favorite-joke.service';
-import { JokeApi } from '../interfaces/JokeApi';
+import { JokeApi } from '../interfaces/jokeApi.interface';
 import { ApiService } from './api.service';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Joke } from '../interfaces/Joke';
+import { Joke } from '../interfaces/joke.interface';
 
 @Injectable({
   providedIn: 'root'

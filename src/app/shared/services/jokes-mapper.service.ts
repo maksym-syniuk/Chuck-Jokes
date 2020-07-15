@@ -1,5 +1,5 @@
-import { Joke } from '../interfaces/Joke';
-import { JokeApi } from '../interfaces/JokeApi';
+import { Joke } from '../interfaces/joke.interface';
+import { JokeApi } from '../interfaces/jokeApi.interface';
 import { Injectable } from '@angular/core';
 
 @Injectable()

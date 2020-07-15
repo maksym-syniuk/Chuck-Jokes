@@ -1,4 +1,4 @@
-import { Joke } from './../../shared/interfaces/Joke';
+import { Joke } from '../../shared/interfaces/joke.interface';
 import { FavoriteJokeService } from './../../shared/services/favorite-joke.service';
 import { Component, OnInit } from '@angular/core';
 

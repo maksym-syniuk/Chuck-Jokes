@@ -1,0 +1,19 @@
+<div class="authentication">
+    <div class="modal">
+        <div class="modal__title">Chuck<span>Jokes</span></div>
+        <div class="modal__subtitle">
+            <h4>Login to your account</h4>
+        </div>
+        <span class="error" *ngIf="errorMessage">{{errorMessage}}</span>
+        <form [formGroup]="loginForm" (ngSubmit)="login()" class="form">
+            <input formControlName="email" type="email" placeholder="Email" id="email" />
+            <span *ngIf="!f.email.valid && f.email.touched" class="control__invalid">Please, enter a valid email</span>
+            <input formControlName="password" type="password" placeholder="Password" id="password" />
+            <span *ngIf="!f.password.valid && f.password.touched" class="control__invalid">Please, enter a valid
+                password</span>
+            <button type="submit" class="btn">Log In</button>
+        </form>
+        <p>or</p>
+        <a routerLink="/register">Register</a>
+    </div>
+</div>

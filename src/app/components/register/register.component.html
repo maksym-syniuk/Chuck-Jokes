@@ -1,0 +1,17 @@
+<div class="authentication">
+    <div class="modal">
+        <div class="modal__title">Chuck<span>Jokes</span></div>
+        <div class="modal__subtitle">
+            <h4>Create a new account</h4>
+        </div>
+        <form [formGroup]="registerForm" class="form" (ngSubmit)="register()">
+            <input formControlName="firstName" type="text" placeholder="First Name" />
+            <input formControlName="lastName" type="text" placeholder="Last Name" />
+            <input formControlName="email" type="email" placeholder="Email" />
+            <input formControlName="password" type="password" placeholder="Password" />
+            <button type="submit" class="btn">Register</button>
+        </form>
+        <p>or</p>
+        <a routerLink="/login">Log In</a>
+    </div>
+</div>

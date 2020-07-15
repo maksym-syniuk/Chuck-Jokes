@@ -2,11 +2,13 @@
     <div class="jokes__container container__left">
         <div class="jokes__header">
             <h5 class="jokes__abbr">MSI 2020</h5>
-            <a class="jokes__burger-btn" href="##" (click)="onToggleSidebar()"
+            <p *ngIf="user" class="jokes__user">Hello, {{user.firstName}}, click <a (click)="logout()">here if you want
+                    to logout</a></p>
+            <button class="jokes__burger-btn" (click)="onToggleSidebar()"
                 [ngClass]="{'jokes__burger-btn_active': showSidebar}">
                 <span></span>
-                <p>Favourite</p>
-            </a>
+                <p>Favorite</p>
+            </button>
         </div>
 
         <app-joke-form></app-joke-form>
