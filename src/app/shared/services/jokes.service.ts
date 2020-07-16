@@ -29,10 +29,12 @@ export class JokesService {
     private favoriteJokesService: FavoriteJokeService,
   ) { }
 
-  private transformFormDataToString(type: JokeTypeEnum, category: JokeCategoryEnum): string {
+  private transformFormDataToString(type: JokeTypeEnum, category?: JokeCategoryEnum): string {
     switch (type) {
       case JokeTypeEnum.random:
         return `${this.apiUrl}/random`;
+      case JokeTypeEnum.top:
+        return `${this.apiUrl}/favorite/top`;
       case JokeTypeEnum.categories:
         return `${this.apiUrl}/random?category=${category}`;
     }
@@ -52,6 +54,10 @@ export class JokesService {
 
   public getJoke(type: JokeTypeEnum, category: JokeCategoryEnum = null): Observable<JokeApi> {
     return this.http.get<JokeApi>(this.transformFormDataToString(type, category));
+  }
+
+  public getTopJokes(type: JokeTypeEnum): Observable<JokeApi[]> {
+    return this.http.get<JokeApi[]>(this.transformFormDataToString(type));
   }
 
   public searchJokes(searchValue: string): Observable<JokeApi[]> {

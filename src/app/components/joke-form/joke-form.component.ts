@@ -23,6 +23,7 @@ export class JokeFormComponent implements OnInit, OnDestroy {
 
   private formSubmitResolver = {
     [JokeTypeEnum.random]: () => this.getRandomOrByCategoryJoke(JokeTypeEnum.random, null),
+    [JokeTypeEnum.top]: () => this.getTopJokes(JokeTypeEnum.top),
     [JokeTypeEnum.categories]: () => this.getRandomOrByCategoryJoke(JokeTypeEnum.categories, this.controls.category.value),
     [JokeTypeEnum.search]: () => this.searchJokes(this.controls.search.value),
   };
@@ -45,6 +46,7 @@ export class JokeFormComponent implements OnInit, OnDestroy {
   private initForm(): void {
     this.jokeForm = this.formBuilder.group({
       type: [JokeTypeEnum.random],
+      top: [JokeTypeEnum.top],
       category: [JokeCategoryEnum.animal],
       search: ['', [Validators.required, Validators.minLength(3)]]
     });
@@ -70,10 +72,28 @@ export class JokeFormComponent implements OnInit, OnDestroy {
       });
   }
 
+  private getTopJokes(type: JokeTypeEnum): void {
+    this.jokesService.changeLoadingState(true);
+    this.jokesService.getTopJokes(type)
+      .pipe(
+        delay(500),
+        takeUntil(this.unsubscribe))
+      .subscribe(
+        (jokes: JokeApi[]) => {
+          this.jokesService.changeJokes(
+            this.jokesMapperService.mapJokeApiForJokes(jokes)
+          );
+          this.jokesService.changeLoadingState(false);
+        },
+        error => {
+          this.jokesService.changeError(error);
+          this.jokesService.changeLoadingState(false);
+        });
+  }
+
   private getRandomOrByCategoryJoke(type: JokeTypeEnum, categoryValue: JokeCategoryEnum): void {
     this.jokesService.changeLoadingState(true);
-    this.jokesService
-      .getJoke(type, categoryValue)
+    this.jokesService.getJoke(type, categoryValue)
       .pipe(
         delay(500),
         takeUntil(this.unsubscribe))
