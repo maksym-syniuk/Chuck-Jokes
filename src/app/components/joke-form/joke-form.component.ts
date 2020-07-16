@@ -1,14 +1,11 @@
-import { Joke } from './../../shared/interfaces/joke.interface';
+import { JokeInterface } from './../../shared/interfaces/joke.interface';
 import { JokeTypeEnum } from './../../shared/enums/joke-type.enum';
 import { JokeCategoryEnum } from '../../shared/enums/joke-category.enum';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { JokesService } from 'src/app/shared/services/jokes.service';
-import { Subject, throwError } from 'rxjs';
-import { takeUntil, delay } from 'rxjs/operators';
-import { JokesMapperService } from 'src/app/shared/services/jokes-mapper.service';
-import { JokeApi } from 'src/app/shared/interfaces/jokeApi.interface';
-import { HttpErrorResponse } from '@angular/common/http';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-joke-form',
@@ -31,7 +28,6 @@ export class JokeFormComponent implements OnInit, OnDestroy {
 
   constructor(
     private jokesService: JokesService,
-    private jokesMapperService: JokesMapperService,
     private formBuilder: FormBuilder
   ) { }
 
@@ -78,7 +74,7 @@ export class JokeFormComponent implements OnInit, OnDestroy {
     this.jokesService.getTopJokes(type)
       .pipe(takeUntil(this.unsubscribe))
       .subscribe(
-        (jokes: Joke[]) => {
+        (jokes: JokeInterface[]) => {
           this.jokesService.changeJokes(jokes);
           this.jokesService.changeLoadingState(false);
         },
@@ -93,7 +89,7 @@ export class JokeFormComponent implements OnInit, OnDestroy {
     this.jokesService.getJoke(type, categoryValue)
       .pipe(takeUntil(this.unsubscribe))
       .subscribe(
-        (joke: Joke[]) => {
+        (joke: JokeInterface[]) => {
           this.jokesService.changeJokes(joke);
           this.jokesService.changeLoadingState(false);
         },
@@ -109,7 +105,7 @@ export class JokeFormComponent implements OnInit, OnDestroy {
       .searchJokes(searchValue)
       .pipe(takeUntil(this.unsubscribe))
       .subscribe(
-        (jokes: Joke[]) => {
+        (jokes: JokeInterface[]) => {
           this.jokesService.changeJokes(jokes);
           this.jokesService.changeLoadingState(false);
         },

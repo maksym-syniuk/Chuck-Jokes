@@ -15,7 +15,7 @@
         <div class="joke__content-details">
             <small class="joke__content-details_date">
                 Last update:
-                <strong>{{ joke.dateUpdated | date }}</strong>
+                <strong>{{ joke.updatedAt | dateToHours }} hours ago</strong>
             </small>
             <div class="flex_wrap">
                 <span class="category" *ngFor="let category of joke.categories"

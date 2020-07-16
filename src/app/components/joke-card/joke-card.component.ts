@@ -1,7 +1,7 @@
 import { JokesService } from 'src/app/shared/services/jokes.service';
 import { AuthService } from './../../shared/services/auth.service';
 import { FavoriteJokeService } from './../../shared/services/favorite-joke.service';
-import { Joke } from '../../shared/interfaces/joke.interface';
+import { JokeInterface } from '../../shared/interfaces/joke.interface';
 import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
 
@@ -12,7 +12,7 @@ import { Router } from '@angular/router';
 })
 
 export class JokeCardComponent implements OnInit {
-  @Input() joke: Joke;
+  @Input() joke: JokeInterface;
   // variable that change styles depends where jokes at (main-jokes/favorite)
   @Input() favorites: boolean;
   private isUserAuthorised: boolean;

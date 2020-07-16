@@ -2,17 +2,21 @@ import { environment } from './../../../environments/environment.prod';
 import { JokesMapperService } from './jokes-mapper.service';
 import { map } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
-import { Joke } from '../interfaces/joke.interface';
+import { JokeInterface } from '../interfaces/joke.interface';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
-import { JokeApi } from '../interfaces/jokeApi.interface';
+import { JokeApiInterface } from '../interfaces/joke-api.interface';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FavoriteJokeService {
   private apiUrl = environment.apiUrl;
-  private currentFavoriteJokesSubject = new BehaviorSubject<Joke[]>([]);
+
+  private isFavoriteShowSubject = new BehaviorSubject<boolean>(false);
+  public isFavoriteShow = this.isFavoriteShowSubject.asObservable();
+
+  private currentFavoriteJokesSubject = new BehaviorSubject<JokeInterface[]>([]);
   public currentFavoriteJokes = this.currentFavoriteJokesSubject.asObservable();
 
   constructor(
@@ -24,11 +28,15 @@ export class FavoriteJokeService {
     return [...this.currentFavoriteJokesSubject.value];
   }
 
-  public changeFavoriteJokes(jokes: Joke[]): void {
+  public toggleDisplayFavorite(state: boolean): void {
+    this.isFavoriteShowSubject.next(state);
+  }
+
+  public changeFavoriteJokes(jokes: JokeInterface[]): void {
     this.currentFavoriteJokesSubject.next(jokes);
   }
 
-  public addJokeToFavorites(joke: Joke): void {
+  public addJokeToFavorites(joke: JokeInterface): void {
     joke.favorite = true;
     const jokes = [...this.currentFavoriteJokesSubject.value];
     jokes.filter(j => j.id !== joke.id);
@@ -36,7 +44,7 @@ export class FavoriteJokeService {
     this.currentFavoriteJokesSubject.next(jokes);
   }
 
-  public removeJokeFromFavorites(joke: Joke): void {
+  public removeJokeFromFavorites(joke: JokeInterface): void {
     joke.favorite = false;
     const jokes = [...this.currentFavoriteJokesSubject.value];
     const index = this.allJokes.indexOf(joke);
@@ -52,13 +60,13 @@ export class FavoriteJokeService {
     return this.http.post<number | string>(`${this.apiUrl}/favorite/${id}`, id);
   }
 
-  public getUserFavoriteJokesFromApi(): Observable<Joke[]> {
-    return this.http.get<JokeApi[]>(`${this.apiUrl}/user-favorite`)
+  public getUserFavoriteJokesFromApi(): Observable<JokeInterface[]> {
+    return this.http.get<JokeApiInterface[]>(`${this.apiUrl}/user-favorite`)
       .pipe(map(
         // transform array from JokesApi interface to array of Jokes
-        (data: JokeApi[]) => this.jokesMapperService.mapJokeApiForJokes(data)
+        (data: JokeApiInterface[]) => this.jokesMapperService.mapJokeApiForJokes(data)
           // rewrite 'favorite' from 'false' to 'true'
-          .map((joke: Joke) => ({ ...joke, favorite: true }))
+          .map((joke: JokeInterface) => ({ ...joke, favorite: true }))
       ));
   }
 }

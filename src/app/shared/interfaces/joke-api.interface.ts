@@ -1,6 +1,6 @@
 import { CategoryInterface } from './joke.interface';
 
-export interface JokeApi {
+export interface JokeApiInterface {
     id: string;
     value: string;
     url: string;

@@ -1,5 +1,5 @@
 import { AuthService } from './../../shared/services/auth.service';
-import { Joke } from '../../shared/interfaces/joke.interface';
+import { JokeInterface } from '../../shared/interfaces/joke.interface';
 import { FavoriteJokeService } from './../../shared/services/favorite-joke.service';
 import { Component, OnInit } from '@angular/core';
 
@@ -9,7 +9,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./sidebar.component.scss']
 })
 export class SidebarComponent implements OnInit {
-  public favoriteJokes: Joke[];
+  public favoriteJokes: JokeInterface[];
   public isUserAuthorised: boolean;
   public jokesDisplayCount = 3;
 

@@ -1,6 +1,6 @@
 import { Router } from '@angular/router';
 import { AuthService } from './../../shared/services/auth.service';
-import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
+import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -33,18 +33,20 @@ export class RegisterComponent implements OnInit {
 
   public register() {
     if (this.registerForm.valid) {
-      this.authService.register(this.registerForm.value).subscribe(
-        (response: boolean) => {
-          const data = {
-            email: this.registerForm.value.email,
-            password: this.registerForm.value.password
-          };
-          this.authService.login(data).subscribe(
-            () => this.router.navigate(['/'])
-          );
-        },
-        error => this.errorMessage = error
-      );
+      this.authService.register(this.registerForm.value)
+        .subscribe(
+          () => {
+            const data = {
+              email: this.registerForm.value.email,
+              password: this.registerForm.value.password
+            };
+            // login after registration
+            this.authService.login(data).subscribe(
+              () => this.router.navigate(['/'])
+            );
+          },
+          error => this.errorMessage = error
+        );
     }
   }
 }

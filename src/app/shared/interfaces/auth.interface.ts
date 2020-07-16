@@ -1,6 +1,6 @@
-import { User } from './../models/user.model';
+import { UserModel } from './../models/user.model';
 
 export interface AuthInterface {
     token: string;
-    user: User;
+    user: UserModel;
 }

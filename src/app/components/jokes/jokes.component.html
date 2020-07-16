@@ -3,7 +3,7 @@
         <div class="jokes__header">
             <h5 class="jokes__abbr">MSI 2020</h5>
             <p *ngIf="userData" class="jokes__user">
-                Hello, {{userData.firstName}} click
+                Hello {{userData.firstName}}, click
                 <a (click)="logout()">here if you want to logout</a>
             </p>
             <button class="jokes__burger-btn" (click)="onToggleSidebar()"
@@ -15,7 +15,7 @@
 
         <app-joke-form></app-joke-form>
 
-        <app-loader *ngIf="loading"></app-loader>
+        <app-loader *ngIf="isLoading"></app-loader>
 
         <div class="error" *ngIf="errorMessage; else showJokes">
             <img src="assets/images/error.svg" alt="error">

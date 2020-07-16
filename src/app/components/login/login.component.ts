@@ -1,5 +1,5 @@
-import { AuthInterface } from '../../shared/interfaces/auth.interface';
-import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
+
+import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AuthService } from '../../shared/services/auth.service';
 import { Component, OnInit } from '@angular/core';
@@ -14,7 +14,6 @@ export class LoginComponent implements OnInit {
   public loginForm: FormGroup;
   public errorMessage = '';
   private returnUrl: string;
-
 
   constructor(
     private authService: AuthService,
@@ -47,9 +46,7 @@ export class LoginComponent implements OnInit {
       this.authService.login(this.loginForm.value)
         .pipe(first())
         .subscribe(
-          (data: AuthInterface) => {
-            this.router.navigate([this.returnUrl]);
-          },
+          () => this.router.navigate([this.returnUrl]),
           error => this.errorMessage = error
         );
     }

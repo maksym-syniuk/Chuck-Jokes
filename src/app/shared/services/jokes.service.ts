@@ -4,11 +4,11 @@ import { environment } from './../../../environments/environment.prod';
 import { JokeCategoryEnum } from './../enums/joke-category.enum';
 import { JokeTypeEnum } from './../enums/joke-type.enum';
 import { FavoriteJokeService } from './favorite-joke.service';
-import { JokeApi } from '../interfaces/jokeApi.interface';
+import { JokeApiInterface } from '../interfaces/joke-api.interface';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Joke, CategoryInterface } from '../interfaces/joke.interface';
+import { JokeInterface, CategoryInterface } from '../interfaces/joke.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -32,22 +32,11 @@ export class JokesService {
     private jokesMapperService: JokesMapperService
   ) { }
 
-  private transformFormDataToString(type: JokeTypeEnum, category?: JokeCategoryEnum): string {
-    switch (type) {
-      case JokeTypeEnum.random:
-        return `${this.apiUrl}/random`;
-      case JokeTypeEnum.top:
-        return `${this.apiUrl}/favorite/top`;
-      case JokeTypeEnum.categories:
-        return `${this.apiUrl}/random?category=${category}`;
-    }
-  }
-
   public changeError(error: string) {
     this.errorMessage.next(error);
   }
 
-  public changeJokes(jokes: Joke[]) {
+  public changeJokes(jokes: JokeInterface[]) {
     this.jokes.next(jokes);
   }
 
@@ -55,26 +44,26 @@ export class JokesService {
     this.loadingState.next(state);
   }
 
-  public getJoke(type: JokeTypeEnum, category: JokeCategoryEnum = null): Observable<Joke[]> {
-    return this.http.get<JokeApi>(this.transformFormDataToString(type, category))
+  public getJoke(type: JokeTypeEnum, category: JokeCategoryEnum = null): Observable<JokeInterface[]> {
+    return this.http.get<JokeApiInterface>(this.transformFormDataToString(type, category))
       .pipe(map(
-        (joke: JokeApi) => {
+        (joke: JokeApiInterface) => {
           return this.jokesMapperService.mapJokeApiForJokes([joke]);
         }));
   }
 
-  public getTopJokes(type: JokeTypeEnum): Observable<Joke[]> {
-    return this.http.get<JokeApi[]>(this.transformFormDataToString(type))
+  public getTopJokes(type: JokeTypeEnum): Observable<JokeInterface[]> {
+    return this.http.get<JokeApiInterface[]>(this.transformFormDataToString(type))
       .pipe(
-        map((jokes: JokeApi[]) => {
+        map((jokes: JokeApiInterface[]) => {
           return this.jokesMapperService.mapJokeApiForJokes(jokes);
         }));
   }
 
-  public searchJokes(searchValue: string): Observable<Joke[]> {
-    return this.http.get<JokeApi[]>(`${this.apiUrl}/search?query=${searchValue}`)
+  public searchJokes(searchValue: string): Observable<JokeInterface[]> {
+    return this.http.get<JokeApiInterface[]>(`${this.apiUrl}/search?query=${searchValue}`)
       .pipe(
-        map((jokes: JokeApi[]) => {
+        map((jokes: JokeApiInterface[]) => {
           return this.jokesMapperService.mapJokeApiForJokes(jokes);
         }));
   }
@@ -89,11 +78,21 @@ export class JokesService {
         }));
   }
 
-  public checkIfJokeIsFavorite(joke: Joke): Joke {
-    this.favoriteJokesService.allJokes.map((favoriteJoke: Joke) => {
-      return favoriteJoke.id === joke.id ? joke = { ...favoriteJoke } : joke;
+  private transformFormDataToString(type: JokeTypeEnum, category?: JokeCategoryEnum): string {
+    switch (type) {
+      case JokeTypeEnum.random:
+        return `${this.apiUrl}/random`;
+      case JokeTypeEnum.top:
+        return `${this.apiUrl}/favorite/top`;
+      case JokeTypeEnum.categories:
+        return `${this.apiUrl}/random?category=${category}`;
     }
-    );
+  }
+
+  public checkIfJokeIsFavorite(joke: JokeInterface): JokeInterface {
+    this.favoriteJokesService.allJokes.map((favoriteJoke: JokeInterface) => {
+      return favoriteJoke.id === joke.id ? joke = { ...favoriteJoke } : joke;
+    });
     return joke;
   }
 }
