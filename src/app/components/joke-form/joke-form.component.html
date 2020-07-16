@@ -27,13 +27,14 @@
             <label for="search">Search</label>
             <div *ngIf="jokeTypeState === jokeTypeEnum.search" class="control__pop-up control__pop-up_search">
                 <input formControlName="search" class="search-form" type="text" placeholder="Free text search..." />
-                <span class="control__invalid" *ngIf="jokeForm.get('search').invalid && jokeForm.get('search').touched">
+                <span class="control__invalid" *ngIf="controls.search.invalid && controls.search.touched">
                     <small>*This line should be more than 2 symbols!</small>
                 </span>
             </div>
         </div>
 
-        <button class="joke__button btn" type="submit" [disabled]="jokeForm.get('search').invalid">
+        <button class="joke__button btn" type="submit"
+            [disabled]="jokeTypeState === jokeTypeEnum.search && controls.search.invalid">
             Get a joke
         </button>
     </form>

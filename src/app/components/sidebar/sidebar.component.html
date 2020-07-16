@@ -1,7 +1,7 @@
 <div class="sidebar">
     <h2 class="sidebar__title">Favorite</h2>
 
-    <div class="unregister" *ngIf="!user; else registered">
+    <div class="unregister" *ngIf="!isUserAuthorised; else registered">
         <p class="unregister__title">This content is available only for registered users</p>
         <button class="btn" routerLink="/login">Log in</button>
     </div>

@@ -1,4 +1,3 @@
-import { AuthInterface } from './../../shared/interfaces/auth.interface';
 import { AuthService } from './../../shared/services/auth.service';
 import { Joke } from '../../shared/interfaces/joke.interface';
 import { FavoriteJokeService } from './../../shared/services/favorite-joke.service';
@@ -11,7 +10,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SidebarComponent implements OnInit {
   public favoriteJokes: Joke[];
-  public user: AuthInterface;
+  public isUserAuthorised: boolean;
   public jokesDisplayCount = 3;
 
   constructor(
@@ -20,8 +19,13 @@ export class SidebarComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.authService.currentUser.subscribe(user => {
-      this.user = user;
+    this.authService.currentUser.subscribe(userData => {
+      this.isUserAuthorised = !!userData;
+      if (this.isUserAuthorised) {
+        // get user favorite jokes when logged in
+        this.favoriteJokeService.getUserFavoriteJokesFromApi()
+          .subscribe(jokes => this.favoriteJokeService.changeFavoriteJokes(jokes));
+      }
     });
     this.favoriteJokeService.currentFavoriteJokes.subscribe(jokes => this.favoriteJokes = jokes);
   }

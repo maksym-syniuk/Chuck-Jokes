@@ -1,9 +1,9 @@
 import { JokeTypeEnum } from './../../shared/enums/joke-type.enum';
 import { JokeCategoryEnum } from '../../shared/enums/joke-category.enum';
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { JokesService } from 'src/app/shared/services/jokes.service';
-import { Subject } from 'rxjs';
+import { Subject, throwError } from 'rxjs';
 import { takeUntil, delay } from 'rxjs/operators';
 import { JokesMapperService } from 'src/app/shared/services/jokes-mapper.service';
 import { JokeApi } from 'src/app/shared/interfaces/jokeApi.interface';
@@ -23,13 +23,14 @@ export class JokeFormComponent implements OnInit, OnDestroy {
 
   private formSubmitResolver = {
     [JokeTypeEnum.random]: () => this.getRandomOrByCategoryJoke(JokeTypeEnum.random, null),
-    [JokeTypeEnum.categories]: () => this.getRandomOrByCategoryJoke(JokeTypeEnum.categories, this.jokeForm.get('category').value),
-    [JokeTypeEnum.search]: () => this.searchJokes(this.jokeForm.get('search').value),
+    [JokeTypeEnum.categories]: () => this.getRandomOrByCategoryJoke(JokeTypeEnum.categories, this.controls.category.value),
+    [JokeTypeEnum.search]: () => this.searchJokes(this.controls.search.value),
   };
 
   constructor(
     private jokesService: JokesService,
-    private jokesMapperService: JokesMapperService
+    private jokesMapperService: JokesMapperService,
+    private formBuilder: FormBuilder
   ) { }
 
   ngOnInit(): void {
@@ -38,11 +39,14 @@ export class JokeFormComponent implements OnInit, OnDestroy {
     this.subscribeToFormTypeValueChanges();
   }
 
+  // getter for easy access to form controls
+  get controls() { return this.jokeForm.controls; }
+
   private initForm(): void {
-    this.jokeForm = new FormGroup({
-      type: new FormControl(JokeTypeEnum.random),
-      category: new FormControl(JokeCategoryEnum.animal),
-      search: new FormControl(null, Validators.minLength(3)),
+    this.jokeForm = this.formBuilder.group({
+      type: [JokeTypeEnum.random],
+      category: [JokeCategoryEnum.animal],
+      search: ['', [Validators.required, Validators.minLength(3)]]
     });
   }
 
@@ -50,18 +54,18 @@ export class JokeFormComponent implements OnInit, OnDestroy {
     this.jokesService
       .getCategories()
       .pipe(takeUntil(this.unsubscribe))
-      .subscribe((categoriesArr: string[]) => {
-        this.categories = [...categoriesArr];
+      .subscribe((categoriesData: string[]) => {
+        this.categories = [...categoriesData];
       });
   }
 
   private subscribeToFormTypeValueChanges(): void {
-    this.jokeForm.get('type').valueChanges
+    this.controls.type.valueChanges
       .pipe(takeUntil(this.unsubscribe))
       .subscribe(type => {
         this.jokeTypeState = type;
         if (type !== JokeTypeEnum.search) {
-          this.jokeForm.get('search').reset();
+          this.controls.search.reset();
         }
       });
   }
@@ -75,13 +79,18 @@ export class JokeFormComponent implements OnInit, OnDestroy {
         takeUntil(this.unsubscribe))
       .subscribe(
         (joke: JokeApi) => {
-          this.jokesService.changeJokes(
-            this.jokesMapperService.mapJokeApiForJokes([joke])
-          );
-          this.jokesService.changeLoadingState(false);
+          if (joke) {
+            this.jokesService.changeJokes(
+              this.jokesMapperService.mapJokeApiForJokes([joke])
+            );
+            this.jokesService.changeLoadingState(false);
+          } else {
+            this.jokesService.changeError('not found');
+            this.jokesService.changeLoadingState(false);
+          }
         },
-        (error: HttpErrorResponse) => {
-          this.jokesService.changeError(error.message);
+        error => {
+          this.jokesService.changeError(error);
           this.jokesService.changeLoadingState(false);
         });
   }
@@ -93,23 +102,22 @@ export class JokeFormComponent implements OnInit, OnDestroy {
       .pipe(
         delay(500),
         takeUntil(this.unsubscribe))
-      .subscribe((jokes: JokeApi[]) => {
-        this.jokesService.changeJokes(
-          this.jokesMapperService.mapJokeApiForJokes(jokes)
-        );
-        this.jokesService.changeLoadingState(false);
-      },
-        (error: HttpErrorResponse) => {
-          this.jokesService.changeError(error.message);
+      .subscribe(
+        (jokes: JokeApi[]) => {
+          this.jokesService.changeJokes(
+            this.jokesMapperService.mapJokeApiForJokes(jokes)
+          );
+          this.jokesService.changeLoadingState(false);
+        },
+        error => {
+          this.jokesService.changeError(error);
           this.jokesService.changeLoadingState(false);
         });
   }
 
   public submitForm(): void {
     this.jokesService.changeError('');
-    if (this.jokeForm.valid) {
-      this.formSubmitResolver[this.jokeForm.get('type').value]();
-    }
+    this.formSubmitResolver[this.controls.type.value]();
   }
 
   ngOnDestroy(): void {

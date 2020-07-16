@@ -1,10 +1,10 @@
+import { environment } from './../../../environments/environment.prod';
 import { JokeCategoryEnum } from './../enums/joke-category.enum';
 import { JokeTypeEnum } from './../enums/joke-type.enum';
 import { FavoriteJokeService } from './favorite-joke.service';
 import { JokeApi } from '../interfaces/jokeApi.interface';
-import { ApiService } from './api.service';
 import { Observable, BehaviorSubject } from 'rxjs';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Joke } from '../interfaces/joke.interface';
 
@@ -13,6 +13,8 @@ import { Joke } from '../interfaces/joke.interface';
 })
 
 export class JokesService {
+  private apiUrl = environment.apiUrl;
+
   private jokes = new BehaviorSubject([]);
   public currentJokes = this.jokes.asObservable();
 
@@ -24,16 +26,15 @@ export class JokesService {
 
   constructor(
     private http: HttpClient,
-    private apiService: ApiService,
     private favoriteJokesService: FavoriteJokeService,
   ) { }
 
   private transformFormDataToString(type: JokeTypeEnum, category: JokeCategoryEnum): string {
     switch (type) {
       case JokeTypeEnum.random:
-        return `${this.apiService.getApiString()}/random`;
+        return `${this.apiUrl}/random`;
       case JokeTypeEnum.categories:
-        return `${this.apiService.getApiString()}/random?category=${category}`;
+        return `${this.apiUrl}/random?category=${category}`;
     }
   }
 
@@ -54,19 +55,18 @@ export class JokesService {
   }
 
   public searchJokes(searchValue: string): Observable<JokeApi[]> {
-    return this.http.get<JokeApi[]>(`${this.apiService.getApiString()}/search?query=${searchValue}`);
+    return this.http.get<JokeApi[]>(`${this.apiUrl}/search?query=${searchValue}`);
   }
 
   public getCategories(): Observable<Array<string>> {
-    return this.http.get<Array<string>>(`${this.apiService.getApiString()}/categories`);
+    return this.http.get<Array<string>>(`${this.apiUrl}/categories`);
   }
 
   public checkIfJokeIsFavorite(joke: Joke): Joke {
     this.favoriteJokesService.allJokes.map((favoriteJoke: Joke) => {
-      if (favoriteJoke.id === joke.id) {
-        joke = { ...favoriteJoke };
-      }
-    });
+      return favoriteJoke.id === joke.id ? joke = { ...favoriteJoke } : joke;
+    }
+    );
     return joke;
   }
 }

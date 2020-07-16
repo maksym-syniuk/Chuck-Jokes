@@ -2,8 +2,10 @@
     <div class="jokes__container container__left">
         <div class="jokes__header">
             <h5 class="jokes__abbr">MSI 2020</h5>
-            <p *ngIf="user" class="jokes__user">Hello, {{user.firstName}}, click <a (click)="logout()">here if you want
-                    to logout</a></p>
+            <p *ngIf="userData" class="jokes__user">
+                Hello, {{userData.firstName}} click
+                <a (click)="logout()">here if you want to logout</a>
+            </p>
             <button class="jokes__burger-btn" (click)="onToggleSidebar()"
                 [ngClass]="{'jokes__burger-btn_active': showSidebar}">
                 <span></span>
@@ -15,7 +17,7 @@
 
         <app-loader *ngIf="loading"></app-loader>
 
-        <div class="error" *ngIf="errorMessage.length; else showJokes">
+        <div class="error" *ngIf="errorMessage; else showJokes">
             <img src="assets/images/error.svg" alt="error">
             <p>O-oops, joke not found</p>
         </div>

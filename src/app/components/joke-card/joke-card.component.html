@@ -25,7 +25,14 @@
             </div>
         </div>
     </div>
-    <div class="joke__heart" [ngClass]="{'joke__heart_filled': favorites }" (click)="addToFavorite()">
+    <div *ngIf="!isWaitingForResponse; else disableHeart" class="joke__heart"
+        [ngClass]="{'joke__heart_filled': favorites }" (click)="addOrRemoveFavoriteJoke()">
         <img [src]="joke.favorite ? 'assets/images/heart-filled.svg' : 'assets/images/heart.svg'" alt="heart-icon" />
     </div>
+    <ng-template #disableHeart>
+        <div class="joke__heart_disabled">
+            <span>Wait...</span>
+            <img src="assets/images/heart-disabled.svg" alt="heart-disabled" />
+        </div>
+    </ng-template>
 </div>

@@ -1,3 +1,4 @@
+import { environment } from './../../../environments/environment.prod';
 import { map } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
@@ -9,17 +10,14 @@ import { AuthInterface } from '../interfaces/auth.interface';
 })
 
 export class AuthService {
+    private authUrl = environment.authUrl;
     private currentUserSubject: BehaviorSubject<AuthInterface>;
     public currentUser: Observable<AuthInterface>;
-
-    // private isLoggedIn = new BehaviorSubject(false);
-    // public currentIsLoggedIn = this.isLoggedIn.asObservable();
-
     private localStorageUserData = 'currentUser';
 
-    private authApiUrl = 'https://reenbit-chuck-norris.azurewebsites.net/api/auth';
-
-    constructor(private http: HttpClient) {
+    constructor(
+        private http: HttpClient,
+    ) {
         this.currentUserSubject = new BehaviorSubject<AuthInterface>(JSON.parse(localStorage.getItem(this.localStorageUserData)));
         this.currentUser = this.currentUserSubject.asObservable();
     }
@@ -29,7 +27,7 @@ export class AuthService {
     }
 
     public login(data: object): Observable<AuthInterface> {
-        return this.http.post<AuthInterface>(`${this.authApiUrl}/signin`, data)
+        return this.http.post<AuthInterface>(`${this.authUrl}/signin`, data)
             .pipe(
                 map((response: AuthInterface) => {
                     if (response && response.token) {
@@ -42,15 +40,11 @@ export class AuthService {
     }
 
     public register(data: object): Observable<boolean> {
-        return this.http.post<boolean>(`${this.authApiUrl}/signup`, data);
+        return this.http.post<boolean>(`${this.authUrl}/signup`, data);
     }
 
     public logout(): void {
         localStorage.removeItem(this.localStorageUserData);
         this.currentUserSubject.next(null);
     }
-
-    // public changeLoggInState(state: boolean): void {
-    //     this.isLoggedIn.next(state);
-    // }
 }

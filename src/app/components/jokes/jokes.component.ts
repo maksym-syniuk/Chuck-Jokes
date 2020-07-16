@@ -20,7 +20,7 @@ export class JokesComponent implements OnInit, OnDestroy {
   public jokes: Joke[];
   public loading: boolean;
   public errorMessage: string;
-  public user: User;
+  public userData: User;
   private jokesSubscription: Subscription = new Subscription();
 
   constructor(
@@ -30,18 +30,18 @@ export class JokesComponent implements OnInit, OnDestroy {
     private authService: AuthService
   ) { }
 
-  private getRandomJoke(): void {
-    this.jokesService.getJoke(JokeTypeEnum.random).subscribe((joke: JokeApi) => {
-      this.jokes = this.jokesMapperService.mapJokeApiForJokes([joke]);
-    });
-  }
-
   ngOnInit() {
     this.jokesService.currentLoadingState.subscribe(state => this.loading = state);
     this.jokesService.currentJokes.subscribe(jokes => this.jokes = jokes);
     this.jokesService.currentErrorMessage.subscribe(message => this.errorMessage = message);
-    this.authService.currentUser.subscribe(user => this.user = user.user);
+    this.authService.currentUser.subscribe(authData => this.userData = authData && authData.user);
     this.getRandomJoke();
+  }
+
+  private getRandomJoke(): void {
+    this.jokesService.getJoke(JokeTypeEnum.random).subscribe((joke: JokeApi) => {
+      this.jokes = this.jokesMapperService.mapJokeApiForJokes([joke]);
+    });
   }
 
   public onToggleSidebar() {
@@ -51,7 +51,6 @@ export class JokesComponent implements OnInit, OnDestroy {
 
   public logout() {
     this.authService.logout();
-    // location.reload();
   }
 
   ngOnDestroy() {

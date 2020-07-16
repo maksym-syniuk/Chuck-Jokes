@@ -4,4 +4,6 @@ export interface JokeApi {
     url: string;
     iconUrl: string;
     categories: Array<string>;
+    createdAt: Date;
+    updatedAt: Date;
 }

@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'https://reenbit-chuck-norris.azurewebsites.net/api/jokes'
+  apiUrl: 'https://reenbit-chuck-norris.azurewebsites.net/api/jokes',
+  authUrl: 'https://reenbit-chuck-norris.azurewebsites.net/api/auth',
 };
 
 /*
