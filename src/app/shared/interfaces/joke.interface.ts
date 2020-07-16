@@ -5,6 +5,11 @@ export interface Joke {
     iconUrl?: string;
     dateUpdated?: Date;
     url?: string;
-    categories: Array<string>;
+    categories: Array<CategoryInterface>;
     favorite: boolean;
+}
+
+export interface CategoryInterface {
+    id: number | string;
+    title: string;
 }

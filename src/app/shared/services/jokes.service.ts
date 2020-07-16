@@ -1,3 +1,5 @@
+import { JokesMapperService } from './jokes-mapper.service';
+import { map } from 'rxjs/operators';
 import { environment } from './../../../environments/environment.prod';
 import { JokeCategoryEnum } from './../enums/joke-category.enum';
 import { JokeTypeEnum } from './../enums/joke-type.enum';
@@ -6,7 +8,7 @@ import { JokeApi } from '../interfaces/jokeApi.interface';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Joke } from '../interfaces/joke.interface';
+import { Joke, CategoryInterface } from '../interfaces/joke.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -27,6 +29,7 @@ export class JokesService {
   constructor(
     private http: HttpClient,
     private favoriteJokesService: FavoriteJokeService,
+    private jokesMapperService: JokesMapperService
   ) { }
 
   private transformFormDataToString(type: JokeTypeEnum, category?: JokeCategoryEnum): string {
@@ -52,20 +55,38 @@ export class JokesService {
     this.loadingState.next(state);
   }
 
-  public getJoke(type: JokeTypeEnum, category: JokeCategoryEnum = null): Observable<JokeApi> {
-    return this.http.get<JokeApi>(this.transformFormDataToString(type, category));
+  public getJoke(type: JokeTypeEnum, category: JokeCategoryEnum = null): Observable<Joke[]> {
+    return this.http.get<JokeApi>(this.transformFormDataToString(type, category))
+      .pipe(map(
+        (joke: JokeApi) => {
+          return this.jokesMapperService.mapJokeApiForJokes([joke]);
+        }));
   }
 
-  public getTopJokes(type: JokeTypeEnum): Observable<JokeApi[]> {
-    return this.http.get<JokeApi[]>(this.transformFormDataToString(type));
+  public getTopJokes(type: JokeTypeEnum): Observable<Joke[]> {
+    return this.http.get<JokeApi[]>(this.transformFormDataToString(type))
+      .pipe(
+        map((jokes: JokeApi[]) => {
+          return this.jokesMapperService.mapJokeApiForJokes(jokes);
+        }));
   }
 
-  public searchJokes(searchValue: string): Observable<JokeApi[]> {
-    return this.http.get<JokeApi[]>(`${this.apiUrl}/search?query=${searchValue}`);
+  public searchJokes(searchValue: string): Observable<Joke[]> {
+    return this.http.get<JokeApi[]>(`${this.apiUrl}/search?query=${searchValue}`)
+      .pipe(
+        map((jokes: JokeApi[]) => {
+          return this.jokesMapperService.mapJokeApiForJokes(jokes);
+        }));
   }
 
   public getCategories(): Observable<Array<string>> {
-    return this.http.get<Array<string>>(`${this.apiUrl}/categories`);
+    return this.http.get<CategoryInterface[]>(`${this.apiUrl}/categories`)
+      .pipe(
+        map((categories: CategoryInterface[]) => {
+          const arr = [];
+          categories.map((category: CategoryInterface) => arr.push(category.title));
+          return arr;
+        }));
   }
 
   public checkIfJokeIsFavorite(joke: Joke): Joke {

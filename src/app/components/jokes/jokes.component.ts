@@ -39,9 +39,8 @@ export class JokesComponent implements OnInit, OnDestroy {
   }
 
   private getRandomJoke(): void {
-    this.jokesService.getJoke(JokeTypeEnum.random).subscribe((joke: JokeApi) => {
-      this.jokes = this.jokesMapperService.mapJokeApiForJokes([joke]);
-    });
+    this.jokesService.getJoke(JokeTypeEnum.random)
+      .subscribe((joke: Joke[]) => this.jokes = joke);
   }
 
   public onToggleSidebar() {

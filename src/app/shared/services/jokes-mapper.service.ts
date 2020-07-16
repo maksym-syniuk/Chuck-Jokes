@@ -15,7 +15,7 @@ export class JokesMapperService {
         value: joke.value,
         url: joke.url,
         iconUrl: joke.iconUrl,
-        categories: joke.categories,
+        categories: [...joke.categories],
         createdAt: joke.createdAt,
         updatedAt: joke.updatedAt,
         favorite: false

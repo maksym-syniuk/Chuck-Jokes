@@ -1,6 +1,6 @@
 import { environment } from './../../../environments/environment.prod';
 import { JokesMapperService } from './jokes-mapper.service';
-import { map, delay } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { Joke } from '../interfaces/joke.interface';
 import { BehaviorSubject, Observable } from 'rxjs';
@@ -44,14 +44,12 @@ export class FavoriteJokeService {
     this.currentFavoriteJokesSubject.next(jokes);
   }
 
-  public removeFavoriteJokeFromDataBase(id: number | string): Observable<string> {
-    return this.http.delete<string>(`${this.apiUrl}/favorite/${id}`)
-      .pipe(delay(3000));
+  public removeFavoriteJokeFromDataBase(id: number | string): Observable<number | string> {
+    return this.http.delete<number | string>(`${this.apiUrl}/favorite/${id}`);
   }
 
-  public addJokeToDataBase(id: number | string): Observable<string> {
-    return this.http.post<string>(`${this.apiUrl}/favorite/${id}`, id)
-      .pipe(delay(3000));
+  public addJokeToDataBase(id: number | string): Observable<number | string> {
+    return this.http.post<number | string>(`${this.apiUrl}/favorite/${id}`, id);
   }
 
   public getUserFavoriteJokesFromApi(): Observable<Joke[]> {

@@ -1,3 +1,4 @@
+import { Joke } from './../../shared/interfaces/joke.interface';
 import { JokeTypeEnum } from './../../shared/enums/joke-type.enum';
 import { JokeCategoryEnum } from '../../shared/enums/joke-category.enum';
 import { Component, OnInit, OnDestroy } from '@angular/core';
@@ -75,14 +76,10 @@ export class JokeFormComponent implements OnInit, OnDestroy {
   private getTopJokes(type: JokeTypeEnum): void {
     this.jokesService.changeLoadingState(true);
     this.jokesService.getTopJokes(type)
-      .pipe(
-        delay(500),
-        takeUntil(this.unsubscribe))
+      .pipe(takeUntil(this.unsubscribe))
       .subscribe(
-        (jokes: JokeApi[]) => {
-          this.jokesService.changeJokes(
-            this.jokesMapperService.mapJokeApiForJokes(jokes)
-          );
+        (jokes: Joke[]) => {
+          this.jokesService.changeJokes(jokes);
           this.jokesService.changeLoadingState(false);
         },
         error => {
@@ -94,20 +91,11 @@ export class JokeFormComponent implements OnInit, OnDestroy {
   private getRandomOrByCategoryJoke(type: JokeTypeEnum, categoryValue: JokeCategoryEnum): void {
     this.jokesService.changeLoadingState(true);
     this.jokesService.getJoke(type, categoryValue)
-      .pipe(
-        delay(500),
-        takeUntil(this.unsubscribe))
+      .pipe(takeUntil(this.unsubscribe))
       .subscribe(
-        (joke: JokeApi) => {
-          if (joke) {
-            this.jokesService.changeJokes(
-              this.jokesMapperService.mapJokeApiForJokes([joke])
-            );
-            this.jokesService.changeLoadingState(false);
-          } else {
-            this.jokesService.changeError('not found');
-            this.jokesService.changeLoadingState(false);
-          }
+        (joke: Joke[]) => {
+          this.jokesService.changeJokes(joke);
+          this.jokesService.changeLoadingState(false);
         },
         error => {
           this.jokesService.changeError(error);
@@ -119,14 +107,10 @@ export class JokeFormComponent implements OnInit, OnDestroy {
     this.jokesService.changeLoadingState(true);
     this.jokesService
       .searchJokes(searchValue)
-      .pipe(
-        delay(500),
-        takeUntil(this.unsubscribe))
+      .pipe(takeUntil(this.unsubscribe))
       .subscribe(
-        (jokes: JokeApi[]) => {
-          this.jokesService.changeJokes(
-            this.jokesMapperService.mapJokeApiForJokes(jokes)
-          );
+        (jokes: Joke[]) => {
+          this.jokesService.changeJokes(jokes);
           this.jokesService.changeLoadingState(false);
         },
         error => {
