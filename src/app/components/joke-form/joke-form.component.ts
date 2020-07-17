@@ -22,8 +22,8 @@ export class JokeFormComponent implements OnInit, OnDestroy {
   private formSubmitResolver = {
     [JokeTypeEnum.random]: () => this.getRandomOrByCategoryJoke(JokeTypeEnum.random, null),
     [JokeTypeEnum.top]: () => this.getTopJokes(JokeTypeEnum.top),
-    [JokeTypeEnum.categories]: () => this.getRandomOrByCategoryJoke(JokeTypeEnum.categories, this.controls.category.value),
-    [JokeTypeEnum.search]: () => this.searchJokes(this.controls.search.value),
+    [JokeTypeEnum.categories]: () => this.getRandomOrByCategoryJoke(JokeTypeEnum.categories, this.jokeForm.get('category').value),
+    [JokeTypeEnum.search]: () => this.searchJokes(this.jokeForm.get('search').value),
   };
 
   constructor(
@@ -36,9 +36,6 @@ export class JokeFormComponent implements OnInit, OnDestroy {
     this.getCategories();
     this.subscribeToFormTypeValueChanges();
   }
-
-  // getter for easy access to form controls
-  get controls() { return this.jokeForm.controls; }
 
   private initForm(): void {
     this.jokeForm = this.formBuilder.group({
@@ -54,17 +51,17 @@ export class JokeFormComponent implements OnInit, OnDestroy {
       .getCategories()
       .pipe(takeUntil(this.unsubscribe))
       .subscribe((categoriesData: string[]) => {
-        this.categories = [...categoriesData];
+        this.categories = categoriesData;
       });
   }
 
   private subscribeToFormTypeValueChanges(): void {
-    this.controls.type.valueChanges
+    this.jokeForm.get('type').valueChanges
       .pipe(takeUntil(this.unsubscribe))
       .subscribe(type => {
         this.jokeTypeState = type;
         if (type !== JokeTypeEnum.search) {
-          this.controls.search.reset();
+          this.jokeForm.get('search').reset();
         }
       });
   }
@@ -117,7 +114,7 @@ export class JokeFormComponent implements OnInit, OnDestroy {
 
   public submitForm(): void {
     this.jokesService.changeError('');
-    this.formSubmitResolver[this.controls.type.value]();
+    this.formSubmitResolver[this.jokeForm.get('type').value]();
   }
 
   ngOnDestroy(): void {

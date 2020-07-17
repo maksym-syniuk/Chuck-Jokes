@@ -96,7 +96,7 @@
 }
 
 input.ng-invalid.ng-touched {
-  border: 2px solid tomato;
+  border: 1px solid tomato;
 }
 
 .no-jokes {
@@ -149,11 +149,6 @@ input.ng-invalid.ng-touched {
     margin-bottom: 20px;
   }
 
-  .error {
-    color: tomato;
-    margin-bottom: 10px;
-  }
-
   p {
     margin: 10px 0;
   }
@@ -172,6 +167,8 @@ input.ng-invalid.ng-touched {
 .form {
   display: flex;
   flex-direction: column;
+  margin-top: 40px;
+  position: relative;
 
   button {
     margin: 0 30px;
@@ -185,10 +182,24 @@ input.ng-invalid.ng-touched {
     border-radius: 4px;
   }
 
-  .control__invalid {
-    text-align: left;
+  &__control {
+    position: relative;
+  }
+
+  .error {
+    position: absolute;
+    top: -28px;
+    left: 11%;
     color: tomato;
-    font-size: 0.9rem;
+
+    &-message {
+      text-align: left;
+      color: tomato;
+      position: absolute;
+      top: 42px;
+      left: 0;
+      margin-left: 10px;
+    }
   }
 }
 

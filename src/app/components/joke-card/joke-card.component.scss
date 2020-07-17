@@ -27,6 +27,11 @@
       position: absolute;
       top: 40px;
       right: 38px;
+
+      &-favorite {
+        top: 21px;
+        right: 19px;
+      }
     }
 
     &:hover {

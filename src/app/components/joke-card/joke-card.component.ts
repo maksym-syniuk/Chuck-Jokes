@@ -14,7 +14,7 @@ import { Router } from '@angular/router';
 export class JokeCardComponent implements OnInit {
   @Input() joke: JokeInterface;
   // variable that change styles depends where jokes at (main-jokes/favorite)
-  @Input() favorites: boolean;
+  @Input() isFavorites: boolean;
   private isUserAuthorised: boolean;
   public errorMessage: string;
   // variable for disabling clicking heart while receiving a response
@@ -28,45 +28,45 @@ export class JokeCardComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    if (!this.favorites) {
+    if (!this.isFavorites) {
       // change heart to filled in main-jokes if this joke is already in favorites
       this.joke = this.jokesService.checkIfJokeIsFavorite(this.joke);
     }
     this.authService.currentUser.subscribe(userData => this.isUserAuthorised = !!userData);
   }
 
-  public addOrRemoveFavoriteJoke() {
+  public onHeartIconClick() {
     if (this.isUserAuthorised) {
       this.isWaitingForResponse = true;
-      if (!this.joke.favorite) {
-        // add joke to favorite and to data base
-        this.favoriteJokeService.addJokeToDataBase(this.joke.id)
-          .subscribe(
-            () => {
-              this.favoriteJokeService.addJokeToFavorites(this.joke);
-              this.isWaitingForResponse = false;
-            },
-            error => {
-              this.errorMessage = error;
-              this.isWaitingForResponse = false;
-            }
-          );
-      } else {
-        // remove joke from favorites and form data base
-        this.favoriteJokeService.removeFavoriteJokeFromDataBase(this.joke.id)
-          .subscribe(
-            () => {
-              this.favoriteJokeService.removeJokeFromFavorites(this.joke);
-              this.isWaitingForResponse = false;
-            },
-            error => {
-              this.errorMessage = error;
-              this.isWaitingForResponse = false;
-            }
-          );
-      }
+      this.joke.favorite ? this.removeJokeFromFavorite() : this.addJokeToFavorite();
     } else {
       this.router.navigate(['/login']);
     }
+  }
+
+  private addJokeToFavorite(): void {
+    this.favoriteJokeService.addJokeToDataBase(this.joke.id)
+      .subscribe(() => {
+        this.favoriteJokeService.addJokeToFavorites(this.joke);
+        this.isWaitingForResponse = false;
+      },
+        error => {
+          this.errorMessage = error;
+          this.isWaitingForResponse = false;
+        }
+      );
+  }
+
+  private removeJokeFromFavorite(): void {
+    this.favoriteJokeService.removeFavoriteJokeFromDataBase(this.joke.id)
+      .subscribe(() => {
+        this.favoriteJokeService.removeJokeFromFavorites(this.joke);
+        this.isWaitingForResponse = false;
+      },
+        error => {
+          this.errorMessage = error;
+          this.isWaitingForResponse = false;
+        }
+      );
   }
 }

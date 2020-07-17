@@ -34,17 +34,16 @@ export class RegisterComponent implements OnInit {
   public register() {
     if (this.registerForm.valid) {
       this.authService.register(this.registerForm.value)
-        .subscribe(
-          () => {
-            const data = {
-              email: this.registerForm.value.email,
-              password: this.registerForm.value.password
-            };
-            // login after registration
-            this.authService.login(data).subscribe(
-              () => this.router.navigate(['/'])
-            );
-          },
+        .subscribe(() => {
+          const data = {
+            email: this.registerForm.value.email,
+            password: this.registerForm.value.password
+          };
+          // login after registration
+          this.authService.login(data).subscribe(
+            () => this.router.navigate(['/'])
+          );
+        },
           error => this.errorMessage = error
         );
     }

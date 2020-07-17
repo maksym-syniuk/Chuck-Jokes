@@ -1,5 +1,5 @@
-<div class="joke" [ngClass]="{ 'joke_dark-theme': favorites }">
-    <a class="joke__message-icon" [ngClass]="{ 'joke__message-icon_dark': favorites }">
+<div class="joke" [ngClass]="{ 'joke_dark-theme': isFavorites }">
+    <a class="joke__message-icon" [ngClass]="{ 'joke__message-icon_dark': isFavorites }">
         <img src="assets/images/message.svg" alt="message-icon" />
     </a>
     <div class="joke__content">
@@ -9,7 +9,7 @@
                 <img src="assets/images/link.svg" alt="link-icon" />
             </a>
         </small>
-        <p class="joke__content-body" [ngClass]="{ 'joke__content-body_small': favorites }">
+        <p class="joke__content-body" [ngClass]="{ 'joke__content-body_small': isFavorites }">
             {{ joke.value }}
         </p>
         <div class="joke__content-details">
@@ -19,19 +19,18 @@
             </small>
             <div class="flex_wrap">
                 <span class="category" *ngFor="let category of joke.categories"
-                    [ngClass]="{'category_dark': favorites}">
+                    [ngClass]="{'category_dark': isFavorites}">
                     {{ category }}
                 </span>
             </div>
         </div>
     </div>
     <div *ngIf="!isWaitingForResponse; else disableHeart" class="joke__heart"
-        [ngClass]="{'joke__heart_filled': favorites }" (click)="addOrRemoveFavoriteJoke()">
+        [ngClass]="{'joke__heart_filled': isFavorites }" (click)="onHeartIconClick()">
         <img [src]="joke.favorite ? 'assets/images/heart-filled.svg' : 'assets/images/heart.svg'" alt="heart-icon" />
     </div>
     <ng-template #disableHeart>
-        <div class="joke__heart_disabled">
-            <span>Wait...</span>
+        <div class="joke__heart_disabled" [ngClass]="{'joke__heart_disabled-favorite': isFavorites }">
             <img src="assets/images/heart-disabled.svg" alt="heart-disabled" />
         </div>
     </ng-template>

@@ -14,7 +14,7 @@
 
         <ng-template #jokes>
             <app-joke-card *ngFor="let joke of favoriteJokes.slice(0,jokesDisplayCount)" [joke]="joke"
-                [favorites]="true">
+                [isFavorites]="true">
             </app-joke-card>
             <button class="sidebar_btn btn" routerLink="/favorites">
                 Go to all Favorites

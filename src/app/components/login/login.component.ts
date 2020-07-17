@@ -27,9 +27,6 @@ export class LoginComponent implements OnInit {
     this.getReturnUrl();
   }
 
-  // getter for easy access to form fields
-  get f() { return this.loginForm.controls; }
-
   private initForm() {
     this.loginForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
@@ -47,7 +44,10 @@ export class LoginComponent implements OnInit {
         .pipe(first())
         .subscribe(
           () => this.router.navigate([this.returnUrl]),
-          error => this.errorMessage = error
+          error => {
+            this.errorMessage = error === 'Bad Request' ? 'You entered invalid email or password' : error;
+            this.loginForm.get('password').reset();
+          }
         );
     }
   }
