@@ -96,7 +96,7 @@
 }
 
 input.ng-invalid.ng-touched {
-  border: 2px solid tomato;
+  border: 1px solid tomato;
 }
 
 .no-jokes {
@@ -113,6 +113,93 @@ input.ng-invalid.ng-touched {
   &__title {
     margin-top: 10px;
     color: $secondaryTextColor;
+  }
+}
+
+.authentication {
+  height: 100vh;
+  min-height: 100vh;
+  width: 100vw;
+  max-width: 100vw;
+  background-color: #2e323e;
+  display: flex;
+}
+
+.modal {
+  text-align: center;
+  margin: auto;
+  padding: 20px;
+  background-color: white;
+  border-radius: 4px;
+
+  &__title {
+    text-align: center;
+    font-size: 2.5rem;
+    padding: 20px;
+
+    span {
+      color: $accentBackgroundColor;
+    }
+  }
+
+  &__subtitle {
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 20px;
+  }
+
+  p {
+    margin: 10px 0;
+  }
+
+  a {
+    color: $accentBackgroundColor;
+    transition: 0.3s;
+
+    &:hover {
+      text-decoration: underline;
+      color: $accentBackgroundHoverColor;
+    }
+  }
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  margin-top: 40px;
+  position: relative;
+
+  button {
+    margin: 0 30px;
+  }
+
+  input {
+    min-width: 350px;
+    padding: 10px 20px;
+    margin-bottom: 20px;
+    border: 1px solid $secondaryTextColor;
+    border-radius: 4px;
+  }
+
+  &__control {
+    position: relative;
+  }
+
+  .error {
+    position: absolute;
+    top: -28px;
+    left: 11%;
+    color: tomato;
+
+    &-message {
+      text-align: left;
+      color: tomato;
+      position: absolute;
+      top: 42px;
+      left: 0;
+      margin-left: 10px;
+    }
   }
 }
 

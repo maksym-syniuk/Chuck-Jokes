@@ -10,6 +10,12 @@
         </div>
 
         <div class="control">
+            <input formControlName="type" type='radio' id="top" [value]="jokeTypeEnum.top" />
+            <span class="control__radio-btn"></span>
+            <label for="top">Top</label>
+        </div>
+
+        <div class="control">
             <input formControlName="type" type="radio" id="categories" [value]="jokeTypeEnum.categories" />
             <span class="control__radio-btn"></span>
             <label for="categories">From categories</label>
@@ -33,7 +39,8 @@
             </div>
         </div>
 
-        <button class="joke__button btn" type="submit" [disabled]="jokeForm.get('search').invalid">
+        <button class="joke__button btn" type="submit"
+            [disabled]="jokeTypeState === jokeTypeEnum.search && jokeForm.get('search').invalid">
             Get a joke
         </button>
     </form>

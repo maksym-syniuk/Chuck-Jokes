@@ -1,27 +1,21 @@
-import { FavouriteDisplayService } from './../../shared/services/favourite-display.service';
-import { Component, OnDestroy } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { FavoriteJokeService } from './../../shared/services/favorite-joke.service';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent implements OnDestroy {
+export class HomeComponent implements OnInit {
+  public showFavorite: boolean;
 
-  showFavourite: boolean;
-  subscription: Subscription = new Subscription();
+  constructor(private favoriteJokeService: FavoriteJokeService) { }
 
-  constructor(private favouriteDisplayService: FavouriteDisplayService) {
-    this.subscription = this.favouriteDisplayService.showFavouriteChange.subscribe(value => {
-      this.showFavourite = value;
-    });
+  ngOnInit() {
+    this.favoriteJokeService.isFavoriteShow.subscribe(isFavoriteShow => this.showFavorite = isFavoriteShow);
   }
+
   public closeBackdrop(): void {
-    this.favouriteDisplayService.onToggleFavourite(false);
-  }
-
-  ngOnDestroy() {
-    this.subscription.unsubscribe();
+    this.favoriteJokeService.toggleDisplayFavorite(false);
   }
 }

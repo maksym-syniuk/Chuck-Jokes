@@ -1,56 +1,72 @@
-import { JokesService } from 'src/app/shared/services/jokes.service';
-import { Joke } from './../interfaces/Joke';
-import { BehaviorSubject } from 'rxjs';
+import { environment } from './../../../environments/environment.prod';
+import { JokesMapperService } from './jokes-mapper.service';
+import { map } from 'rxjs/operators';
+import { HttpClient } from '@angular/common/http';
+import { JokeInterface } from '../interfaces/joke.interface';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
+import { JokeApiInterface } from '../interfaces/joke-api.interface';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FavoriteJokeService {
-  private localStorageKey = 'jokes';
-  private jokes: Joke[] = [];
-  private favoriteJokes = new BehaviorSubject([]);
-  public currentFavoriteJokes = this.favoriteJokes.asObservable();
+  private apiUrl = environment.apiUrl;
 
-  constructor() {
-    this.favoriteJokes.next(this.getDataFromLocalStorage());
-  }
+  private isFavoriteShowSubject = new BehaviorSubject<boolean>(false);
+  public isFavoriteShow = this.isFavoriteShowSubject.asObservable();
+
+  private currentFavoriteJokesSubject = new BehaviorSubject<JokeInterface[]>([]);
+  public currentFavoriteJokes = this.currentFavoriteJokesSubject.asObservable();
+
+  constructor(
+    private http: HttpClient,
+    private jokesMapperService: JokesMapperService,
+  ) { }
 
   get allJokes() {
-    return this.jokes;
+    return [...this.currentFavoriteJokesSubject.value];
   }
 
-  private addJokeToFavorite(joke: Joke): void {
-    this.jokes = this.jokes.filter(j => j !== joke);
+  public toggleDisplayFavorite(state: boolean): void {
+    this.isFavoriteShowSubject.next(state);
+  }
+
+  public changeFavoriteJokes(jokes: JokeInterface[]): void {
+    this.currentFavoriteJokesSubject.next(jokes);
+  }
+
+  public addJokeToFavorites(joke: JokeInterface): void {
     joke.favorite = true;
-    this.jokes.unshift(joke);
-    this.favoriteJokes.next(this.jokes);
-    this.saveDataToLocalStorage(this.jokes);
+    const jokes = [...this.currentFavoriteJokesSubject.value];
+    jokes.filter(j => j.id !== joke.id);
+    jokes.unshift(joke);
+    this.currentFavoriteJokesSubject.next(jokes);
   }
 
-  private removeJokeFromFavorite(joke: Joke): void {
+  public removeJokeFromFavorites(joke: JokeInterface): void {
     joke.favorite = false;
-    const index = this.jokes.indexOf(joke);
-    this.jokes.splice(index, 1);
-    this.favoriteJokes.next(this.jokes);
-    this.saveDataToLocalStorage(this.jokes);
+    const jokes = [...this.currentFavoriteJokesSubject.value];
+    const index = this.allJokes.indexOf(joke);
+    jokes.splice(index, 1);
+    this.currentFavoriteJokesSubject.next(jokes);
   }
 
-  private getDataFromLocalStorage() {
-    return this.jokes = JSON.parse(localStorage.getItem(this.localStorageKey)) || [];
+  public removeFavoriteJokeFromDataBase(id: number | string): Observable<number | string> {
+    return this.http.delete<number | string>(`${this.apiUrl}/favorite/${id}`);
   }
 
-  private saveDataToLocalStorage(data: Joke[]) {
-    localStorage.setItem(this.localStorageKey, JSON.stringify(data));
+  public addJokeToDataBase(id: number | string): Observable<number | string> {
+    return this.http.post<number | string>(`${this.apiUrl}/favorite/${id}`, id);
   }
 
-  public onAddJokeToFavorite(joke: Joke) {
-    if (joke.favorite) {
-      // if joke was already added
-      this.removeJokeFromFavorite(joke);
-    } else {
-      // if new joke
-      this.addJokeToFavorite(joke);
-    }
+  public getUserFavoriteJokesFromApi(): Observable<JokeInterface[]> {
+    return this.http.get<JokeApiInterface[]>(`${this.apiUrl}/user-favorite`)
+      .pipe(map(
+        // transform array from JokesApi interface to array of Jokes
+        (data: JokeApiInterface[]) => this.jokesMapperService.mapJokeApiForJokes(data)
+          // rewrite 'favorite' from 'false' to 'true'
+          .map((joke: JokeInterface) => ({ ...joke, favorite: true }))
+      ));
   }
 }

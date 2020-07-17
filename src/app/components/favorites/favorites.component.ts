@@ -1,4 +1,4 @@
-import { Joke } from './../../shared/interfaces/Joke';
+import { JokeInterface } from '../../shared/interfaces/joke.interface';
 import { FavoriteJokeService } from './../../shared/services/favorite-joke.service';
 import { Component, OnInit } from '@angular/core';
 
@@ -8,14 +8,12 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./favorites.component.scss']
 })
 export class FavoritesComponent implements OnInit {
-  favoriteJokes: Joke[];
+  public favoriteJokes: JokeInterface[];
+
   constructor(private favoriteJokeService: FavoriteJokeService) { }
 
   ngOnInit(): void {
-    this.favoriteJokeService.currentFavoriteJokes.subscribe(
-      (jokes: Joke[]) => {
-        this.favoriteJokes = jokes;
-      }
-    );
+    this.favoriteJokeService.currentFavoriteJokes
+      .subscribe((jokes: JokeInterface[]) => this.favoriteJokes = jokes);
   }
 }

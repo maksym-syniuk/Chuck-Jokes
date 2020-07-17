@@ -1,16 +1,24 @@
 <div class="sidebar">
-    <h2 class="sidebar__title">Favourite</h2>
+    <h2 class="sidebar__title">Favorite</h2>
 
-    <div class="no-jokes" *ngIf="!favoriteJokes.length; else jokes">
-        <img src="assets/images/empty.svg" alt="no-favorites">
-        <p class="no-jokes__title">Please, add some jokes to favorites</p>
+    <div class="unregister" *ngIf="!isUserAuthorised; else registered">
+        <p class="unregister__title">This content is available only for registered users</p>
+        <button class="btn" routerLink="/login">Log in</button>
     </div>
 
-    <ng-template #jokes>
-        <app-joke-card *ngFor="let joke of favoriteJokes.slice(0,3)" [joke]="joke" [favorites]="true">
-        </app-joke-card>
-        <button class="sidebar_btn btn" routerLink="/favorites">
-            Go to all Favorites
-        </button>
+    <ng-template #registered>
+        <div class="no-jokes" *ngIf="!favoriteJokes.length; else jokes">
+            <img src="assets/images/empty.svg" alt="no-favorites">
+            <p class="no-jokes__title">Please, add some jokes to favorites</p>
+        </div>
+
+        <ng-template #jokes>
+            <app-joke-card *ngFor="let joke of favoriteJokes.slice(0,jokesDisplayCount)" [joke]="joke"
+                [isFavorites]="true">
+            </app-joke-card>
+            <button class="sidebar_btn btn" routerLink="/favorites">
+                Go to all Favorites
+            </button>
+        </ng-template>
     </ng-template>
 </div>

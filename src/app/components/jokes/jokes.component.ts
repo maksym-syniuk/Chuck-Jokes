@@ -1,12 +1,10 @@
-import { HttpErrorResponse } from '@angular/common/http';
-import { JokeApi } from 'src/app/shared/interfaces/JokeApi';
+import { FavoriteJokeService } from './../../shared/services/favorite-joke.service';
+import { UserModel } from './../../shared/models/user.model';
+import { AuthService } from './../../shared/services/auth.service';
 import { JokeTypeEnum } from './../../shared/enums/joke-type.enum';
-import { JokesMapperService } from 'src/app/shared/services/jokes-mapper.service';
-import { Joke } from '../../shared/interfaces/Joke';
-import { Subscription } from 'rxjs';
+import { JokeInterface } from '../../shared/interfaces/joke.interface';
 import { JokesService } from '../../shared/services/jokes.service';
-import { FavouriteDisplayService } from './../../shared/services/favourite-display.service';
-import { Component, OnInit, OnDestroy, Input } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-jokes',
@@ -14,38 +12,38 @@ import { Component, OnInit, OnDestroy, Input } from '@angular/core';
   styleUrls: ['./jokes.component.scss']
 })
 
-export class JokesComponent implements OnInit, OnDestroy {
+export class JokesComponent implements OnInit {
   @Input() showSidebar: boolean;
-  public jokes: Joke[];
-  public loading: boolean;
+  public jokes: JokeInterface[];
+  public isLoading: boolean;
   public errorMessage: string;
-  private jokesSubscription: Subscription = new Subscription();
+  public userData: UserModel;
 
   constructor(
-    private favouriteDisplayService: FavouriteDisplayService,
+    private favoriteJokeService: FavoriteJokeService,
     private jokesService: JokesService,
-    private jokesMapperService: JokesMapperService
+    private authService: AuthService
   ) { }
 
-  private getRandomJoke(): void {
-    this.jokesService.getJoke(JokeTypeEnum.random).subscribe((joke: JokeApi) => {
-      this.jokes = this.jokesMapperService.mapJokeApiForJokes([joke]);
-    });
-  }
-
   ngOnInit() {
-    this.jokesService.currentLoadingState.subscribe(state => this.loading = state);
+    this.jokesService.currentLoadingState.subscribe(state => this.isLoading = state);
     this.jokesService.currentJokes.subscribe(jokes => this.jokes = jokes);
     this.jokesService.currentErrorMessage.subscribe(message => this.errorMessage = message);
+    this.authService.currentUser.subscribe(authData => this.userData = authData && authData.user);
     this.getRandomJoke();
+  }
+
+  private getRandomJoke(): void {
+    this.jokesService.getJoke(JokeTypeEnum.random)
+      .subscribe((joke: JokeInterface[]) => this.jokes = joke);
   }
 
   public onToggleSidebar() {
     this.showSidebar = !this.showSidebar;
-    this.favouriteDisplayService.onToggleFavourite(this.showSidebar);
+    this.favoriteJokeService.toggleDisplayFavorite(this.showSidebar);
   }
 
-  ngOnDestroy() {
-    this.jokesSubscription.unsubscribe();
+  public logout() {
+    this.authService.logout();
   }
 }

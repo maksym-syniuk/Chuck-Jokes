@@ -1,133 +1,149 @@
 @import "variables";
 
 .joke {
-    margin-top: 40px;
-    padding: 63px 27px 40px 41px;
-    background-color: $secondaryBackgroundColor;
-    border-radius: 20px;
-    display: flex;
-    position: relative;
+  margin-top: 40px;
+  padding: 63px 27px 40px 41px;
+  background-color: $secondaryBackgroundColor;
+  border-radius: 20px;
+  display: flex;
+  position: relative;
 
-    &_dark-theme {
-        margin-top: 20px;
-        margin-bottom: 20px;
-        padding: 45px 21px 19px 22px;
-        background-color: $primaryBackgroundColor;
-        border: 1px solid $secondaryBackgroundColor;
-        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  &_dark-theme {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding: 45px 21px 19px 22px;
+    background-color: $primaryBackgroundColor;
+    border: 1px solid $secondaryBackgroundColor;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  }
+
+  &__heart {
+    position: absolute;
+    top: 40px;
+    right: 38px;
+    cursor: pointer;
+
+    &_disabled {
+      position: absolute;
+      top: 40px;
+      right: 38px;
+
+      &-favorite {
+        top: 21px;
+        right: 19px;
+      }
     }
 
-    &__heart {
-        position: absolute;
-        top: 40px;
-        right: 38px;
-        cursor: pointer;
-
-        &:hover {
-            background: url("../../../assets/images/heart-filled.svg") no-repeat;
-        }
-
-        &_filled {
-            background: url("../../../assets/images/heart-filled.svg") no-repeat;
-            top: 21px;
-            right: 19px;
-        }
+    &:hover {
+      background: url("../../../assets/images/heart-filled.svg") no-repeat;
     }
 
-    &__message-icon {
-        flex-shrink: 0;
-        padding: 10px;
-        margin-right: 19px;
-        background-color: $primaryBackgroundColor;
-        border-radius: 50%;
-        width: 40px;
-        height: 40px;
-        text-align: center;
-        margin-top: 4px;
+    &_filled {
+      top: 21px;
+      right: 19px;
+    }
+  }
 
-        &_dark {
-            background-color: $secondaryBackgroundColor;
-        }
+  &__message-icon {
+    flex-shrink: 0;
+    padding: 10px;
+    margin-right: 19px;
+    background-color: $primaryBackgroundColor;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    text-align: center;
+    margin-top: 4px;
 
-        img {
-            height: 100%;
-            width: 100%;
-            object-fit: contain;
-        }
+    &_dark {
+      background-color: $secondaryBackgroundColor;
     }
 
-    &__content {
-        width: 100%;
-        max-width: 100%;
-        &-id {
-            color: $secondaryTextColor;
-            font-weight: 500;
-            font-size: 10px;
-            & a {
-                text-decoration: underline;
-                color: $linkTextColor;
-            }
-        }
-
-        &-body {
-            font-size: 18px;
-            line-height: 26px;
-            color: $primaryTextColor;
-            margin-top: 5px;
-
-            &_small {
-                line-height: 20px;
-                font-size: 14px;
-            }
-        }
-
-        &-details {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 22px;
-
-            &_date {
-                font-size: 10px;
-                color: $secondaryTextColor;
-            }
-        }
+    img {
+      height: 100%;
+      width: 100%;
+      object-fit: contain;
     }
+  }
+
+  &__content {
+    width: 100%;
+    max-width: 100%;
+
+    &-id {
+      color: $secondaryTextColor;
+      font-weight: 500;
+      font-size: 10px;
+
+      & a {
+        text-decoration: underline;
+        color: $linkTextColor;
+      }
+    }
+
+    &-body {
+      font-size: 18px;
+      line-height: 26px;
+      color: $primaryTextColor;
+      margin-top: 5px;
+
+      &_small {
+        line-height: 20px;
+        font-size: 14px;
+      }
+    }
+
+    &-details {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 22px;
+
+      &_date {
+        font-size: 10px;
+        color: $secondaryTextColor;
+      }
+    }
+  }
 }
 
+
+
 @media (max-width: 1179px) {
-    .joke__content_body {
-        margin-right: 50px;
-        &_small {
-            font-size: 14px;
-        }
+  .joke__content_body {
+    margin-right: 50px;
+
+    &_small {
+      font-size: 14px;
     }
-    .joke_dark-theme {
-        border-radius: 10px;
-        padding: 43px 21px 19px 20px;
-    }
+  }
+
+  .joke_dark-theme {
+    border-radius: 10px;
+    padding: 43px 21px 19px 20px;
+  }
 }
 
 @media (max-width: 420px) {
-    .joke {
-        padding: 40px 27px 20px 21px;
+  .joke {
+    padding: 40px 27px 20px 21px;
 
-        &__heart {
-            top: 17px;
-            right: 20px;
-        }
-
-        &__content-details {
-            flex-wrap: wrap;
-            margin-top: 29px;
-
-            &_date {
-                margin-bottom: 10px;
-            }
-        }
-
-        &_dark-theme {
-            padding: 42px 19px 2px;
-        }
+    &__heart {
+      top: 17px;
+      right: 20px;
     }
+
+    &__content-details {
+      flex-wrap: wrap;
+      margin-top: 29px;
+
+      &_date {
+        margin-bottom: 10px;
+      }
+    }
+
+    &_dark-theme {
+      padding: 42px 19px 2px;
+    }
+  }
 }
