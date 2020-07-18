@@ -1,7 +1,7 @@
-import { AuthGuard } from './../../shared/guards/auth.guard';
+import { AuthGuard } from './../../../shared/guards/auth.guard';
+import { SharedModule } from './../../../shared/shared.module';
 import { FavoritesComponent } from './favorites.component';
 import { RouterModule, Routes } from '@angular/router';
-import { SharedModule } from '../../shared/shared.module';
 import { NgModule } from '@angular/core';
 
 const routes: Routes = [

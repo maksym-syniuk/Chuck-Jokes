@@ -1,3 +1,34 @@
+// Custom Theming for Angular Material
+// For more information: https://material.angular.io/guide/theming
+@import '~@angular/material/theming';
+// Plus imports for other components in your app.
+
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+@include mat-core();
+
+// Define the palettes for your theme using the Material Design palettes available in palette.scss
+// (imported above). For each palette, you can optionally specify a default, lighter, and darker
+// hue. Available color palettes: https://material.io/design/color/
+$chuck-jokes-app-primary: mat-palette($mat-indigo);
+$chuck-jokes-app-accent: mat-palette($mat-pink, A200, A100, A400);
+
+// The warn palette is optional (defaults to red).
+$chuck-jokes-app-warn: mat-palette($mat-red);
+
+// Create the theme object. A theme consists of configurations for individual
+// theming systems such as "color" or "typography".
+$chuck-jokes-app-theme: mat-light-theme((color: (primary: $chuck-jokes-app-primary,
+      accent: $chuck-jokes-app-accent,
+      warn: $chuck-jokes-app-warn,
+    )));
+
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+@include angular-material-theme($chuck-jokes-app-theme);
+
 @import "normalize";
 @import "fonts";
 @import "global";
@@ -214,4 +245,14 @@ input.ng-invalid.ng-touched {
     margin: 20px auto;
     padding: 0 20px;
   }
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
 }

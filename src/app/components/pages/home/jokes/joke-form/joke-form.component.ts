@@ -1,11 +1,12 @@
-import { JokeInterface } from './../../shared/interfaces/joke.interface';
-import { JokeTypeEnum } from './../../shared/enums/joke-type.enum';
-import { JokeCategoryEnum } from '../../shared/enums/joke-category.enum';
+import { AuthService } from './../../../../../shared/services/auth.service';
+import { JokeInterface, CategoryInterface } from './../../../../../shared/interfaces/joke.interface';
+import { JokeCategoryEnum } from './../../../../../shared/enums/joke-category.enum';
+import { JokeTypeEnum } from './../../../../../shared/enums/joke-type.enum';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { JokesService } from 'src/app/shared/services/jokes.service';
 import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { takeUntil, map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-joke-form',
@@ -17,6 +18,7 @@ export class JokeFormComponent implements OnInit, OnDestroy {
   public categories: string[] = [];
   public jokeTypeEnum = JokeTypeEnum;
   public jokeTypeState: string;
+  public isUserLoggedIn: boolean;
   private unsubscribe = new Subject<void>();
 
   private formSubmitResolver = {
@@ -28,13 +30,15 @@ export class JokeFormComponent implements OnInit, OnDestroy {
 
   constructor(
     private jokesService: JokesService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private authService: AuthService
   ) { }
 
   ngOnInit(): void {
     this.initForm();
     this.getCategories();
     this.subscribeToFormTypeValueChanges();
+    this.authService.currentUser.subscribe(userData => this.isUserLoggedIn = !!userData);
   }
 
   private initForm(): void {
@@ -49,10 +53,15 @@ export class JokeFormComponent implements OnInit, OnDestroy {
   private getCategories(): void {
     this.jokesService
       .getCategories()
-      .pipe(takeUntil(this.unsubscribe))
-      .subscribe((categoriesData: string[]) => {
-        this.categories = categoriesData;
-      });
+      .pipe(
+        map((categories: CategoryInterface[]) => {
+          return categories.map((category: CategoryInterface) => category.title);
+        }),
+        takeUntil(this.unsubscribe))
+      .subscribe(
+        (categoriesData: string[]) => {
+          this.categories = categoriesData;
+        });
   }
 
   private subscribeToFormTypeValueChanges(): void {

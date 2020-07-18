@@ -68,14 +68,8 @@ export class JokesService {
         }));
   }
 
-  public getCategories(): Observable<Array<string>> {
-    return this.http.get<CategoryInterface[]>(`${this.apiUrl}/categories`)
-      .pipe(
-        map((categories: CategoryInterface[]) => {
-          const arr = [];
-          categories.map((category: CategoryInterface) => arr.push(category.title));
-          return arr;
-        }));
+  public getCategories(): Observable<CategoryInterface[]> {
+    return this.http.get<CategoryInterface[]>(`${this.apiUrl}/categories`);
   }
 
   private transformFormDataToString(type: JokeTypeEnum, category?: JokeCategoryEnum): string {
@@ -94,5 +88,9 @@ export class JokesService {
       return favoriteJoke.id === joke.id ? joke = { ...favoriteJoke } : joke;
     });
     return joke;
+  }
+
+  public createJoke(joke: JokeInterface): Observable<any> {
+    return this.http.post<JokeInterface>(this.apiUrl, joke);
   }
 }

@@ -1,0 +1,43 @@
+<form class="form-modify" [formGroup]="jokeFormGroup" (ngSubmit)="onSubmit()">
+    <mat-form-field class="form-modify_full-width">
+        <mat-label>Joke message</mat-label>
+        <textarea matInput placeholder="Chuck Norris..." formControlName="value"></textarea>
+        <mat-error *ngIf="jokeFormGroup.get('value').invalid">You must enter a value</mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="form-modify_full-width">
+        <mat-label>Joke url</mat-label>
+        <input matInput placeholder="https://..." value="Some url..." formControlName="url">
+    </mat-form-field>
+
+    <mat-form-field class="form-modify_full-width">
+        <mat-label>Icon url</mat-label>
+        <input matInput placeholder="https://..." value="Some url..." formControlName="iconUrl">
+    </mat-form-field>
+
+    <mat-form-field class="form-modify_full-width">
+        <mat-chip-list #chipList aria-label="Category selection">
+            <mat-chip *ngFor="let category of categories" [selectable]="selectable" [removable]="removable"
+                (removed)="removeCategoryFromMaterialChip(category)">
+                <span id="capitalize">{{category}}</span>
+                <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+            </mat-chip>
+            <input placeholder="Select category..." #categoryInput formControlName="categories" [matAutocomplete]="auto"
+                [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                (matChipInputTokenEnd)="onAddCategoryToMaterialChip($event)">
+        </mat-chip-list>
+        <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onCategoryOptionSelected($event)">
+            <mat-option *ngFor="let category of filteredCategories | async" [value]="category">
+                <span [ngStyle]="{textTransform: 'capitalize'}">{{category}}</span>
+                <mat-error *ngIf="jokeFormGroup.get('categories').invalid">You must enter a unique value!</mat-error>
+            </mat-option>
+        </mat-autocomplete>
+    </mat-form-field>
+
+    <button mat-stroked-button color="primary" type="submit">Create Joke</button>
+</form>
+
+<ng-container *ngIf="createdJoke">
+    <p class="joke__created"><span class="joke__created-successful">Well Done! </span>Here is your created joke!</p>
+    <app-joke-card [isFavorites]="true" [joke]="createdJoke"></app-joke-card>
+</ng-container>

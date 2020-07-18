@@ -1,4 +1,4 @@
-import { FavoriteJokeService } from './../../shared/services/favorite-joke.service';
+import { FavoriteJokeService } from './../../../shared/services/favorite-joke.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({

@@ -1,7 +1,6 @@
-import { RouterModule } from '@angular/router';
-import { SidebarModule } from './../sidebar/sidebar.module';
-import { SharedModule } from './../../shared/shared.module';
-import { JokesModule } from './../jokes/jokes.module';
+import { SharedModule } from './../../../shared/shared.module';
+import { SidebarModule } from './sidebar/sidebar.module';
+import { JokesModule } from './jokes/jokes.module';
 import { HomeComponent } from './home.component';
 import { NgModule } from '@angular/core';
 

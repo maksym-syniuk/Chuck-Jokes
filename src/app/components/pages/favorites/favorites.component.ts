@@ -1,5 +1,5 @@
-import { JokeInterface } from '../../shared/interfaces/joke.interface';
-import { FavoriteJokeService } from './../../shared/services/favorite-joke.service';
+import { FavoriteJokeService } from './../../../shared/services/favorite-joke.service';
+import { JokeInterface } from './../../../shared/interfaces/joke.interface';
 import { Component, OnInit } from '@angular/core';
 
 @Component({

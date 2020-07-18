@@ -1,0 +1,27 @@
+@import 'variables';
+
+.form-modify {
+  min-width: 150px;
+  max-width: 500px;
+  width: 100%;
+
+  &_full-width {
+    width: 100%;
+
+    #capitalize {
+      text-transform: capitalize;
+    }
+  }
+}
+
+.joke__created {
+  width: 100%;
+  text-align: center;
+  margin: 20px 0;
+  font-size: 16px;
+  color: #333333;
+
+  &-successful {
+    color: seagreen;
+  }
+}

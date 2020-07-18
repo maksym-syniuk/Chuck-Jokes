@@ -1,7 +1,6 @@
-
+import { AuthService } from './../../../../shared/services/auth.service';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
-import { AuthService } from '../../shared/services/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { first } from 'rxjs/operators';
 

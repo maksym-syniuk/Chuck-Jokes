@@ -1,9 +1,9 @@
-import { FavoriteJokeService } from './../../shared/services/favorite-joke.service';
-import { UserModel } from './../../shared/models/user.model';
-import { AuthService } from './../../shared/services/auth.service';
-import { JokeTypeEnum } from './../../shared/enums/joke-type.enum';
-import { JokeInterface } from '../../shared/interfaces/joke.interface';
-import { JokesService } from '../../shared/services/jokes.service';
+import { JokeInterface } from './../../../../shared/interfaces/joke.interface';
+import { JokeTypeEnum } from './../../../../shared/enums/joke-type.enum';
+import { AuthService } from './../../../../shared/services/auth.service';
+import { JokesService } from './../../../../shared/services/jokes.service';
+import { FavoriteJokeService } from './../../../../shared/services/favorite-joke.service';
+import { UserModel } from './../../../../shared/models/user.model';
 import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
