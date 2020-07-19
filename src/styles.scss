@@ -120,6 +120,10 @@ $chuck-jokes-app-theme: mat-light-theme((color: (primary: $chuck-jokes-app-prima
   padding: 0 40px;
 }
 
+.flex {
+  display: flex;
+}
+
 .flex_wrap {
   display: flex;
   justify-content: flex-end;

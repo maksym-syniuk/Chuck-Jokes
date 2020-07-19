@@ -2,6 +2,8 @@
     <a class="joke__message-icon" [ngClass]="{ 'joke__message-icon_dark': isFavorites }">
         <img src="assets/images/message.svg" alt="message-icon" />
     </a>
+    <a class="joke__edit" [ngClass]="{ 'joke__edit_favorite': isFavorites }" *ngIf="isUserAuthorised"
+        (click)="saveJokeAndGoToEditing()">Edit</a>
     <div class="joke__content">
         <small class="joke__content-id">ID:
             <a [href]="joke.url">

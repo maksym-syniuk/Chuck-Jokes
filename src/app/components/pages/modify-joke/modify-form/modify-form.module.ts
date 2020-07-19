@@ -11,6 +11,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatCardModule } from '@angular/material/card';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatGridListModule } from '@angular/material/grid-list';
 
 @NgModule({
     declarations: [ModifyFormComponent],
@@ -25,7 +26,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
         MatIconModule,
         MatAutocompleteModule,
         MatCardModule,
-        MatSnackBarModule
+        MatSnackBarModule,
+        MatGridListModule
     ],
     exports: [ModifyFormComponent]
 })

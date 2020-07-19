@@ -1,21 +1,11 @@
-<mat-tab-group mat-stretch-tabs dynamicHeight>
-    <mat-tab label="Add">
-        <div class="example-small-box mat-elevation-z4">
-            <div class="form__container">
-                <app-modify-form></app-modify-form>
-            </div>
-        </div>
-    </mat-tab>
-    <mat-tab label="Edit">
-        <div class="example-large-box mat-elevation-z4">
-            <!-- <app-modify-form></app-modify-form> -->
-        </div>
-    </mat-tab>
-    <mat-tab label="Delete">
-        <div class="example-large-box mat-elevation-z4">
-            <!-- <app-modify-form></app-modify-form> -->
-        </div>
-    </mat-tab>
-</mat-tab-group>
+<nav mat-tab-nav-bar mat-stretch-tabs>
+    <a mat-tab-link *ngFor="let link of navLinks" [routerLink]="link.path" (click)="activeLink = link"
+        [active]="activeLink == link">{{ link.label }}</a>
+</nav>
 
-<button mat-raised-button color="primary" routerLink="/">Go Back</button>
+<div class="container">
+    <button mat-raised-button color="primary" routerLink="/">Go Back</button>
+</div>
+<div class="form__container">
+    <router-outlet></router-outlet>
+</div>

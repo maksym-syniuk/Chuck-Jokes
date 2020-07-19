@@ -1,3 +1,4 @@
+import { ModifyFormComponent } from './modify-form/modify-form.component';
 import { AuthGuard } from './../../../shared/guards/auth.guard';
 import { ModifyFormModule } from './modify-form/modify-form.module';
 import { RouterModule, Routes } from '@angular/router';
@@ -9,7 +10,11 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatButtonModule } from '@angular/material/button';
 
 const routes: Routes = [
-  { path: '', component: ModifyJokeComponent, canActivate: [AuthGuard] }
+  {
+    path: '', component: ModifyJokeComponent, canActivate: [AuthGuard], children: [
+      { path: ':mode', component: ModifyFormComponent }
+    ]
+  }
 ];
 
 @NgModule({

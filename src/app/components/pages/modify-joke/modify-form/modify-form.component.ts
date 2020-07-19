@@ -1,3 +1,6 @@
+import { JokeFormModule } from './../../home/jokes/joke-form/joke-form.module';
+import { JokeFormMode } from './../../../../shared/enums/joke-form-mode.enum';
+import { ActivatedRoute } from '@angular/router';
 import { JokeInterface, CategoryInterface } from './../../../../shared/interfaces/joke.interface';
 import { JokesService } from './../../../../shared/services/jokes.service';
 import { FormBuilder, FormGroup, Validators, FormArray, AbstractControl, FormControl } from '@angular/forms';
@@ -21,7 +24,9 @@ export class ModifyFormComponent implements OnInit {
   public categories: Array<string> = [];
   public filteredCategories: Observable<string[]>;
   public createdJoke: JokeInterface;
+  public jokeFormModeEnum = JokeFormMode;
   private apiCategories: CategoryInterface[];
+  public currentMode: string;
 
   // controls for angular material
   public visible = true;
@@ -29,21 +34,36 @@ export class ModifyFormComponent implements OnInit {
   public removable = true;
   public separatorKeysCodes: number[] = [ENTER, COMMA];
 
+  private formInitResolver = {
+    [JokeFormMode.create]: this._initForm.bind(this),
+    [JokeFormMode.update]: this._initUpdateForm.bind(this),
+    [JokeFormMode.delete]: this._initDeleteForm.bind(this)
+  };
+
   @ViewChild('categoryInput') categoryInput: ElementRef<HTMLInputElement>;
   @ViewChild('auto') matAutocomplete: MatAutocomplete;
 
   constructor(
     private formBuilder: FormBuilder,
     private jokesService: JokesService,
+    private route: ActivatedRoute,
     private snackBar: MatSnackBar
   ) { }
 
   ngOnInit(): void {
-    this.initForm();
+    this._subscribeToChangingRoutes();
     this._getCategoriesFromApi();
   }
 
-  private initForm(): void {
+  private _subscribeToChangingRoutes(): void {
+    this.route.params.subscribe(params => {
+      this.jokesService.changeCurrentJokeMode(params.mode);
+      this.currentMode = params.mode;
+      this.formInitResolver[params.mode]();
+    });
+  }
+
+  private _initForm(): void {
     this.jokeFormGroup = this.formBuilder.group({
       value: ['', [Validators.required]],
       url: [''],
@@ -52,14 +72,33 @@ export class ModifyFormComponent implements OnInit {
     });
   }
 
+  private _initUpdateForm(): void {
+    this.jokesService.currentSelectedJokeForEditing
+      .subscribe((joke: JokeInterface) => {
+        this.jokeFormGroup = this.formBuilder.group({
+          id: [joke.id, [Validators.required, Validators.min(1)]],
+          value: [joke.value, [Validators.required]],
+          iconUrl: [joke.iconUrl],
+          categories: [joke.categories]
+        });
+      });
+  }
+
+  private _initDeleteForm(): void {
+    this.jokeFormGroup = this.formBuilder.group({
+      id: [null, [Validators.required, Validators.min(1)]],
+    });
+  }
+
   private _getCategoriesFromApi(): void {
     this.jokesService.getCategories().subscribe(categories => {
       this.apiCategories = categories;
-      console.log(categories);
       this.allCategories = this._transformCategoriesToStrings(categories);
-      this.filteredCategories = this.jokeFormGroup.get('categories').valueChanges.pipe(
-        startWith(null as string),
-        map((category: string | null) => category ? this._filter(category) : this.allCategories.slice()));
+      if (this.currentMode === JokeFormMode.create || this.currentMode === JokeFormMode.update) {
+        this.filteredCategories = this.jokeFormGroup.get('categories').valueChanges.pipe(
+          startWith(null as string),
+          map((category: string | null) => category ? this._filter(category) : this.allCategories.slice()));
+      }
     });
   }
 
@@ -72,9 +111,9 @@ export class ModifyFormComponent implements OnInit {
     return this.allCategories.filter(fruit => fruit.toLowerCase().indexOf(filterValue) === 0);
   }
 
-  private _openSnackBar() {
-    this.snackBar.open('Joke Created!', 'Close', {
-      duration: 2000,
+  private _openSnackBar(message: string) {
+    this.snackBar.open(message, 'Close', {
+      duration: 3000,
     });
   }
 
@@ -105,15 +144,41 @@ export class ModifyFormComponent implements OnInit {
 
   public onSubmit(): void {
     if (this.jokeFormGroup.valid) {
-      this._openSnackBar();
-      const data = this._transformInputDataBeforeSubmit();
-      this.jokesService.createJoke(data).subscribe(joke => this.createdJoke = joke);
+      const data = this._transformInputDataBeforeSubmit(this.currentMode);
+      this._currentModeSelectedSubmit(this.currentMode, data);
+      this.jokeFormGroup.reset();
     }
   }
 
-  private _transformInputDataBeforeSubmit(): JokeInterface {
+  private _currentModeSelectedSubmit(mode: string, data: JokeInterface | string | number) {
+    switch (mode) {
+      case JokeFormMode.create:
+        return this.jokesService.createJoke(data as JokeInterface).subscribe(joke => {
+          this.createdJoke = this.jokesService.checkIfJokeIsFavorite(joke);
+          this._openSnackBar(`Joke was successfully ${this.currentMode}d`);
+        });
+      case JokeFormMode.update:
+        return this.jokesService.updateJoke(data as JokeInterface).subscribe(joke => {
+          this.createdJoke = this.jokesService.checkIfJokeIsFavorite(joke);
+          this._openSnackBar(`Joke was successfully ${this.currentMode}d`);
+        });
+      case JokeFormMode.delete:
+        return this.jokesService.deleteJoke(data as string | number).subscribe(response => {
+          this._openSnackBar(`Joke was successfully ${this.currentMode}d`);
+        });
+    }
+  }
+
+  private _transformInputDataBeforeSubmit(mode: string): JokeInterface | number | string {
     const categories = this._getIdsOfCategories(this._checkForUniqueValues(this._checkForEqualValues(this.categories)));
-    return { ...this.jokeFormGroup.value, categories };
+    switch (mode) {
+      case JokeFormMode.create:
+        return { ...this.jokeFormGroup.value, categories };
+      case JokeFormMode.update:
+        return { ...this.jokeFormGroup.value, categories };
+      case JokeFormMode.delete:
+        return this.jokeFormGroup.value.id;
+    }
   }
 
   private _checkForEqualValues(inputValues: string[]): string[] {

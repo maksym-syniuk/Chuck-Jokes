@@ -5,6 +5,14 @@
   max-width: 500px;
   width: 100%;
 
+  &_little-width {
+    widows: 20%;
+  }
+
+  &_half-width {
+    width: 50%;
+  }
+
   &_full-width {
     width: 100%;
 
@@ -24,4 +32,16 @@
   &-successful {
     color: seagreen;
   }
+}
+
+.left {
+  align-items: flex-start;
+}
+
+.center {
+  align-items: center;
+}
+
+.right {
+  align-items: flex-end;
 }

@@ -15,7 +15,7 @@ export class JokeCardComponent implements OnInit {
   @Input() joke: JokeInterface;
   // variable that change styles depends where jokes at (main-jokes/favorite)
   @Input() isFavorites: boolean;
-  private isUserAuthorised: boolean;
+  public isUserAuthorised: boolean;
   public errorMessage: string;
   // variable for disabling clicking heart while receiving a response
   public isWaitingForResponse = false;
@@ -33,6 +33,11 @@ export class JokeCardComponent implements OnInit {
       this.joke = this.jokesService.checkIfJokeIsFavorite(this.joke);
     }
     this.authService.currentUser.subscribe(userData => this.isUserAuthorised = !!userData);
+  }
+
+  public saveJokeAndGoToEditing(): void {
+    this.jokesService.changeCurrentJokeForEditing(this.joke);
+    this.router.navigate(['/modify-joke/update']);
   }
 
   public onHeartIconClick() {

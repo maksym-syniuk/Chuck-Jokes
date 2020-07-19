@@ -1,3 +1,4 @@
+import { JokeFormMode } from './../enums/joke-form-mode.enum';
 import { JokesMapperService } from './jokes-mapper.service';
 import { map } from 'rxjs/operators';
 import { environment } from './../../../environments/environment.prod';
@@ -17,6 +18,12 @@ import { JokeInterface, CategoryInterface } from '../interfaces/joke.interface';
 export class JokesService {
   private apiUrl = environment.apiUrl;
 
+  private selectedJokeMode = new BehaviorSubject(JokeFormMode.create);
+  public currentSelectedJokeMode = this.selectedJokeMode.asObservable();
+
+  private selectedJokeForEditing = new BehaviorSubject({});
+  public currentSelectedJokeForEditing = this.selectedJokeForEditing.asObservable();
+
   private jokes = new BehaviorSubject([]);
   public currentJokes = this.jokes.asObservable();
 
@@ -31,6 +38,14 @@ export class JokesService {
     private favoriteJokesService: FavoriteJokeService,
     private jokesMapperService: JokesMapperService
   ) { }
+
+  public changeCurrentJokeMode(mode: JokeFormMode): void {
+    this.selectedJokeMode.next(mode);
+  }
+
+  public changeCurrentJokeForEditing(joke: JokeInterface): void {
+    this.selectedJokeForEditing.next(joke);
+  }
 
   public changeError(error: string) {
     this.errorMessage.next(error);
@@ -90,7 +105,15 @@ export class JokesService {
     return joke;
   }
 
-  public createJoke(joke: JokeInterface): Observable<any> {
+  public createJoke(joke: JokeInterface): Observable<JokeInterface> {
     return this.http.post<JokeInterface>(this.apiUrl, joke);
+  }
+
+  public updateJoke(joke: JokeInterface): Observable<any> {
+    return this.http.put<JokeInterface>(this.apiUrl, joke);
+  }
+
+  public deleteJoke(id: number | string): Observable<any> {
+    return this.http.delete<number | string>(`${this.apiUrl}/${id}`);
   }
 }

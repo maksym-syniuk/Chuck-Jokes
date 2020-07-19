@@ -2,11 +2,39 @@
 
 .joke {
   margin-top: 40px;
-  padding: 63px 27px 40px 41px;
+  padding: 50px 27px 50px 41px;
   background-color: $secondaryBackgroundColor;
   border-radius: 20px;
   display: flex;
   position: relative;
+
+  &__edit {
+    position: absolute;
+    bottom: 20px;
+    left: 100px;
+    cursor: pointer;
+    background: linear-gradient(to bottom, #ff9800 0%, #ff9800 100%) 0 100% repeat-x;
+    background-size: 4px 4px;
+    font-size: 11px;
+    color: #333333;
+    transition: background-size 0.4s;
+    padding: 2px 7px;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    border-radius: 4px;
+
+    &_favorite {
+      bottom: 24px;
+      left: 17px;
+      font-size: 11px;
+      padding: 2px 5px;
+      letter-spacing: 2px;
+    }
+
+    &:hover {
+      background-size: 4px 50px;
+    }
+  }
 
   &_dark-theme {
     margin-top: 20px;
