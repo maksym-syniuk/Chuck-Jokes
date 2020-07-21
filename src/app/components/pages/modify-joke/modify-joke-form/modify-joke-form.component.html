@@ -1,0 +1,44 @@
+<form class="form-modify" [formGroup]="form" (ngSubmit)="onSubmit()">
+
+  <mat-form-field *ngIf="updateJokeMode" class="form__field">
+    <mat-label>Joke ID</mat-label>
+    <input matInput type="number" placeholder="0" value="id" formControlName="id" />
+  </mat-form-field>
+
+  <mat-form-field class="form__field">
+    <mat-label>Joke message</mat-label>
+    <textarea matInput placeholder="Chuck Norris..." formControlName="value" cdkTextareaAutosize cdkAutosizeMinRows="1"
+      cdkAutosizeMaxRows="10"></textarea>
+    <mat-error *ngIf="form.get('value').invalid">You must enter a value</mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="form__field">
+    <mat-label>Joke url</mat-label>
+    <input matInput placeholder="https://..." value="Some url..." formControlName="url">
+  </mat-form-field>
+
+  <mat-form-field class="form__field">
+    <mat-label>Icon url</mat-label>
+    <input matInput placeholder="https://..." value="Some url..." formControlName="iconUrl">
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Categories</mat-label>
+    <mat-select formControlName="categories" multiple>
+      <mat-select-trigger>
+        {{form.get('categories').value ? form.get('categories').value[0] : ''}}
+        <span *ngIf="form.get('categories').value?.length > 1" class="example-additional-selection">
+          (+{{form.get('categories').value.length - 1}}
+          {{form.get('categories').value?.length === 2 ? 'other' : 'others'}})
+        </span>
+      </mat-select-trigger>
+      <mat-option *ngFor="let category of categories" [value]="category.title">{{category.title}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <div class="form__field form__field_center">
+    <button mat-raised-button color="primary" type="submit">
+      {{ updateJokeMode ? 'Update Joke' : 'Create Joke' }}
+    </button>
+  </div>
+</form>

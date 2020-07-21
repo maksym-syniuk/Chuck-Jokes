@@ -44,8 +44,8 @@
                 [disabled]="jokeTypeState === jokeTypeEnum.search && jokeForm.get('search').invalid">
                 Get a joke
             </button>
-            <button *ngIf="isUserLoggedIn" class="joke__button btn" routerLink="/modify-joke/create">
-                Modify jokes
+            <button *ngIf="isUserLoggedIn" class="joke__button btn" routerLink="create-joke">
+                Create joke
             </button>
         </div>
     </form>

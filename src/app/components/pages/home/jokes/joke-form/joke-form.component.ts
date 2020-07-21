@@ -1,5 +1,8 @@
+import {
+  CategoryModel,
+  JokeModel,
+} from './../../../../../shared/models/joke.model';
 import { AuthService } from './../../../../../shared/services/auth.service';
-import { JokeInterface, CategoryInterface } from './../../../../../shared/interfaces/joke.interface';
 import { JokeCategoryEnum } from './../../../../../shared/enums/joke-category.enum';
 import { JokeTypeEnum } from './../../../../../shared/enums/joke-type.enum';
 import { Component, OnInit, OnDestroy } from '@angular/core';
@@ -22,23 +25,31 @@ export class JokeFormComponent implements OnInit, OnDestroy {
   private unsubscribe = new Subject<void>();
 
   private formSubmitResolver = {
-    [JokeTypeEnum.random]: () => this.getRandomOrByCategoryJoke(JokeTypeEnum.random, null),
+    [JokeTypeEnum.random]: () =>
+      this.getRandomOrByCategoryJoke(JokeTypeEnum.random, null),
     [JokeTypeEnum.top]: () => this.getTopJokes(JokeTypeEnum.top),
-    [JokeTypeEnum.categories]: () => this.getRandomOrByCategoryJoke(JokeTypeEnum.categories, this.jokeForm.get('category').value),
-    [JokeTypeEnum.search]: () => this.searchJokes(this.jokeForm.get('search').value),
+    [JokeTypeEnum.categories]: () =>
+      this.getRandomOrByCategoryJoke(
+        JokeTypeEnum.categories,
+        this.jokeForm.get('category').value
+      ),
+    [JokeTypeEnum.search]: () =>
+      this.searchJokes(this.jokeForm.get('search').value),
   };
 
   constructor(
     private jokesService: JokesService,
     private formBuilder: FormBuilder,
     private authService: AuthService
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.initForm();
     this.getCategories();
     this.subscribeToFormTypeValueChanges();
-    this.authService.currentUser.subscribe(userData => this.isUserLoggedIn = !!userData);
+    this.authService.currentUser.subscribe(
+      (userData) => (this.isUserLoggedIn = !!userData)
+    );
   }
 
   private initForm(): void {
@@ -46,7 +57,7 @@ export class JokeFormComponent implements OnInit, OnDestroy {
       type: [JokeTypeEnum.random],
       top: [JokeTypeEnum.top],
       category: [JokeCategoryEnum.animal],
-      search: ['', [Validators.required, Validators.minLength(3)]]
+      search: ['', [Validators.required, Validators.minLength(3)]],
     });
   }
 
@@ -54,20 +65,21 @@ export class JokeFormComponent implements OnInit, OnDestroy {
     this.jokesService
       .getCategories()
       .pipe(
-        map((categories: CategoryInterface[]) => {
-          return categories.map((category: CategoryInterface) => category.title);
+        map((categories: CategoryModel[]) => {
+          return categories.map((category: CategoryModel) => category.title);
         }),
-        takeUntil(this.unsubscribe))
-      .subscribe(
-        (categoriesData: string[]) => {
-          this.categories = categoriesData;
-        });
+        takeUntil(this.unsubscribe)
+      )
+      .subscribe((categoriesData: string[]) => {
+        this.categories = categoriesData;
+      });
   }
 
   private subscribeToFormTypeValueChanges(): void {
-    this.jokeForm.get('type').valueChanges
-      .pipe(takeUntil(this.unsubscribe))
-      .subscribe(type => {
+    this.jokeForm
+      .get('type')
+      .valueChanges.pipe(takeUntil(this.unsubscribe))
+      .subscribe((type) => {
         this.jokeTypeState = type;
         if (type !== JokeTypeEnum.search) {
           this.jokeForm.get('search').reset();
@@ -77,32 +89,39 @@ export class JokeFormComponent implements OnInit, OnDestroy {
 
   private getTopJokes(type: JokeTypeEnum): void {
     this.jokesService.changeLoadingState(true);
-    this.jokesService.getTopJokes(type)
+    this.jokesService
+      .getTopJokes(type)
       .pipe(takeUntil(this.unsubscribe))
       .subscribe(
-        (jokes: JokeInterface[]) => {
+        (jokes: JokeModel[]) => {
           this.jokesService.changeJokes(jokes);
           this.jokesService.changeLoadingState(false);
         },
-        error => {
+        (error) => {
           this.jokesService.changeError(error);
           this.jokesService.changeLoadingState(false);
-        });
+        }
+      );
   }
 
-  private getRandomOrByCategoryJoke(type: JokeTypeEnum, categoryValue: JokeCategoryEnum): void {
+  private getRandomOrByCategoryJoke(
+    type: JokeTypeEnum,
+    categoryValue: JokeCategoryEnum
+  ): void {
     this.jokesService.changeLoadingState(true);
-    this.jokesService.getJoke(type, categoryValue)
+    this.jokesService
+      .getJoke(type, categoryValue)
       .pipe(takeUntil(this.unsubscribe))
       .subscribe(
-        (joke: JokeInterface[]) => {
+        (joke: JokeModel[]) => {
           this.jokesService.changeJokes(joke);
           this.jokesService.changeLoadingState(false);
         },
-        error => {
+        (error) => {
           this.jokesService.changeError(error);
           this.jokesService.changeLoadingState(false);
-        });
+        }
+      );
   }
 
   private searchJokes(searchValue: string): void {
@@ -111,14 +130,15 @@ export class JokeFormComponent implements OnInit, OnDestroy {
       .searchJokes(searchValue)
       .pipe(takeUntil(this.unsubscribe))
       .subscribe(
-        (jokes: JokeInterface[]) => {
+        (jokes: JokeModel[]) => {
           this.jokesService.changeJokes(jokes);
           this.jokesService.changeLoadingState(false);
         },
-        error => {
+        (error) => {
           this.jokesService.changeError(error);
           this.jokesService.changeLoadingState(false);
-        });
+        }
+      );
   }
 
   public submitForm(): void {

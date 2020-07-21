@@ -34,11 +34,25 @@ $chuck-jokes-app-theme: mat-light-theme((color: (primary: $chuck-jokes-app-prima
 @import "global";
 @import "variables";
 
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
 .container__left {
   max-width: 758px;
   padding: 0 40px;
   margin: 40px auto;
   margin-bottom: 0;
+}
+
+.joke__container {
+  height: 100%;
+  max-width: 600px;
+  display: grid;
+  align-items: center;
+  margin: 0 auto;
+  padding: 0 20px;
 }
 
 .category {
@@ -249,14 +263,4 @@ input.ng-invalid.ng-touched {
     margin: 20px auto;
     padding: 0 20px;
   }
-}
-
-html,
-body {
-  height: 100%;
-}
-
-body {
-  margin: 0;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
 }
