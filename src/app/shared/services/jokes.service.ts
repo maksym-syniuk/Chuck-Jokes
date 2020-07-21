@@ -17,12 +17,6 @@ import { Observable, BehaviorSubject } from 'rxjs';
 export class JokesService {
   private apiUrl = environment.apiUrl;
 
-  private selectedJokeMode = new BehaviorSubject(JokeFormMode.create);
-  public currentSelectedJokeMode = this.selectedJokeMode.asObservable();
-
-  private selectedJokeForEditing = new BehaviorSubject({});
-  public currentSelectedJokeForEditing = this.selectedJokeForEditing.asObservable();
-
   private jokes = new BehaviorSubject([]);
   public currentJokes = this.jokes.asObservable();
 
@@ -37,14 +31,6 @@ export class JokesService {
     private favoriteJokesService: FavoriteJokeService,
     private jokesMapperService: JokesMapperService
   ) {}
-
-  public changeCurrentJokeMode(mode: JokeFormMode): void {
-    this.selectedJokeMode.next(mode);
-  }
-
-  public changeCurrentJokeForEditing(joke: JokeModel): void {
-    this.selectedJokeForEditing.next(joke);
-  }
 
   public changeError(error: string) {
     this.errorMessage.next(error);
@@ -124,12 +110,21 @@ export class JokesService {
     return this.http.post<JokeModel>(this.apiUrl, joke);
   }
 
-  public updateJoke(joke: JokeModel): Observable<any> {
-    return this.http.put<JokeModel>(this.apiUrl, joke);
+  public updateJoke(joke: JokeModel): Observable<JokeModel[]> {
+    return this.http.put<JokeApiModel>(this.apiUrl, joke).pipe(
+      map((jokes: JokeApiModel) => {
+        return this.jokesMapperService.mapJokeApiForJokes([jokes]);
+      })
+    );
   }
 
   public deleteJoke(id: number | string): Observable<any> {
     return this.http.delete<number | string>(`${this.apiUrl}/${id}`);
+  }
+
+  public deleteJokeById(id: number | string): void {
+    const jokes = this.jokes.value.filter((joke) => joke.id !== id);
+    this.changeJokes(jokes);
   }
 
   public transformCategoriesStringToIds(

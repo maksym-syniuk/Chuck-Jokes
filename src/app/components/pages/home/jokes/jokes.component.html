@@ -1,29 +1,32 @@
 <div class="jokes">
-    <div class="jokes__container container__left">
-        <div class="jokes__header">
-            <h5 class="jokes__abbr">MSI 2020</h5>
-            <p *ngIf="userData" class="jokes__user">
-                Hello {{userData.firstName}}, click
-                <a (click)="logout()">here if you want to logout</a>
-            </p>
-            <button class="jokes__burger-btn" (click)="onToggleSidebar()"
-                [ngClass]="{'jokes__burger-btn_active': showSidebar}">
-                <span></span>
-                <p>Favorite</p>
-            </button>
-        </div>
-
-        <app-joke-form></app-joke-form>
-
-        <app-loader *ngIf="isLoading"></app-loader>
-
-        <div class="error" *ngIf="errorMessage; else showJokes">
-            <img src="assets/images/error.svg" alt="error">
-            <p>O-oops, joke not found</p>
-        </div>
-
-        <ng-template #showJokes>
-            <app-joke-card *ngFor="let joke of jokes" [joke]="joke" [isFavorites]="false"></app-joke-card>
-        </ng-template>
+  <div class="jokes__container container__left">
+    <div class="jokes__header">
+      <h5 class="jokes__abbr">MSI 2020</h5>
+      <p *ngIf="userData" class="jokes__user">
+        Hello {{userData.firstName}}, click
+        <a (click)="logout()">here if you want to logout</a>
+      </p>
+      <button class="jokes__burger-btn" (click)="onToggleSidebar()"
+        [ngClass]="{'jokes__burger-btn_active': showSidebar}">
+        <span></span>
+        <p>Favorite</p>
+      </button>
     </div>
+
+    <app-joke-form></app-joke-form>
+
+    <app-loader *ngIf="isLoading"></app-loader>
+
+    <div class="error" *ngIf="errorMessage; else showJokes">
+      <img src="assets/images/error.svg" alt="error">
+      <p>O-oops, joke not found</p>
+    </div>
+
+    <ng-template #showJokes>
+      <ng-container *ngIf="!isLoading">
+        <app-joke-card *ngFor="let joke of jokes" [joke]="joke" [isFavorites]="false">
+        </app-joke-card>
+      </ng-container>
+    </ng-template>
+  </div>
 </div>

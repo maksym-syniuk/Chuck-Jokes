@@ -6,6 +6,6 @@
   </mat-card>
 
   <div *ngIf="updatedJoke" class="joke-card__conatiner">
-    <app-joke-card [joke]="updatedJoke" [isFavorites]="true"></app-joke-card>
+    <app-joke-card *ngFor="let joke of updatedJoke" [joke]="joke" [isFavorites]="false"></app-joke-card>
   </div>
 </div>

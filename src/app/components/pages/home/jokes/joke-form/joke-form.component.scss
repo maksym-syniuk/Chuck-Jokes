@@ -2,7 +2,7 @@
 
 .joke {
   &__description {
-    margin-top: 40px;
+    margin-top: 20px;
   }
 
   &__title {
@@ -35,7 +35,7 @@
   &__description-controls {
     display: flex;
     flex-direction: column;
-    margin-top: 30px;
+    margin-top: 15px;
 
     & .control {
       position: relative;

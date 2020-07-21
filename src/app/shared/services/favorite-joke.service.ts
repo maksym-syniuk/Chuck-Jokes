@@ -44,6 +44,13 @@ export class FavoriteJokeService {
     this.currentFavoriteJokesSubject.next(jokes);
   }
 
+  public deleteFavoriteJokeById(id: number | string): void {
+    const jokes = this.currentFavoriteJokesSubject.value.filter(
+      (joke) => joke.id !== id
+    );
+    this.changeFavoriteJokes(jokes);
+  }
+
   public removeJokeFromFavorites(joke: JokeModel): void {
     joke.favorite = false;
     const jokes = [...this.currentFavoriteJokesSubject.value];

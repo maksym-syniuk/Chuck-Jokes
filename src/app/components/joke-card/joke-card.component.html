@@ -1,39 +1,45 @@
 <div class="joke" [ngClass]="{ 'joke_dark-theme': isFavorites }">
+  <div class="joke__message-icons">
     <a class="joke__message-icon" [ngClass]="{ 'joke__message-icon_dark': isFavorites }">
-        <img src="assets/images/message.svg" alt="message-icon" />
+      <img src="assets/images/message.svg" alt="message-icon" />
     </a>
-    <a class="joke__edit" [ngClass]="{ 'joke__edit_favorite': isFavorites }" *ngIf="isUserAuthorised"
-        (click)="saveJokeAndGoToEditing()">Edit</a>
-    <div class="joke__content">
-        <small class="joke__content-id">ID:
-            <a [href]="joke.url">
-                {{ joke.id }}
-                <img src="assets/images/link.svg" alt="link-icon" />
-            </a>
-        </small>
-        <p class="joke__content-body" [ngClass]="{ 'joke__content-body_small': isFavorites }">
-            {{ joke.value }}
-        </p>
-        <div class="joke__content-details">
-            <small class="joke__content-details_date">
-                Last update:
-                <strong>{{ joke.updatedAt | dateToHours }} hours ago</strong>
-            </small>
-            <div class="flex_wrap">
-                <span class="category" *ngFor="let category of joke.categories"
-                    [ngClass]="{'category_dark': isFavorites}">
-                    {{ category }}
-                </span>
-            </div>
-        </div>
+    <div class="icon" (click)="goToEditPage()">
+      <mat-icon class="icon_edit">edit</mat-icon>
     </div>
-    <div *ngIf="!isWaitingForResponse; else disableHeart" class="joke__heart"
-        [ngClass]="{'joke__heart_filled': isFavorites }" (click)="onHeartIconClick()">
-        <img [src]="joke.favorite ? 'assets/images/heart-filled.svg' : 'assets/images/heart.svg'" alt="heart-icon" />
+    <div class="icon" (click)="onDeleteIconClick()">
+      <mat-icon class="icon_delete">delete</mat-icon>
     </div>
-    <ng-template #disableHeart>
-        <div class="joke__heart_disabled" [ngClass]="{'joke__heart_disabled-favorite': isFavorites }">
-            <img src="assets/images/heart-disabled.svg" alt="heart-disabled" />
-        </div>
-    </ng-template>
+  </div>
+  <div class="joke__content">
+    <small class="joke__content-id">ID:
+      <a [href]="joke.url">
+        {{ joke.id }}
+        <img src="assets/images/link.svg" alt="link-icon" />
+      </a>
+    </small>
+    <p class="joke__content-body" [ngClass]="{ 'joke__content-body_small': isFavorites }">
+      {{ joke.value }}
+    </p>
+    <div class="joke__content-details">
+      <small class="joke__content-details_date">
+        Last update:
+        <strong>{{ joke.updatedAt | dateToHours }} hours ago</strong>
+      </small>
+      <span *ngIf="joke.categories && joke.categories[0]" class="category" [ngClass]="{'category_dark': isFavorites}">
+        {{joke.categories[0]}}
+        <span *ngIf="joke.categories?.length > 1">
+          (+{{joke.categories.length - 1}}
+          {{joke.categories?.length === 2 ? 'other' : 'others'}})
+        </span>
+      </span>
+    </div>
+  </div>
+  <div *ngIf="!isWaitingForResponse; else disableHeart" class="joke__heart" (click)="onHeartIconClick()">
+    <mat-icon>{{joke.favorite ?'favorite' :'favorite_border'}}</mat-icon>
+  </div>
+  <ng-template #disableHeart>
+    <div class="joke__heart joke__heart_disabled">
+      <mat-icon>favorite</mat-icon>
+    </div>
+  </ng-template>
 </div>
