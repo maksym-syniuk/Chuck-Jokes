@@ -1,7 +1,7 @@
 <div class="joke" [ngClass]="{ 'joke_dark-theme': isFavorites }">
   <div class="joke__message-icons">
     <a class="joke__message-icon" [ngClass]="{ 'joke__message-icon_dark': isFavorites }">
-      <img src="assets/images/message.svg" alt="message-icon" />
+      <img [src]=" joke.iconUrl ? joke.iconUrl :'assets/images/message.svg'" alt="message-icon" />
     </a>
     <div class="icon" (click)="goToEditPage()">
       <mat-icon class="icon_edit">edit</mat-icon>
