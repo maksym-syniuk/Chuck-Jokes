@@ -25,6 +25,11 @@ export class JokesComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this._subscribeToDataChanges();
+    this._getRandomJoke();
+  }
+
+  private _subscribeToDataChanges(): void {
     this.jokesService.currentLoadingState.subscribe(
       (state) => (this.isLoading = state)
     );
@@ -35,10 +40,9 @@ export class JokesComponent implements OnInit {
     this.authService.currentUser.subscribe(
       (authData) => (this.userData = authData && authData.user)
     );
-    this.getRandomJoke();
   }
 
-  private getRandomJoke(): void {
+  private _getRandomJoke(): void {
     this.jokesService
       .getJoke(JokeTypeEnum.random)
       .subscribe((joke: JokeModel[]) => (this.jokes = joke));

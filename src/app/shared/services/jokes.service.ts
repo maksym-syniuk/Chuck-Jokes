@@ -10,6 +10,7 @@ import { JokeCategoryEnum } from './../enums/joke-category.enum';
 import { JokeTypeEnum } from './../enums/joke-type.enum';
 import { FavoriteJokeService } from './favorite-joke.service';
 import { Observable, BehaviorSubject } from 'rxjs';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Injectable({
   providedIn: 'root',
@@ -29,7 +30,8 @@ export class JokesService {
   constructor(
     private http: HttpClient,
     private favoriteJokesService: FavoriteJokeService,
-    private jokesMapperService: JokesMapperService
+    private jokesMapperService: JokesMapperService,
+    private snackBar: MatSnackBar
   ) {}
 
   public changeError(error: string) {
@@ -141,5 +143,11 @@ export class JokesService {
       });
     });
     return ids;
+  }
+
+  public openSnackBar(message: string, action: string): void {
+    this.snackBar.open(message, action, {
+      duration: 2000,
+    });
   }
 }

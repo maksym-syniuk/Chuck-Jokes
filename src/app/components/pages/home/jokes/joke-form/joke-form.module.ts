@@ -4,15 +4,9 @@ import { JokeFormComponent } from './joke-form.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-
-
 @NgModule({
   declarations: [JokeFormComponent],
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    RouterModule
-  ],
-  exports: [JokeFormComponent, RouterModule]
+  imports: [CommonModule, ReactiveFormsModule, RouterModule],
+  exports: [JokeFormComponent, RouterModule],
 })
-export class JokeFormModule { }
+export class JokeFormModule {}

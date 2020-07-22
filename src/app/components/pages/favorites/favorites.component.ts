@@ -13,6 +13,10 @@ export class FavoritesComponent implements OnInit {
   constructor(private favoriteJokeService: FavoriteJokeService) {}
 
   ngOnInit(): void {
+    this._subscribeToFavoriteJokes();
+  }
+
+  private _subscribeToFavoriteJokes(): void {
     this.favoriteJokeService.currentFavoriteJokes.subscribe(
       (jokes: JokeModel[]) => (this.favoriteJokes = jokes)
     );

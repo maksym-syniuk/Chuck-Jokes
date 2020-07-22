@@ -2,7 +2,6 @@ import { JokeModel } from './../../../../shared/models/joke.model';
 import { ActivatedRoute, Params } from '@angular/router';
 import { JokesService } from './../../../../shared/services/jokes.service';
 import { Component, OnInit } from '@angular/core';
-import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-update-joke',
@@ -16,8 +15,7 @@ export class UpdateJokeComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private jokesService: JokesService,
-    private snackBar: MatSnackBar
+    private jokesService: JokesService
   ) {}
 
   ngOnInit(): void {
@@ -40,15 +38,9 @@ export class UpdateJokeComponent implements OnInit {
     this.jokesService.updateJoke(joke).subscribe(
       (updatedJoke: JokeModel[]) => {
         this.updatedJoke = updatedJoke;
-        this._openSnackbar('Joke was updated!');
+        this.jokesService.openSnackBar('Joke was updated!', 'Close');
       },
-      (error) => this._openSnackbar(error)
+      (error) => this.jokesService.openSnackBar(error, 'Close')
     );
-  }
-
-  private _openSnackbar(message: string): void {
-    this.snackBar.open(message, 'Close', {
-      duration: 2000,
-    });
   }
 }

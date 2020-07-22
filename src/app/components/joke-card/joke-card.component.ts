@@ -4,7 +4,6 @@ import { AuthService } from './../../shared/services/auth.service';
 import { FavoriteJokeService } from './../../shared/services/favorite-joke.service';
 import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
-import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-joke-card',
@@ -25,12 +24,10 @@ export class JokeCardComponent implements OnInit {
     private favoriteJokeService: FavoriteJokeService,
     private jokesService: JokesService,
     private authService: AuthService,
-    private router: Router,
-    private snackBar: MatSnackBar
+    private router: Router
   ) {}
 
   ngOnInit(): void {
-    console.log(this.joke);
     if (!this.isFavorites) {
       // change heart to filled in main-jokes if this joke is already in favorites
       this.joke = this.jokesService.checkIfJokeIsFavorite(this.joke);
@@ -44,9 +41,9 @@ export class JokeCardComponent implements OnInit {
     this.jokesService.deleteJoke(this.joke.id).subscribe(
       () => {
         this._deleteJokeFromServices(this.joke);
-        this._openSnackBar('Joke deleted!');
+        this.jokesService.openSnackBar('Joke deleted!', 'Close');
       },
-      (error) => this._openSnackBar(error)
+      (error) => this.jokesService.openSnackBar(error, 'Close')
     );
   }
 
@@ -79,12 +76,12 @@ export class JokeCardComponent implements OnInit {
       () => {
         this.favoriteJokeService.addJokeToFavorites(this.joke);
         this.isWaitingForResponse = false;
-        this._openSnackBar('Joke added to Favorites!');
+        this.jokesService.openSnackBar('Joke added to Favorites!', 'Close');
       },
       (error) => {
         this.errorMessage = error;
         this.isWaitingForResponse = false;
-        this._openSnackBar(error);
+        this.jokesService.openSnackBar(error, 'Close');
       }
     );
   }
@@ -96,19 +93,16 @@ export class JokeCardComponent implements OnInit {
         () => {
           this.favoriteJokeService.removeJokeFromFavorites(this.joke);
           this.isWaitingForResponse = false;
-          this._openSnackBar('Joke removed from Favorites!');
+          this.jokesService.openSnackBar(
+            'Joke removed from Favorites!',
+            'Close'
+          );
         },
         (error) => {
           this.errorMessage = error;
           this.isWaitingForResponse = false;
-          this._openSnackBar(error);
+          this.jokesService.openSnackBar(error, 'Close');
         }
       );
-  }
-
-  private _openSnackBar(message: string): void {
-    this.snackBar.open(message, 'Close', {
-      duration: 2000,
-    });
   }
 }
