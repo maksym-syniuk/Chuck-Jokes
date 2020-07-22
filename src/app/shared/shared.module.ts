@@ -8,7 +8,11 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
-  declarations: [JokeCardComponent, LoaderComponent, DateToHoursPipe],
+  declarations: [
+    JokeCardComponent,
+    LoaderComponent,
+    DateToHoursPipe
+  ],
   imports: [CommonModule, RouterModule, MatIconModule, MatSnackBarModule],
   exports: [JokeCardComponent, LoaderComponent, CommonModule, RouterModule],
 })
