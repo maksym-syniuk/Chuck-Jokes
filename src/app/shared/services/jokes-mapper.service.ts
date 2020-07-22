@@ -1,15 +1,13 @@
-import { JokeInterface } from '../interfaces/joke.interface';
-import { JokeApiInterface } from '../interfaces/joke-api.interface';
+import { JokeApiModel } from './../models/joke-api.model';
+import { JokeModel } from './../models/joke.model';
 import { Injectable } from '@angular/core';
 
 @Injectable()
-
 export class JokesMapperService {
+  constructor() {}
 
-  constructor() { }
-
-  public mapJokeApiForJokes(jokes: JokeApiInterface[]): JokeInterface[] {
-    return jokes.map((joke: JokeApiInterface) => {
+  public mapJokeApiForJokes(jokes: JokeApiModel[]): JokeModel[] {
+    return jokes.map((joke: JokeApiModel) => {
       return {
         id: joke.id,
         value: joke.value,
@@ -18,7 +16,7 @@ export class JokesMapperService {
         categories: [...joke.categories],
         createdAt: joke.createdAt,
         updatedAt: joke.updatedAt,
-        favorite: false
+        favorite: false,
       };
     });
   }

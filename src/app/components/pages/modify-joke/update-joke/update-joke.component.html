@@ -1,0 +1,11 @@
+<div class="joke__container">
+  <button class="modify__button" mat-stroked-button color="primary" routerLink="/">Go Back</button>
+  <mat-card>
+    <app-modify-joke-form [updateJokeMode]="true" (submitForm)="onJokeUpdate($event)" [joke]="joke">
+    </app-modify-joke-form>
+  </mat-card>
+
+  <div *ngIf="updatedJoke" class="joke-card__conatiner">
+    <app-joke-card *ngFor="let joke of updatedJoke" [joke]="joke" [isFavorites]="false"></app-joke-card>
+  </div>
+</div>

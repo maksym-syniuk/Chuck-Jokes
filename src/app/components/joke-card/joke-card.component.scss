@@ -2,11 +2,39 @@
 
 .joke {
   margin-top: 40px;
-  padding: 63px 27px 40px 41px;
+  padding: 50px 27px 50px 41px;
   background-color: $secondaryBackgroundColor;
   border-radius: 20px;
   display: flex;
   position: relative;
+
+  &__edit {
+    position: absolute;
+    bottom: 20px;
+    left: 100px;
+    cursor: pointer;
+    background: linear-gradient(to bottom, #ff9800 0%, #ff9800 100%) 0 100% repeat-x;
+    background-size: 4px 4px;
+    font-size: 11px;
+    color: $primaryTextColor;
+    transition: background-size 0.4s;
+    padding: 2px 7px;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    border-radius: 4px;
+
+    &_favorite {
+      bottom: 24px;
+      left: 17px;
+      font-size: 11px;
+      padding: 2px 5px;
+      letter-spacing: 2px;
+    }
+
+    &:hover {
+      background-size: 4px 50px;
+    }
+  }
 
   &_dark-theme {
     margin-top: 20px;
@@ -22,11 +50,18 @@
     top: 40px;
     right: 38px;
     cursor: pointer;
+    transition: 0.2s;
+
+    mat-icon {
+      color: #FF6767;
+      font-size: 1.5rem;
+      transition: 0.3s;
+    }
 
     &_disabled {
-      position: absolute;
-      top: 40px;
-      right: 38px;
+      mat-icon {
+        color: $primaryTextColor;
+      }
 
       &-favorite {
         top: 21px;
@@ -34,14 +69,19 @@
       }
     }
 
-    &:hover {
-      background: url("../../../assets/images/heart-filled.svg") no-repeat;
+    &:hover mat-icon {
+      font-size: 1.7rem;
     }
 
     &_filled {
       top: 21px;
       right: 19px;
     }
+  }
+
+  &__message-icons {
+    display: flex;
+    flex-direction: column;
   }
 
   &__message-icon {
@@ -69,6 +109,9 @@
   &__content {
     width: 100%;
     max-width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 
     &-id {
       color: $secondaryTextColor;
@@ -98,11 +141,47 @@
       justify-content: space-between;
       align-items: center;
       margin-top: 22px;
+      margin-bottom: 5px;
 
       &_date {
         font-size: 10px;
         color: $secondaryTextColor;
       }
+    }
+  }
+}
+
+
+.example-additional-selection {
+  opacity: 0.75;
+  font-size: 0.75em;
+}
+
+.icon {
+  padding: 10px;
+  margin-right: 19px;
+  cursor: pointer;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  text-align: center;
+  margin-bottom: 3px;
+
+  &_edit {
+    transform: translate(-7%, -7%);
+    transition: 0.3s;
+
+    &:hover {
+      color: rgb(231, 209, 4);
+    }
+  }
+
+  &_delete {
+    transform: translate(-7%, -7%);
+    transition: 0.3s;
+
+    &:hover {
+      color: rgb(255, 60, 0);
     }
   }
 }
@@ -136,6 +215,7 @@
     &__content-details {
       flex-wrap: wrap;
       margin-top: 29px;
+      margin-bottom: 5px;
 
       &_date {
         margin-bottom: 10px;

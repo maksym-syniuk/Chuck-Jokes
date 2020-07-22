@@ -1,0 +1,52 @@
+<div class="joke__description">
+  <h1 class="joke__title">Hey!</h1>
+  <h2 class="joke__subtitle">Let’s try to find a joke for you:</h2>
+
+  <form [formGroup]="jokeForm" (ngSubmit)="submitForm()" class="joke__description-controls">
+    <div class="control">
+      <input formControlName="type" type="radio" id="random" [value]="jokeTypeEnum.random" />
+      <span class="control__radio-btn"></span>
+      <label for="random">Random</label>
+    </div>
+
+    <div class="control">
+      <input formControlName="type" type='radio' id="top" [value]="jokeTypeEnum.top" />
+      <span class="control__radio-btn"></span>
+      <label for="top">Top</label>
+    </div>
+
+    <div class="control">
+      <input formControlName="type" type="radio" id="categories" [value]="jokeTypeEnum.categories" />
+      <span class="control__radio-btn"></span>
+      <label for="categories">From categories</label>
+      <div *ngIf="jokeTypeState === jokeTypeEnum.categories" class="control__pop-up control__pop-up_category">
+        <div *ngFor="let category of categories" class="category__container">
+          <input formControlName="category" type="radio" [id]="category" [value]="category" />
+          <label class="category_big" [for]="category">{{ category }}</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="control">
+      <input formControlName="type" type="radio" id="search" [value]="jokeTypeEnum.search" />
+      <span class="control__radio-btn"></span>
+      <label for="search">Search</label>
+      <div *ngIf="jokeTypeState === jokeTypeEnum.search" class="control__pop-up control__pop-up_search">
+        <input formControlName="search" class="search-form" type="text" placeholder="Free text search..." />
+        <span class="control__invalid" *ngIf="jokeForm.get('search').invalid && jokeForm.get('search').touched">
+          <small>*This line should be more than 2 symbols!</small>
+        </span>
+      </div>
+    </div>
+
+    <div class="joke__buttons">
+      <button class="joke__button btn" type="submit"
+        [disabled]="jokeTypeState === jokeTypeEnum.search && jokeForm.get('search').invalid">
+        Get a joke
+      </button>
+      <button *ngIf="isUserLoggedIn" type="button" class="joke__button btn" routerLink="create-joke">
+        Create joke
+      </button>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,21 @@
+.form-modify {
+  padding: 0 20px;
+}
+
+.form__field {
+  width: 100%;
+
+  &_center {
+    text-align: center;
+  }
+}
+
+mat-select-trigger,
+mat-option {
+  text-transform: capitalize;
+}
+
+.example-additional-selection {
+  opacity: 0.75;
+  font-size: 0.75em;
+}
