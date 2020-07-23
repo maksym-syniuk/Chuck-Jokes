@@ -5,6 +5,17 @@
     margin-top: 20px;
   }
 
+  &__buttons {
+    position: relative;
+
+    .spinner {
+      position: absolute;
+      display: inline;
+      top: -40%;
+      left: 55%;
+    }
+  }
+
   &__title {
     font-weight: bold;
     font-size: 32px;

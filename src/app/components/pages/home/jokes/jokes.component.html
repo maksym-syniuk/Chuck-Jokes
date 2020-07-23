@@ -13,9 +13,7 @@
       </button>
     </div>
 
-    <app-joke-form></app-joke-form>
-
-    <app-loader *ngIf="isLoading"></app-loader>
+    <app-joke-form [isLoading]="isLoading"></app-joke-form>
 
     <div class="error" *ngIf="errorMessage; else showJokes">
       <img src="assets/images/error.svg" alt="error">
@@ -28,5 +26,6 @@
         </app-joke-card>
       </ng-container>
     </ng-template>
+
   </div>
 </div>

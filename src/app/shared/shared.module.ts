@@ -1,7 +1,7 @@
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { JokeCardComponent } from './../components/joke-card/joke-card.component';
-import { LoaderComponent } from './../components/loader/loader.component';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DateToHoursPipe } from './pipes/date-to-hours.pipe';
@@ -13,7 +13,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
-  declarations: [JokeCardComponent, LoaderComponent, DateToHoursPipe],
+  declarations: [JokeCardComponent, DateToHoursPipe],
   imports: [
     CommonModule,
     ReactiveFormsModule,
@@ -24,11 +24,11 @@ import { MatSelectModule } from '@angular/material/select';
     MatFormFieldModule,
     MatButtonModule,
     MatSelectModule,
+    MatProgressSpinnerModule,
   ],
   exports: [
     JokeCardComponent,
     ReactiveFormsModule,
-    LoaderComponent,
     CommonModule,
     RouterModule,
     MatIconModule,
@@ -37,6 +37,7 @@ import { MatSelectModule } from '@angular/material/select';
     MatFormFieldModule,
     MatButtonModule,
     MatSelectModule,
+    MatProgressSpinnerModule,
   ],
 })
 export class SharedModule {}

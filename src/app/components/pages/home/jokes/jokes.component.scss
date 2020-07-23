@@ -1,6 +1,7 @@
 @import "variables";
 
 .jokes {
+  position: relative;
 
   &__header {
     display: flex;

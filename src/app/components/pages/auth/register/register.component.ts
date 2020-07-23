@@ -24,7 +24,9 @@ export class RegisterComponent {
           .login(data)
           .subscribe(() => this.router.navigate(['/']));
       },
-      (error) => (this.errorMessage = error)
+      (error) =>
+        (this.errorMessage =
+          error === 'Bad Request' ? 'Oops, some error occured :(' : error)
     );
   }
 }
