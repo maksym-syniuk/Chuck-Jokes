@@ -1,0 +1,20 @@
+<div class="modify-categories">
+  <button class="modify_button" mat-stroked-button color="primary" type="button" routerLink="/">Go Back</button>
+  <mat-card class="card">
+    <mat-tab-group mat-stretch-tabs>
+      <mat-tab label="Create Category">
+        <div class="card__container">
+          <mat-error *ngIf="createErrorMessage">{{createErrorMessage}}</mat-error>
+          <app-modify-categories-form (submitForm)="onCreateCategory($event)"></app-modify-categories-form>
+        </div>
+      </mat-tab>
+      <mat-tab label="Delete Category">
+        <div class="card__container">
+          <mat-error class="form_full-width form_center" *ngIf="deleteErrorMessage">{{deleteErrorMessage}}</mat-error>
+          <app-modify-categories-form [deleteMode]="true" (submitForm)="onDeleteCategory($event.id)">
+          </app-modify-categories-form>
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+  </mat-card>
+</div>

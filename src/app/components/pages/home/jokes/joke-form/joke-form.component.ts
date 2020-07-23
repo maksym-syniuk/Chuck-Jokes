@@ -19,7 +19,6 @@ import { takeUntil, map } from 'rxjs/operators';
   styleUrls: ['./joke-form.component.scss'],
 })
 export class JokeFormComponent implements OnInit, OnDestroy {
-  @Input() isLoading: boolean;
   public jokeForm: FormGroup;
   public categories: string[] = [];
   public jokeTypeEnum = JokeTypeEnum;

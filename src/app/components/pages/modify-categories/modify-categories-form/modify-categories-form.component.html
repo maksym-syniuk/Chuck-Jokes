@@ -1,0 +1,24 @@
+<form class="form" [formGroup]="form" (ngSubmit)="onSubmit()">
+
+  <mat-form-field class="form_full-width" *ngIf="!deleteMode">
+    <mat-label>Title</mat-label>
+    <input matInput placeholder="Ex. Animal" type="text" formControlName="title">
+    <mat-error *ngIf="form.get('title').hasError('required')">
+      Title is <strong>required</strong>
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="form_full-width" *ngIf="deleteMode">
+    <mat-label>ID</mat-label>
+    <input matInput placeholder="Ex. 21" type="number" formControlName="id">
+    <mat-error *ngIf="form.get('id').hasError('required')">
+      ID is <strong>required</strong>
+    </mat-error>
+  </mat-form-field>
+
+  <div class="form_full-width form_center">
+    <button *ngIf="!deleteMode" mat-raised-button color="primary" type="submit">Create</button>
+    <button *ngIf="deleteMode" mat-raised-button color="warn" type="submit">Delete</button>
+  </div>
+
+</form>

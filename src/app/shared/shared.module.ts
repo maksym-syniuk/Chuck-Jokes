@@ -11,6 +11,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatCardModule } from '@angular/material/card';
 
 @NgModule({
   declarations: [JokeCardComponent, DateToHoursPipe],
@@ -25,6 +27,8 @@ import { MatSelectModule } from '@angular/material/select';
     MatButtonModule,
     MatSelectModule,
     MatProgressSpinnerModule,
+    MatTabsModule,
+    MatCardModule,
   ],
   exports: [
     JokeCardComponent,
@@ -38,6 +42,8 @@ import { MatSelectModule } from '@angular/material/select';
     MatButtonModule,
     MatSelectModule,
     MatProgressSpinnerModule,
+    MatTabsModule,
+    MatCardModule,
   ],
 })
 export class SharedModule {}

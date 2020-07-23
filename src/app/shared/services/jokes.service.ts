@@ -121,7 +121,15 @@ export class JokesService {
   }
 
   public deleteJoke(id: number | string): Observable<any> {
-    return this.http.delete<number | string>(`${this.apiUrl}/${id}`);
+    return this.http.delete<boolean>(`${this.apiUrl}/${id}`);
+  }
+
+  public createCategory(title: string): Observable<CategoryModel> {
+    return this.http.post<CategoryModel>(`${this.apiUrl}/categories`, title);
+  }
+
+  public deleteCategory(id: number): Observable<any> {
+    return this.http.delete<any>(`${this.apiUrl}/categories/${id}`);
   }
 
   public deleteJokeById(id: number | string): void {

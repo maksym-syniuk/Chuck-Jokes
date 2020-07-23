@@ -3,6 +3,13 @@
 .jokes {
   position: relative;
 
+  .spinner {
+    margin-top: 40px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
   &__header {
     display: flex;
     justify-content: space-between;
