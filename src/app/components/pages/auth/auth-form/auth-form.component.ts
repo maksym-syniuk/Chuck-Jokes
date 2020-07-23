@@ -40,13 +40,16 @@ export class AuthFormComponent implements OnInit {
         'lastName',
         new FormControl('', [Validators.minLength(2)])
       );
-      this.form.addControl('roles', new FormControl(''));
+      this.form.addControl('roles', new FormControl(null));
     }
   }
 
   public onSubmit(): void {
     if (this.form.valid) {
-      this.form.value.roles = [this.form.value.roles];
+      // if there is any role convert roles: Role to roles: [Role]
+      if (this.form.value.roles) {
+        this.form.value.roles = [this.form.value.roles];
+      }
       this.submitForm.emit(this.form.value);
     }
   }

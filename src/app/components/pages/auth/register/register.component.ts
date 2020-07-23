@@ -13,6 +13,7 @@ export class RegisterComponent {
   constructor(private authService: AuthService, private router: Router) {}
 
   public register(formValue) {
+    console.log(formValue);
     this.authService.register(formValue).subscribe(
       () => {
         const data = {
