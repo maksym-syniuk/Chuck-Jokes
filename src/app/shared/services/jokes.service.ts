@@ -4,7 +4,7 @@ import { map } from 'rxjs/operators';
 import { JokeApiModel } from './../models/joke-api.model';
 import { JokeModel, CategoryModel } from './../models/joke.model';
 import { JokeFormMode } from './../enums/joke-form-mode.enum';
-import { JokesMapperService } from './jokes-mapper.service';
+import { JokesMapperService } from './mapper.service';
 import { environment } from './../../../environments/environment.prod';
 import { JokeCategoryEnum } from './../enums/joke-category.enum';
 import { JokeTypeEnum } from './../enums/joke-type.enum';

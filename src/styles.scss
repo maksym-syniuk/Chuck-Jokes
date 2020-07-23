@@ -180,6 +180,7 @@ input.ng-invalid.ng-touched {
   padding: 20px;
   background-color: white;
   border-radius: 4px;
+  max-width: 400px;
 
   &__title {
     text-align: center;
@@ -211,44 +212,23 @@ input.ng-invalid.ng-touched {
       color: $accentBackgroundHoverColor;
     }
   }
+
+  &__error {
+    color: tomato;
+  }
 }
 
 .form {
-  display: flex;
-  flex-direction: column;
-  margin-top: 40px;
-  position: relative;
-
-  button {
-    margin: 0 30px;
+  &_full-width {
+    width: 100%;
   }
 
-  input {
-    min-width: 350px;
-    padding: 10px 20px;
-    margin-bottom: 20px;
-    border: 1px solid $secondaryTextColor;
-    border-radius: 4px;
+  &_half-width {
+    width: 50%;
   }
 
-  &__control {
-    position: relative;
-  }
-
-  .error {
-    position: absolute;
-    top: -28px;
-    left: 11%;
-    color: tomato;
-
-    &-message {
-      text-align: left;
-      color: tomato;
-      position: absolute;
-      top: 42px;
-      left: 0;
-      margin-left: 10px;
-    }
+  &_center {
+    text-align: center;
   }
 }
 

@@ -1,7 +1,7 @@
 import { JokeModel } from './../models/joke.model';
 import { JokeApiModel } from './../models/joke-api.model';
 import { environment } from './../../../environments/environment.prod';
-import { JokesMapperService } from './jokes-mapper.service';
+import { JokesMapperService } from './mapper.service';
 import { map } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';

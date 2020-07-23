@@ -1,0 +1,56 @@
+<form class="form" [formGroup]="form" (ngSubmit)="onSubmit()">
+
+  <mat-form-field class="form_full-width" *ngIf="isRegisterMode">
+    <mat-label>First Name</mat-label>
+    <input matInput placeholder="Ex. Max" type="text" formControlName="firstName">
+    <mat-error *ngIf="form.get('firstName').hasError('minlength') && !form.get('firstName').hasError('required')">
+      Name should be more than 2 symbols
+    </mat-error>
+    <mat-error *ngIf="form.get('firstName').hasError('required')">
+      Name is <strong>required</strong>
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="form_full-width" *ngIf="isRegisterMode">
+    <mat-label>Last Name</mat-label>
+    <input matInput placeholder="Ex. Sinyuk" type="text" formControlName="lastName">
+  </mat-form-field>
+
+  <mat-form-field class="form_full-width">
+    <mat-label>Email</mat-label>
+    <input matInput placeholder="test@example.com" type="email" formControlName="email">
+    <mat-error *ngIf="form.get('email').hasError('email') && !form.get('email').hasError('required')">
+      Please enter a valid email address
+    </mat-error>
+    <mat-error *ngIf="form.get('email').hasError('required')">
+      Email is <strong>required</strong>
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="form_full-width">
+    <mat-label>Password</mat-label>
+    <input matInput [type]="hidePassword ? 'password' : 'text'" formControlName="password">
+    <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword" [attr.aria-label]="'Hide password'"
+      [attr.aria-pressed]="hidePassword" type="button">
+      <mat-icon id="password-icon">{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+    </button>
+    <mat-error *ngIf="form.get('password').hasError('minlength') && !form.get('password').hasError('required')">
+      Password must be more than 6 symbols
+    </mat-error>
+    <mat-error *ngIf="form.get('password').hasError('required')">
+      Password is <strong>required</strong>
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="form_full-width" *ngIf="isRegisterMode">
+    <mat-label>Roles</mat-label>
+    <mat-select formControlName="roles">
+      <mat-option [value]="role.SUPERADMIN">{{role.SUPERADMIN}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <div class="form_full-width form_center">
+    <button *ngIf="isRegisterMode" mat-raised-button color="primary" type="submit">Register</button>
+    <button *ngIf="!isRegisterMode" mat-raised-button color="primary" type="submit">Login</button>
+  </div>
+</form>
