@@ -1,9 +1,11 @@
+import { AuthInterface } from './../../shared/interfaces/auth.interface';
 import { JokeModel } from './../../shared/models/joke.model';
 import { JokesService } from 'src/app/shared/services/jokes.service';
 import { AuthService } from './../../shared/services/auth.service';
 import { FavoriteJokeService } from './../../shared/services/favorite-joke.service';
 import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
+import { Role } from 'src/app/shared/models/user.model';
 
 @Component({
   selector: 'app-joke-card',
@@ -15,7 +17,10 @@ export class JokeCardComponent implements OnInit {
   // variable that change styles depends where jokes at (main-jokes/favorite)
   @Input() isFavorites: boolean;
 
-  public isUserAuthorised: boolean;
+  // public isUserAuthorised: boolean;
+  // public isAdmin: boolean;
+  public userData: AuthInterface;
+  public isSuperAdmin: boolean;
   public errorMessage: string;
   // variable for disabling clicking heart while receiving a response
   public isWaitingForResponse = false;
@@ -32,9 +37,16 @@ export class JokeCardComponent implements OnInit {
       // change heart to filled in main-jokes if this joke is already in favorites
       this.joke = this.jokesService.checkIfJokeIsFavorite(this.joke);
     }
-    this.authService.currentUser.subscribe(
-      (userData) => (this.isUserAuthorised = !!userData)
-    );
+    this._subscribeToGetUserData();
+  }
+
+  private _subscribeToGetUserData(): void {
+    this.authService.currentUser.subscribe((userData: AuthInterface) => {
+      this.userData = userData;
+      if (userData) {
+        this.isSuperAdmin = userData.user.roles.includes(Role.SUPERADMIN);
+      }
+    });
   }
 
   public onDeleteIconClick(): void {
@@ -61,7 +73,7 @@ export class JokeCardComponent implements OnInit {
   }
 
   public onHeartIconClick() {
-    if (this.isUserAuthorised) {
+    if (this.userData) {
       this.isWaitingForResponse = true;
       this.joke.favorite
         ? this.removeJokeFromFavorite()
@@ -101,7 +113,6 @@ export class JokeCardComponent implements OnInit {
         (error) => {
           this.errorMessage = error;
           this.isWaitingForResponse = false;
-          this.jokesService.openSnackBar(error, 'Close');
         }
       );
   }

@@ -8,9 +8,15 @@ import { AuthGuard } from './../../../../shared/guards/auth.guard';
 import { UpdateJokeComponent } from './update-joke.component';
 import { ModifyJokeFormModule } from './../modify-joke-form/modify-joke-form.module';
 import { MatButtonModule } from '@angular/material/button';
+import { Role } from 'src/app/shared/models/user.model';
 
 const routes: Routes = [
-  { path: '', component: UpdateJokeComponent, canActivate: [AuthGuard] },
+  {
+    path: '',
+    component: UpdateJokeComponent,
+    canActivate: [AuthGuard],
+    data: { roles: [Role.SUPERADMIN] },
+  },
 ];
 
 @NgModule({

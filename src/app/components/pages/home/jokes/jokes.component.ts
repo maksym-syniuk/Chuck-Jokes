@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { JokeModel } from './../../../../shared/models/joke.model';
 import { JokeTypeEnum } from './../../../../shared/enums/joke-type.enum';
 import { AuthService } from './../../../../shared/services/auth.service';
@@ -21,7 +22,8 @@ export class JokesComponent implements OnInit {
   constructor(
     private favoriteJokeService: FavoriteJokeService,
     private jokesService: JokesService,
-    private authService: AuthService
+    private authService: AuthService,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -55,5 +57,6 @@ export class JokesComponent implements OnInit {
 
   public logout() {
     this.authService.logout();
+    this.router.navigate(['/login']);
   }
 }

@@ -1,3 +1,5 @@
+import { Role } from 'src/app/shared/models/user.model';
+import { AuthInterface } from './../../../../../shared/interfaces/auth.interface';
 import {
   CategoryModel,
   JokeModel,
@@ -22,6 +24,7 @@ export class JokeFormComponent implements OnInit, OnDestroy {
   public jokeTypeEnum = JokeTypeEnum;
   public jokeTypeState: string;
   public isUserLoggedIn: boolean;
+  public isSuperAdmin: boolean;
   private unsubscribe = new Subject<void>();
 
   private formSubmitResolver = {
@@ -47,9 +50,16 @@ export class JokeFormComponent implements OnInit, OnDestroy {
     this.initForm();
     this.getCategories();
     this.subscribeToFormTypeValueChanges();
-    this.authService.currentUser.subscribe(
-      (userData) => (this.isUserLoggedIn = !!userData)
-    );
+    this._subscribeToGetuserData();
+  }
+
+  private _subscribeToGetuserData(): void {
+    this.authService.currentUser.subscribe((userData: AuthInterface) => {
+      this.isUserLoggedIn = !!userData;
+      if (userData) {
+        this.isSuperAdmin = userData.user.roles.includes(Role.SUPERADMIN);
+      }
+    });
   }
 
   private initForm(): void {

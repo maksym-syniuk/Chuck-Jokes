@@ -1,7 +1,11 @@
 export class UserModel {
-    id: number;
-    email: string;
-    firstName: string;
-    lastName: string;
-    roles: [];
+  id: number;
+  email: string;
+  firstName: string;
+  lastName: string;
+  roles: Role[];
+}
+
+export enum Role {
+  SUPERADMIN = 'SuperAdmin',
 }
