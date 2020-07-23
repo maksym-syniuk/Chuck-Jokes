@@ -3,6 +3,9 @@
   <mat-form-field class="form_full-width" *ngIf="!deleteMode">
     <mat-label>Title</mat-label>
     <input matInput placeholder="Ex. Animal" type="text" formControlName="title">
+    <mat-error *ngIf="form.get('title').hasError('forbiddenCategories')">
+      There is such <strong>category</strong>
+    </mat-error>
     <mat-error *ngIf="form.get('title').hasError('required')">
       Title is <strong>required</strong>
     </mat-error>

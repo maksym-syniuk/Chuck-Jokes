@@ -137,6 +137,18 @@ export class JokesService {
     this.changeJokes(jokes);
   }
 
+  public checkExistCategories(
+    category: string
+  ): Observable<object> | Observable<null> {
+    return this.http
+      .get<object | null>(
+        `${this.apiUrl}/categories/exists?categoryTitle=${category}`
+      )
+      .pipe(
+        map((response) => (response ? { forbiddenCategories: true } : null))
+      );
+  }
+
   public transformCategoriesStringToIds(
     categories: string[]
   ): number[] | string[] {

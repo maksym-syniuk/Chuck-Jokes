@@ -1,4 +1,11 @@
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { JokesService } from 'src/app/shared/services/jokes.service';
+import { Observable } from 'rxjs';
+import {
+  FormGroup,
+  FormBuilder,
+  Validators,
+  FormControl,
+} from '@angular/forms';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
@@ -11,7 +18,10 @@ export class ModifyCategoriesFormComponent implements OnInit {
   @Input() deleteMode: boolean;
   @Output() submitForm = new EventEmitter();
 
-  constructor(private formBuilder: FormBuilder) {}
+  constructor(
+    private formBuilder: FormBuilder,
+    private jokesService: JokesService
+  ) {}
 
   ngOnInit(): void {
     this._initForm();
@@ -23,7 +33,7 @@ export class ModifyCategoriesFormComponent implements OnInit {
           id: ['', Validators.required],
         }))
       : (this.form = this.formBuilder.group({
-          title: ['', Validators.required],
+          title: ['', Validators.required, this.forbiddenCategories.bind(this)],
         }));
   }
 
@@ -31,5 +41,12 @@ export class ModifyCategoriesFormComponent implements OnInit {
     if (this.form.valid) {
       this.submitForm.emit(this.form.value);
     }
+  }
+
+  public forbiddenCategories(
+    control: FormControl
+  ): Observable<object> | Observable<null> {
+    console.log('calling');
+    return this.jokesService.checkExistCategories(control.value);
   }
 }
