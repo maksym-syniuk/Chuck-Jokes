@@ -3,7 +3,6 @@ import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { JokeApiModel } from './../models/joke-api.model';
 import { JokeModel, CategoryModel } from './../models/joke.model';
-import { JokeFormMode } from './../enums/joke-form-mode.enum';
 import { JokesMapperService } from './mapper.service';
 import { environment } from './../../../environments/environment.prod';
 import { JokeCategoryEnum } from './../enums/joke-category.enum';
@@ -27,6 +26,9 @@ export class JokesService {
   private errorMessage = new BehaviorSubject('');
   public currentErrorMessage = this.errorMessage.asObservable();
 
+  public categories = new BehaviorSubject<CategoryModel[]>([]);
+  private currentCategories = this.categories.asObservable();
+
   constructor(
     private http: HttpClient,
     private favoriteJokesService: FavoriteJokeService,
@@ -44,6 +46,10 @@ export class JokesService {
 
   public changeLoadingState(state: boolean) {
     this.loadingState.next(state);
+  }
+
+  public changeCategories(categories: CategoryModel[]) {
+    this.categories.next(categories);
   }
 
   public getJoke(
@@ -149,20 +155,14 @@ export class JokesService {
       );
   }
 
-  public transformCategoriesStringToIds(
-    categories: string[]
-  ): number[] | string[] {
-    const ids = [];
-    this.getCategories().subscribe((apiCategories: CategoryModel[]) => {
-      categories.map((category) => {
-        apiCategories.map((ctg) => {
-          if (category === ctg.title) {
-            ids.push(ctg.id);
-          }
-        });
-      });
-    });
-    return ids;
+  public transformCategoryStringToId(category: string) {
+    let id: number | string;
+    this.categories.value.map((apiCategory) =>
+      apiCategory.title.toLowerCase() === category.toLowerCase()
+        ? (id = apiCategory.id)
+        : null
+    );
+    return id;
   }
 
   public openSnackBar(message: string, action: string): void {

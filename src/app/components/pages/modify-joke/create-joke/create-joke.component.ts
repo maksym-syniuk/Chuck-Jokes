@@ -14,11 +14,12 @@ export class CreateJokeComponent {
   constructor(private jokesService: JokesService) {}
 
   public onJokeCreate(joke: any): void {
-    joke.categories = this.jokesService.transformCategoriesStringToIds(
-      joke.categories
+    joke.categories = joke.categories.map((category) =>
+      this.jokesService.transformCategoryStringToId(category)
     );
     this.jokesService.createJoke(joke).subscribe(
       (createdJoke: JokeModel) => {
+        console.log(createdJoke);
         this.createdJoke = createdJoke;
         this.jokesService.openSnackBar('Joke Created!', 'Close');
       },

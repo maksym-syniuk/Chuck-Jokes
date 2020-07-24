@@ -7,7 +7,7 @@
 
   <mat-form-field class="form__field">
     <mat-label>Joke message</mat-label>
-    <textarea matInput placeholder="Chuck Norris..." formControlName="value" cdkTextareaAutosize cdkAutosizeMinRows="1"
+    <textarea matInput placeholder="Chuck Norris..." formControlName="value" cdkTextareaAutosize cdkAutosizeMinRows="2"
       cdkAutosizeMaxRows="10"></textarea>
     <mat-error *ngIf="form.get('value').invalid">You must enter a value</mat-error>
   </mat-form-field>
