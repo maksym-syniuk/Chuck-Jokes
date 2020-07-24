@@ -25,7 +25,8 @@
         Last update:
         <strong>{{ joke.updatedAt | dateToHours }} hours ago</strong>
       </small>
-      <span *ngIf="joke.categories && joke.categories[0]" class="category" [ngClass]="{'category_dark': isFavorites}">
+      <span [matTooltip]="joke.categories.length > 1 ? joke.categories : null"
+        *ngIf="joke.categories && joke.categories[0]" class="category" [ngClass]="{'category_dark': isFavorites}">
         {{joke.categories[0]}}
         <span *ngIf="joke.categories?.length > 1">
           (+{{joke.categories.length - 1}}

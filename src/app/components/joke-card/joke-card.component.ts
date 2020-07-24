@@ -16,9 +16,6 @@ export class JokeCardComponent implements OnInit {
   @Input() joke: JokeModel;
   // variable that change styles depends where jokes at (main-jokes/favorite)
   @Input() isFavorites: boolean;
-
-  // public isUserAuthorised: boolean;
-  // public isAdmin: boolean;
   public userData: AuthInterface;
   public isSuperAdmin: boolean;
   public errorMessage: string;

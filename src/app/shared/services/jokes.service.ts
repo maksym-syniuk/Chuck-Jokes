@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { map } from 'rxjs/operators';
+import { map, debounceTime } from 'rxjs/operators';
 import { JokeApiModel } from './../models/joke-api.model';
 import { JokeModel, CategoryModel } from './../models/joke.model';
 import { JokesMapperService } from './mapper.service';
@@ -10,6 +10,7 @@ import { JokeTypeEnum } from './../enums/joke-type.enum';
 import { FavoriteJokeService } from './favorite-joke.service';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { ValidationErrors } from '@angular/forms';
 
 @Injectable({
   providedIn: 'root',
@@ -143,16 +144,11 @@ export class JokesService {
     this.changeJokes(jokes);
   }
 
-  public checkExistCategories(
-    category: string
-  ): Observable<object> | Observable<null> {
-    return this.http
-      .get<object | null>(
-        `${this.apiUrl}/categories/exists?categoryTitle=${category}`
-      )
-      .pipe(
-        map((response) => (response ? { forbiddenCategories: true } : null))
-      );
+  public checkExistCategories(category: string): Observable<boolean> {
+    console.log('validator');
+    return this.http.get<boolean>(
+      `${this.apiUrl}/categories/exists?categoryTitle=${category}`
+    );
   }
 
   public transformCategoryStringToId(category: string) {

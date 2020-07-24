@@ -13,6 +13,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatCardModule } from '@angular/material/card';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
   declarations: [JokeCardComponent, DateToHoursPipe],
@@ -29,6 +30,7 @@ import { MatCardModule } from '@angular/material/card';
     MatProgressSpinnerModule,
     MatTabsModule,
     MatCardModule,
+    MatTooltipModule,
   ],
   exports: [
     JokeCardComponent,
@@ -44,6 +46,7 @@ import { MatCardModule } from '@angular/material/card';
     MatProgressSpinnerModule,
     MatTabsModule,
     MatCardModule,
+    MatTooltipModule,
   ],
 })
 export class SharedModule {}
