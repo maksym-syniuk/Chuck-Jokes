@@ -1,0 +1,14 @@
+.card {
+  max-width: 400px;
+  width: 400px;
+
+  &__container {
+    margin: 20px 0;
+  }
+}
+
+.modify-categories {
+  margin-top: 100px;
+  display: grid;
+  place-items: center;
+}

@@ -50,6 +50,7 @@ export class ModifyJokeFormComponent implements OnInit {
       .getCategories()
       .subscribe((categories: CategoryModel[]) => {
         this.categories = categories;
+        this.jokesService.changeCategories(categories);
       });
   }
 

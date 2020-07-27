@@ -32,8 +32,8 @@ export class UpdateJokeComponent implements OnInit {
   }
 
   public onJokeUpdate(joke: any): void {
-    joke.categories = this.jokesService.transformCategoriesStringToIds(
-      joke.categories
+    joke.categories = joke.categories.map((category) =>
+      this.jokesService.transformCategoryStringToId(category)
     );
     this.jokesService.updateJoke(joke).subscribe(
       (updatedJoke: JokeModel[]) => {

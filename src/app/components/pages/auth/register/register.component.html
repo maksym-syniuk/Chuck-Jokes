@@ -1,38 +1,12 @@
 <div class="authentication">
-    <div class="modal">
-        <div class="modal__title">Chuck<span>Jokes</span></div>
-        <div class="modal__subtitle">
-            <h4>Create a new account</h4>
-        </div>
-        <form [formGroup]="registerForm" class="form" (ngSubmit)="register()">
-            <div class="form__control">
-                <input formControlName="firstName" type="text" placeholder="First Name" />
-                <span class="error-message"
-                    *ngIf="!this.registerForm.get('firstName').valid && this.registerForm.get('firstName').touched">
-                    <small>First Name is required!</small>
-                </span>
-            </div>
-            <div class="form__control">
-                <input formControlName="lastName" type="text" placeholder="Last Name" />
-            </div>
-            <div class="form__control">
-                <input formControlName="email" type="email" placeholder="Email" />
-                <span class="error-message"
-                    *ngIf="!this.registerForm.get('email').valid && this.registerForm.get('email').touched">
-                    <small>Please, enter valid email!</small>
-                </span>
-            </div>
-            <div class="form__control">
-                <input formControlName="password" type="password" placeholder="Password" />
-                <span class="error-message"
-                    *ngIf="!this.registerForm.get('password').valid && this.registerForm.get('password').touched">
-                    <small>Please, enter valid password!</small>
-                </span>
-            </div>
-            <span class="error" *ngIf="errorMessage">{{errorMessage}}</span>
-            <button type="submit" class="btn">Register</button>
-        </form>
-        <p>or</p>
-        <a routerLink="/login">Log In</a>
+  <div class="modal">
+    <div class="modal__title">Chuck<span>Jokes</span></div>
+    <div class="modal__subtitle">
+      <h4>Create a new account</h4>
     </div>
+    <div *ngIf="errorMessage" class="modal__error">{{errorMessage}}</div>
+    <app-auth-form [isRegisterMode]="true" (submitForm)="register($event)"></app-auth-form>
+    <p>or</p>
+    <a routerLink="/login">Log In</a>
+  </div>
 </div>

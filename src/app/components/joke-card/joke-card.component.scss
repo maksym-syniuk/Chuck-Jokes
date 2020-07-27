@@ -70,7 +70,7 @@
     }
 
     &:hover mat-icon {
-      font-size: 1.7rem;
+      transform: scale(1.15);
     }
 
     &_filled {
@@ -150,7 +150,6 @@
     }
   }
 }
-
 
 .example-additional-selection {
   opacity: 0.75;

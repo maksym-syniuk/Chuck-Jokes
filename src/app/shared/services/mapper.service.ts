@@ -1,5 +1,7 @@
-import { JokeApiModel } from './../models/joke-api.model';
-import { JokeModel } from './../models/joke.model';
+import { UserModel } from './../models/user.model';
+import { AuthInterface } from './../interfaces/auth.interface';
+import { JokeApiModel } from '../models/joke-api.model';
+import { JokeModel } from '../models/joke.model';
 import { Injectable } from '@angular/core';
 
 @Injectable()

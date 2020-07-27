@@ -47,6 +47,10 @@
       <button *ngIf="isUserLoggedIn && isSuperAdmin" type="button" class="joke__button btn" routerLink="create-joke">
         Create joke
       </button>
+      <button *ngIf="isUserLoggedIn && isSuperAdmin" type="button" class="joke__button btn"
+        routerLink="modify-categories">
+        Modify categories
+      </button>
     </div>
   </form>
 </div>

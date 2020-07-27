@@ -7,7 +7,7 @@ import {
 import { AuthService } from './../../../../../shared/services/auth.service';
 import { JokeCategoryEnum } from './../../../../../shared/enums/joke-category.enum';
 import { JokeTypeEnum } from './../../../../../shared/enums/joke-type.enum';
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { JokesService } from 'src/app/shared/services/jokes.service';
 import { Subject } from 'rxjs';

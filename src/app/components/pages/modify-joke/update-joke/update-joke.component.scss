@@ -1,26 +1,3 @@
-.title_full-width {
-  width: 100%;
-  text-align: center;
-  margin: 10px 0;
-  font-size: 1.2rem;
-}
-
-.joke__container {
-  max-height: 100vh;
-  height: 100vh;
-
-  &_small {
-    margin: 40px 0;
-    height: auto;
-  }
-}
-
 .joke-card__conatiner {
   max-width: 600px;
-}
-
-.modify__button {
-  position: absolute;
-  top: 100px;
-  left: 100px;
 }

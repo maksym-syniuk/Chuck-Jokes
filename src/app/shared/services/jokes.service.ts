@@ -1,16 +1,16 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { map } from 'rxjs/operators';
+import { map, debounceTime } from 'rxjs/operators';
 import { JokeApiModel } from './../models/joke-api.model';
 import { JokeModel, CategoryModel } from './../models/joke.model';
-import { JokeFormMode } from './../enums/joke-form-mode.enum';
-import { JokesMapperService } from './jokes-mapper.service';
+import { JokesMapperService } from './mapper.service';
 import { environment } from './../../../environments/environment.prod';
 import { JokeCategoryEnum } from './../enums/joke-category.enum';
 import { JokeTypeEnum } from './../enums/joke-type.enum';
 import { FavoriteJokeService } from './favorite-joke.service';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { ValidationErrors } from '@angular/forms';
 
 @Injectable({
   providedIn: 'root',
@@ -26,6 +26,9 @@ export class JokesService {
 
   private errorMessage = new BehaviorSubject('');
   public currentErrorMessage = this.errorMessage.asObservable();
+
+  public categories = new BehaviorSubject<CategoryModel[]>([]);
+  private currentCategories = this.categories.asObservable();
 
   constructor(
     private http: HttpClient,
@@ -44,6 +47,10 @@ export class JokesService {
 
   public changeLoadingState(state: boolean) {
     this.loadingState.next(state);
+  }
+
+  public changeCategories(categories: CategoryModel[]) {
+    this.categories.next(categories);
   }
 
   public getJoke(
@@ -121,7 +128,15 @@ export class JokesService {
   }
 
   public deleteJoke(id: number | string): Observable<any> {
-    return this.http.delete<number | string>(`${this.apiUrl}/${id}`);
+    return this.http.delete<boolean>(`${this.apiUrl}/${id}`);
+  }
+
+  public createCategory(title: string): Observable<CategoryModel> {
+    return this.http.post<CategoryModel>(`${this.apiUrl}/categories`, title);
+  }
+
+  public deleteCategory(id: number): Observable<any> {
+    return this.http.delete<any>(`${this.apiUrl}/categories/${id}`);
   }
 
   public deleteJokeById(id: number | string): void {
@@ -129,20 +144,21 @@ export class JokesService {
     this.changeJokes(jokes);
   }
 
-  public transformCategoriesStringToIds(
-    categories: string[]
-  ): number[] | string[] {
-    const ids = [];
-    this.getCategories().subscribe((apiCategories: CategoryModel[]) => {
-      categories.map((category) => {
-        apiCategories.map((ctg) => {
-          if (category === ctg.title) {
-            ids.push(ctg.id);
-          }
-        });
-      });
-    });
-    return ids;
+  public checkExistCategories(category: string): Observable<boolean> {
+    console.log('validator');
+    return this.http.get<boolean>(
+      `${this.apiUrl}/categories/exists?categoryTitle=${category}`
+    );
+  }
+
+  public transformCategoryStringToId(category: string) {
+    let id: number | string;
+    this.categories.value.map((apiCategory) =>
+      apiCategory.title.toLowerCase() === category.toLowerCase()
+        ? (id = apiCategory.id)
+        : null
+    );
+    return id;
   }
 
   public openSnackBar(message: string, action: string): void {

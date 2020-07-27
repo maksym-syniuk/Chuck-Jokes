@@ -1,28 +1,12 @@
 <div class="authentication">
-    <div class="modal">
-        <div class="modal__title">Chuck<span>Jokes</span></div>
-        <div class="modal__subtitle">
-            <h4>Login to your account</h4>
-        </div>
-        <form [formGroup]="loginForm" (ngSubmit)="login()" class="form">
-            <div class="form__control">
-                <input formControlName="email" type="email" placeholder="Email" id="email" />
-                <span *ngIf="!this.loginForm.get('email').valid && this.loginForm.get('email').touched"
-                    class="error-message">
-                    <small>Please, enter a valid email</small>
-                </span>
-            </div>
-            <div class="form__control">
-                <input formControlName="password" type="password" placeholder="Password" id="password" />
-                <span *ngIf="!this.loginForm.get('password').valid && this.loginForm.get('password').touched"
-                    class="error-message">
-                    <small>Please, enter a valid password</small>
-                </span>
-            </div>
-            <button type="submit" class="btn">Log In</button>
-            <span class="error" *ngIf="errorMessage">{{errorMessage}}</span>
-        </form>
-        <p>or</p>
-        <a routerLink="/register">Register</a>
+  <div class="modal">
+    <div class="modal__title">Chuck<span>Jokes</span></div>
+    <div class="modal__subtitle">
+      <h4>Login to your account</h4>
     </div>
+    <div *ngIf="errorMessage" class="modal__error">{{errorMessage}}</div>
+    <app-auth-form (submitForm)="login($event)"></app-auth-form>
+    <p>or</p>
+    <a routerLink="/register">Register</a>
+  </div>
 </div>

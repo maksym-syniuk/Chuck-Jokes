@@ -51,8 +51,12 @@ body {
   max-width: 600px;
   display: grid;
   align-items: center;
-  margin: 0 auto;
+  margin: 40px auto;
   padding: 0 20px;
+}
+
+.joke-card__container {
+  max-width: 600px;
 }
 
 .category {
@@ -65,23 +69,12 @@ body {
   background-color: $primaryBackgroundColor;
   border-radius: 6px;
   margin-right: 9px;
-  margin-top: 2px;
-
-  &_hidden {
-    display: none;
-  }
 
   &_dark {
-    display: block;
     margin-bottom: 5px;
-    font-weight: 500;
-    font-size: 10px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: $primaryTextColor;
-    padding: 6px 20px;
-    background-color: $secondaryBackgroundColor;
-    border-radius: 6px;
+    font-size: 9px;
+    padding: 3px 12px;
+    background-color: #f8f8f8;
   }
 
   &_big {
@@ -144,10 +137,6 @@ body {
   flex-wrap: wrap;
 }
 
-input.ng-invalid.ng-touched {
-  border: 1px solid tomato;
-}
-
 .no-jokes {
   width: 100%;
   height: 100%;
@@ -180,6 +169,7 @@ input.ng-invalid.ng-touched {
   padding: 20px;
   background-color: white;
   border-radius: 4px;
+  max-width: 400px;
 
   &__title {
     text-align: center;
@@ -211,45 +201,33 @@ input.ng-invalid.ng-touched {
       color: $accentBackgroundHoverColor;
     }
   }
+
+  &__error {
+    color: tomato;
+  }
 }
 
 .form {
+  &_full-width {
+    width: 100%;
+  }
+
+  &_half-width {
+    width: 50%;
+  }
+
+  &_center {
+    text-align: center;
+  }
+}
+
+.header_blue {
+  color: $accentBackgroundColor;
+}
+
+.header_toolbar {
   display: flex;
-  flex-direction: column;
-  margin-top: 40px;
-  position: relative;
-
-  button {
-    margin: 0 30px;
-  }
-
-  input {
-    min-width: 350px;
-    padding: 10px 20px;
-    margin-bottom: 20px;
-    border: 1px solid $secondaryTextColor;
-    border-radius: 4px;
-  }
-
-  &__control {
-    position: relative;
-  }
-
-  .error {
-    position: absolute;
-    top: -28px;
-    left: 11%;
-    color: tomato;
-
-    &-message {
-      text-align: left;
-      color: tomato;
-      position: absolute;
-      top: 42px;
-      left: 0;
-      margin-left: 10px;
-    }
-  }
+  justify-content: space-between;
 }
 
 @media (max-width: 834px) {
