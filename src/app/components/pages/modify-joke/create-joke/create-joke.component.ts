@@ -19,7 +19,6 @@ export class CreateJokeComponent {
     );
     this.jokesService.createJoke(joke).subscribe(
       (createdJoke: JokeModel) => {
-        console.log(createdJoke);
         this.createdJoke = createdJoke;
         this.jokesService.openSnackBar('Joke Created!', 'Close');
       },

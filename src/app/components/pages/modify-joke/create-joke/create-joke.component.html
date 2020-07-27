@@ -1,10 +1,13 @@
+<mat-toolbar class="header_toolbar">
+  <span>Chuck<span class="header_blue">Jokes</span></span>
+  <button mat-raised-button color="primary" routerLink="/">Go Back</button>
+</mat-toolbar>
 <div class="joke__container">
-  <button class="modify__button" mat-stroked-button color="primary" routerLink="/">Go Back</button>
   <mat-card>
     <app-modify-joke-form (submitForm)="onJokeCreate($event)" [joke]="joke"></app-modify-joke-form>
   </mat-card>
 
-  <div *ngIf="createdJoke" class="joke-card__conatiner">
+  <div *ngIf="createdJoke" class="joke-card__container">
     <app-joke-card [joke]="createdJoke" [isFavorites]="false"></app-joke-card>
   </div>
 </div>

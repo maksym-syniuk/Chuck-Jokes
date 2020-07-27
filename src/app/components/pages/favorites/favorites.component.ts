@@ -14,11 +14,20 @@ export class FavoritesComponent implements OnInit {
 
   ngOnInit(): void {
     this._subscribeToFavoriteJokes();
+    this._getFavoriteJokesFromApi();
   }
 
   private _subscribeToFavoriteJokes(): void {
     this.favoriteJokeService.currentFavoriteJokes.subscribe(
       (jokes: JokeModel[]) => (this.favoriteJokes = jokes)
     );
+  }
+
+  private _getFavoriteJokesFromApi(): void {
+    this.favoriteJokeService
+      .getUserFavoriteJokesFromApi()
+      .subscribe((jokes: JokeModel[]) =>
+        this.favoriteJokeService.changeFavoriteJokes(jokes)
+      );
   }
 }

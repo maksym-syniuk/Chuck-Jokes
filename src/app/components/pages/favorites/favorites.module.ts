@@ -5,15 +5,12 @@ import { RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
 
 const routes: Routes = [
-    { path: '', component: FavoritesComponent, canActivate: [AuthGuard] }
+  { path: '', component: FavoritesComponent, canActivate: [AuthGuard] },
 ];
 
 @NgModule({
-    declarations: [FavoritesComponent],
-    imports: [
-        SharedModule,
-        RouterModule.forChild(routes)
-    ],
-    exports: [RouterModule]
+  declarations: [FavoritesComponent],
+  imports: [SharedModule, RouterModule.forChild(routes)],
+  exports: [RouterModule],
 })
-export class FavoritesModule { }
+export class FavoritesModule {}

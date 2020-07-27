@@ -51,8 +51,12 @@ body {
   max-width: 600px;
   display: grid;
   align-items: center;
-  margin: 0 auto;
+  margin: 40px auto;
   padding: 0 20px;
+}
+
+.joke-card__container {
+  max-width: 600px;
 }
 
 .category {
@@ -215,6 +219,15 @@ body {
   &_center {
     text-align: center;
   }
+}
+
+.header_blue {
+  color: $accentBackgroundColor;
+}
+
+.header_toolbar {
+  display: flex;
+  justify-content: space-between;
 }
 
 @media (max-width: 834px) {

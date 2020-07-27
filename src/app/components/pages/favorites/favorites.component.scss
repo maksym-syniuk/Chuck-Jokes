@@ -1,0 +1,11 @@
+.favorites__container {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  padding: 0 40px;
+}
+
+.favorite-joke__card {
+  flex: 0 0 45%;
+  margin: 10px;
+}

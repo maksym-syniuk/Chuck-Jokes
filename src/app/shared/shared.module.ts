@@ -14,6 +14,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatCardModule } from '@angular/material/card';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatToolbarModule } from '@angular/material/toolbar';
 
 @NgModule({
   declarations: [JokeCardComponent, DateToHoursPipe],
@@ -47,6 +48,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     MatTabsModule,
     MatCardModule,
     MatTooltipModule,
+    MatToolbarModule,
   ],
 })
 export class SharedModule {}
