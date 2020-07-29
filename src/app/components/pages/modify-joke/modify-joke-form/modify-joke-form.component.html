@@ -12,15 +12,9 @@
     <mat-error *ngIf="form.get('value').invalid">You must enter a value</mat-error>
   </mat-form-field>
 
-  <mat-form-field class="form__field">
-    <mat-label>Joke url</mat-label>
-    <input matInput placeholder="https://..." value="Some url..." formControlName="url">
-  </mat-form-field>
-
-  <mat-form-field class="form__field">
-    <mat-label>Icon url</mat-label>
-    <input matInput placeholder="https://..." value="Some url..." formControlName="iconUrl">
-  </mat-form-field>
+  <div class="form__field">
+    <input type="file" formControlName="imageNames" (change)="onChange($event)" multiple>
+  </div>
 
   <mat-form-field>
     <mat-label>Categories</mat-label>

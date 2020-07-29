@@ -47,7 +47,9 @@ export class JokesComponent implements OnInit {
   private _getRandomJoke(): void {
     this.jokesService
       .getJoke(JokeTypeEnum.random)
-      .subscribe((joke: JokeModel[]) => (this.jokes = joke));
+      .subscribe((joke: JokeModel[]) => {
+        this.jokes = joke;
+      });
   }
 
   public onToggleSidebar() {

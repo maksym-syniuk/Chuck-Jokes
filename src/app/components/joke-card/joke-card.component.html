@@ -1,7 +1,9 @@
 <div class="joke" [ngClass]="{ 'joke_dark-theme': isFavorites }">
   <div class="joke__message-icons">
     <a class="joke__message-icon" [ngClass]="{ 'joke__message-icon_dark': isFavorites }">
-      <img src='assets/images/message.svg' alt="message-icon" />
+      <img [src]="
+          joke.imageUrls[0] ? joke.imageUrls[0] : 'assets/images/message.svg'
+        " alt="message-icon" />
     </a>
     <div class="icon" (click)="goToEditPage()" *ngIf="isSuperAdmin">
       <mat-icon class="icon_edit">edit</mat-icon>
@@ -12,7 +14,7 @@
   </div>
   <div class="joke__content">
     <small class="joke__content-id">ID:
-      <a [href]="joke.url">
+      <a (click)="goToJokePage()">
         {{ joke.id }}
         <img src="assets/images/link.svg" alt="link-icon" />
       </a>
@@ -26,17 +28,17 @@
         <strong>{{ joke.updatedAt | dateToHours }} hours ago</strong>
       </small>
       <span [matTooltip]="joke.categories.length > 1 ? joke.categories : null"
-        *ngIf="joke.categories && joke.categories[0]" class="category" [ngClass]="{'category_dark': isFavorites}">
-        {{joke.categories[0]}}
+        *ngIf="joke.categories && joke.categories[0]" class="category" [ngClass]="{ category_dark: isFavorites }">
+        {{ joke.categories[0] }}
         <span *ngIf="joke.categories?.length > 1">
-          (+{{joke.categories.length - 1}}
-          {{joke.categories?.length === 2 ? 'other' : 'others'}})
+          (+{{ joke.categories.length - 1 }}
+          {{ joke.categories?.length === 2 ? 'other' : 'others' }})
         </span>
       </span>
     </div>
   </div>
   <div *ngIf="!isWaitingForResponse; else disableHeart" class="joke__heart" (click)="onHeartIconClick()">
-    <mat-icon>{{joke.favorite ?'favorite' :'favorite_border'}}</mat-icon>
+    <mat-icon>{{ joke.favorite ? 'favorite' : 'favorite_border' }}</mat-icon>
   </div>
   <ng-template #disableHeart>
     <div class="joke__heart joke__heart_disabled">

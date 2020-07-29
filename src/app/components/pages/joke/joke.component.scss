@@ -1,0 +1,64 @@
+@import "variables";
+
+.joke {
+    &__container {
+        max-width: 900px;
+
+        .ptb12 {
+            padding: 12px 0;
+        }
+
+        .spinner_full-width {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+        }
+    }
+    &__id {
+        width: 100%;
+        text-align: center;
+        font-size: 2rem;
+        padding: 4px 0 20px;
+    }
+    &__content {
+        color: $primaryTextColor;
+    }
+    &__images {
+        .images {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .image {
+            flex: 1 0 25%;
+            max-width: 150px;
+            max-height: 150px;
+            min-width: 50px;
+            min-height: 50px;
+            margin: 10px;
+            padding: 7px;
+            border: 2px solid $secondaryTextColor;
+            border-radius: 6px;
+            cursor: pointer;
+
+            img {
+                object-fit: cover;
+            }
+
+            &:hover {
+                border: 2px solid $accentBackgroundHoverColor;
+            }
+        }
+    }
+    &__categories {
+        .categories {
+            display: flex;
+        }
+    }
+    &__date {
+        padding-top: 12px;
+        p {
+            margin-bottom: 0;
+        }
+    }
+}

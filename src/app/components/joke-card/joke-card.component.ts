@@ -69,6 +69,10 @@ export class JokeCardComponent implements OnInit {
     this.router.navigate(['update-joke', this.joke.id]);
   }
 
+  public goToJokePage(): void {
+    this.router.navigate(['joke', this.joke.id]);
+  }
+
   public onHeartIconClick() {
     if (this.userData) {
       this.isWaitingForResponse = true;
