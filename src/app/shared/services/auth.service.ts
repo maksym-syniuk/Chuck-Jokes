@@ -68,6 +68,6 @@ export class AuthService {
   }
 
   public changePassword(userData: UserDataToChangePassword): Observable<any> {
-    return this.http.post<any>(`${this.authUrl}/changePassword`, { userData });
+    return this.http.post<any>(`${this.authUrl}/changePassword`, userData);
   }
 }
