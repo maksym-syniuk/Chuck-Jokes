@@ -1,3 +1,4 @@
+import { ImageModel } from './../../../../shared/models/image.model';
 import {
   JokeModel,
   CategoryModel,
@@ -34,6 +35,9 @@ export class ModifyJokeFormComponent implements OnInit {
   public jokeModel: JokeModel;
   public form: FormGroup;
   public categories: CategoryModel[];
+  private imageData: ImageModel[] = [];
+  private fileList: FileList;
+  private imagesData = [];
 
   constructor(
     private formBuilder: FormBuilder,
@@ -57,8 +61,7 @@ export class ModifyJokeFormComponent implements OnInit {
   private _initForm(joke: JokeModel): void {
     this.form = this.formBuilder.group({
       value: [joke.value, [Validators.required, Validators.minLength(3)]],
-      url: [joke.url, Validators.minLength(5)],
-      iconUrl: [joke.iconUrl, Validators.minLength(5)],
+      imageNames: [joke.imageNames],
       categories: [
         joke.categories
           ? joke.categories.map((category) => category.title)
@@ -71,12 +74,53 @@ export class ModifyJokeFormComponent implements OnInit {
         Validators.min(1),
       ]);
       this.form.addControl('id', idControl);
+      this.imageData = this.joke.imageUrls;
     }
   }
 
   public onSubmit(): void {
     if (this.form.valid) {
-      this.submitForm.emit(this.form.getRawValue());
+      const data = {
+        ...this.form.getRawValue(),
+        imagesData: this.imagesData,
+      };
+      this.submitForm.emit(data);
     }
+  }
+
+  public onChange(event): void {
+    this.fileList = event.target.files;
+    Array.from(this.fileList).map((file: File) => {
+      const fileExtension = file.name.split('.').pop();
+      this.jokesService
+        .getImageUrl(fileExtension)
+        .subscribe((imageData: ImageModel) =>
+          this.imagesData.push({ imageData, file })
+        );
+    });
+
+    // this.jokesService
+    //   .getImageUrl(fileExtension)
+    //   .subscribe((imageData: ImageModel) => {
+    //     this.jokesService
+    //       .uploadImage(imageData.imageUploadUrl, file)
+    //       .subscribe(() => {
+    //         this.imageNames.push(imageData.imageName);
+    //       });
+    //   });
+    // let arrayBuffer: string | ArrayBuffer;
+    // const reader = new FileReader();
+    // reader.readAsDataURL(file);
+    // reader.onload = () => {
+    //   // when file has loaded
+    //   arrayBuffer = reader.result;
+    // };
+    // this.jokesService
+    //   .getImageUrl(fileExtension)
+    //   .subscribe((imageData: ImageModel) => {
+    //     this.jokesService
+    //       .uploadImage(imageData.imageUploadUrl, arrayBuffer)
+    //       .subscribe((response) => console.log(response));
+    //   });
   }
 }

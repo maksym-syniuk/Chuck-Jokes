@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { map, debounceTime } from 'rxjs/operators';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { map } from 'rxjs/operators';
 import { JokeApiModel } from './../models/joke-api.model';
 import { JokeModel, CategoryModel } from './../models/joke.model';
 import { JokesMapperService } from './mapper.service';
@@ -10,7 +10,7 @@ import { JokeTypeEnum } from './../enums/joke-type.enum';
 import { FavoriteJokeService } from './favorite-joke.service';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { ValidationErrors } from '@angular/forms';
+import { ImageModel } from '../models/image.model';
 
 @Injectable({
   providedIn: 'root',
@@ -115,8 +115,8 @@ export class JokesService {
     return this.http.get<JokeModel>(`${this.apiUrl}/${id}`);
   }
 
-  public createJoke(joke: JokeModel): Observable<JokeModel> {
-    return this.http.post<JokeModel>(this.apiUrl, joke);
+  public createJoke(joke: JokeModel): Observable<any> {
+    return this.http.post<any>(this.apiUrl, joke);
   }
 
   public updateJoke(joke: JokeModel): Observable<JokeModel[]> {
@@ -137,6 +137,25 @@ export class JokesService {
 
   public deleteCategory(id: number): Observable<any> {
     return this.http.delete<any>(`${this.apiUrl}/categories/${id}`);
+  }
+
+  public getImageUrl(extension: string): Observable<ImageModel> {
+    return this.http.post<ImageModel>(
+      `https://reenbit-chuck-norris.azurewebsites.net/api/media?fileExtencion=${extension}`,
+      extension
+    );
+  }
+
+  public uploadImage(data): Observable<any> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'image/png',
+        'x-ms-blob-type': 'BlockBlob',
+      }),
+    };
+    return this.http
+      .put<any>(data.imageData.imageUploadUrl, data.file, httpOptions)
+      .pipe(map((response) => (response = data.imageData.imageName)));
   }
 
   public deleteJokeById(id: number | string): void {

@@ -53,6 +53,11 @@ const routes: Routes = [
         './components/pages/modify-categories/modify-categories.module'
       ).then((m) => m.ModifyCategoriesModule),
   },
+  {
+    path: 'joke/:id',
+    loadChildren: () =>
+      import('./components/pages/joke/joke.module').then((m) => m.JokeModule),
+  },
   { path: '**', redirectTo: '/error' },
 ];
 
