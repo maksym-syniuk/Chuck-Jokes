@@ -1,8 +1,10 @@
-import { JokeFormModule } from './joke-form/joke-form.module';
-import { SharedModule } from './../../../../shared/shared.module';
 import { JokesMapperService } from 'src/app/shared/services/mapper.service';
-import { JokesComponent } from './jokes.component';
+
 import { NgModule } from '@angular/core';
+
+import { SharedModule } from '../../../../shared/shared.module';
+import { JokeFormModule } from './joke-form/joke-form.module';
+import { JokesComponent } from './jokes.component';
 
 @NgModule({
   declarations: [JokesComponent],

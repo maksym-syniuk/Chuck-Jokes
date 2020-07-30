@@ -6,7 +6,6 @@
   <mat-card>
     <app-modify-joke-form (submitForm)="onJokeCreate($event)" [joke]="joke"></app-modify-joke-form>
   </mat-card>
-
   <div *ngIf="createdJoke" class="joke-card__container">
     <app-joke-card [joke]="createdJoke" [isFavorites]="false"></app-joke-card>
   </div>

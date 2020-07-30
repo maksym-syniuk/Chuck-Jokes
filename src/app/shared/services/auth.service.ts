@@ -1,11 +1,15 @@
-import { UserDataToChangePassword } from './../../components/pages/auth/reset-password/reset-password.component';
-import { environment } from './../../../environments/environment.prod';
-import { map } from 'rxjs/operators';
-import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { Injectable } from '@angular/core';
-import { AuthInterface } from '../interfaces/auth.interface';
+import { map } from 'rxjs/operators';
 import { UserData } from 'src/app/components/pages/auth/reset-password/reset-password.component';
+
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+
+import { environment } from '../../../environments/environment.prod';
+import {
+    UserDataToChangePassword
+} from '../../components/pages/auth/reset-password/reset-password.component';
+import { AuthInterface } from '../interfaces/auth.interface';
 
 @Injectable({
   providedIn: 'root',

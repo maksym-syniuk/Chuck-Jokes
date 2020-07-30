@@ -1,7 +1,8 @@
-import { JokeModel } from './../../../../shared/models/joke.model';
-import { ActivatedRoute, Params } from '@angular/router';
-import { JokesService } from './../../../../shared/services/jokes.service';
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Params } from '@angular/router';
+
+import { JokeModel } from '../../../../shared/models/joke.model';
+import { JokesService } from '../../../../shared/services/jokes.service';
 
 @Component({
   selector: 'app-update-joke',

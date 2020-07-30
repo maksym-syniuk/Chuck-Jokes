@@ -1,13 +1,10 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
 import { Role } from 'src/app/shared/models/user.model';
-import { AuthInterface } from './../../../../shared/interfaces/auth.interface';
-import { ComparePassword } from './../../../../shared/validators/password-compare.validator';
+
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+
+import { AuthInterface } from '../../../../shared/interfaces/auth.interface';
+import { ComparePassword } from '../../../../shared/validators/password-compare.validator';
 
 @Component({
   selector: 'app-auth-form',

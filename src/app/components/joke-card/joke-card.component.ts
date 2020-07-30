@@ -1,11 +1,13 @@
-import { AuthInterface } from './../../shared/interfaces/auth.interface';
-import { JokeModel } from './../../shared/models/joke.model';
-import { JokesService } from 'src/app/shared/services/jokes.service';
-import { AuthService } from './../../shared/services/auth.service';
-import { FavoriteJokeService } from './../../shared/services/favorite-joke.service';
-import { Component, OnInit, Input } from '@angular/core';
-import { Router } from '@angular/router';
 import { Role } from 'src/app/shared/models/user.model';
+import { JokesService } from 'src/app/shared/services/jokes.service';
+
+import { Component, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+
+import { AuthInterface } from '../../shared/interfaces/auth.interface';
+import { JokeModel } from '../../shared/models/joke.model';
+import { AuthService } from '../../shared/services/auth.service';
+import { FavoriteJokeService } from '../../shared/services/favorite-joke.service';
 
 @Component({
   selector: 'app-joke-card',

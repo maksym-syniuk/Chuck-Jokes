@@ -8,6 +8,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
@@ -15,7 +16,8 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { RouterModule } from '@angular/router';
-import { JokeCardComponent } from './../components/joke-card/joke-card.component';
+
+import { JokeCardComponent } from '../components/joke-card/joke-card.component';
 import { DragDropDirective } from './directives/drag-drop.directive';
 import { DateToHoursPipe } from './pipes/date-to-hours.pipe';
 
@@ -37,6 +39,7 @@ import { DateToHoursPipe } from './pipes/date-to-hours.pipe';
     MatTooltipModule,
     MatDividerModule,
     MatExpansionModule,
+    MatProgressBarModule,
   ],
   exports: [
     JokeCardComponent,
@@ -58,6 +61,7 @@ import { DateToHoursPipe } from './pipes/date-to-hours.pipe';
     MatToolbarModule,
     MatDividerModule,
     MatExpansionModule,
+    MatProgressBarModule,
   ],
 })
 export class SharedModule {}

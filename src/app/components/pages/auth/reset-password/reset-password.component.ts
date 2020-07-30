@@ -1,7 +1,9 @@
 import { timer } from 'rxjs';
-import { AuthService } from './../../../../shared/services/auth.service';
-import { ActivatedRoute, Router } from '@angular/router';
+
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+
+import { AuthService } from '../../../../shared/services/auth.service';
 
 export class FormPassword {
   password: string;

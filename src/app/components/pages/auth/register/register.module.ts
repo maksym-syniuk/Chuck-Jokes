@@ -1,9 +1,10 @@
-import { AuthFormModule } from './../auth-form/auth-form.module';
-import { SharedModule } from './../../../../shared/shared.module';
-import { ReactiveFormsModule } from '@angular/forms';
-import { Routes, RouterModule } from '@angular/router';
-import { RegisterComponent } from './register.component';
 import { NgModule } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
+import { RouterModule, Routes } from '@angular/router';
+
+import { SharedModule } from '../../../../shared/shared.module';
+import { AuthFormModule } from '../auth-form/auth-form.module';
+import { RegisterComponent } from './register.component';
 
 const routes: Routes = [{ path: '', component: RegisterComponent }];
 

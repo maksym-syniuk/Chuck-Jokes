@@ -1,16 +1,9 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
-import { ImageModel } from './../../../../shared/models/image.model';
-import {
-  CategoryModel,
-  JokeModel,
-} from './../../../../shared/models/joke.model';
-import { JokesService } from './../../../../shared/services/jokes.service';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+
+import { ImageModel } from '../../../../shared/models/image.model';
+import { CategoryModel, JokeModel } from '../../../../shared/models/joke.model';
+import { JokesService } from '../../../../shared/services/jokes.service';
 
 @Component({
   selector: 'app-modify-joke-form',

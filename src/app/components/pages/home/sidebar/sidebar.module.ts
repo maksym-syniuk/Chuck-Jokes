@@ -1,7 +1,8 @@
-import { SharedModule } from './../../../../shared/shared.module';
-import { RouterModule } from '@angular/router';
-import { SidebarComponent } from './sidebar.component';
 import { NgModule } from '@angular/core';
+import { RouterModule } from '@angular/router';
+
+import { SharedModule } from '../../../../shared/shared.module';
+import { SidebarComponent } from './sidebar.component';
 
 @NgModule({
     declarations: [SidebarComponent],

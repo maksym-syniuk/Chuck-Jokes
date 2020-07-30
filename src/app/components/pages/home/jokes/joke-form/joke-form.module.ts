@@ -1,9 +1,10 @@
-import { RouterModule } from '@angular/router';
-import { ReactiveFormsModule } from '@angular/forms';
-import { JokeFormComponent } from './joke-form.component';
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { RouterModule } from '@angular/router';
+
+import { JokeFormComponent } from './joke-form.component';
 
 @NgModule({
   declarations: [JokeFormComponent],

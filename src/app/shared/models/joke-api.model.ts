@@ -1,4 +1,4 @@
-import { CategoryModel } from './../models/joke.model';
+import { CategoryModel } from '../models/joke.model';
 import { ImageModel } from './image.model';
 
 export class JokeApiModel {

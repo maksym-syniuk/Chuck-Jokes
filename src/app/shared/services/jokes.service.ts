@@ -1,16 +1,18 @@
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { JokeApiModel } from './../models/joke-api.model';
-import { JokeModel, CategoryModel } from './../models/joke.model';
-import { JokesMapperService } from './mapper.service';
-import { environment } from './../../../environments/environment.prod';
-import { JokeCategoryEnum } from './../enums/joke-category.enum';
-import { JokeTypeEnum } from './../enums/joke-type.enum';
-import { FavoriteJokeService } from './favorite-joke.service';
-import { Observable, BehaviorSubject } from 'rxjs';
+
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
+
+import { environment } from '../../../environments/environment.prod';
+import { JokeCategoryEnum } from '../enums/joke-category.enum';
+import { JokeTypeEnum } from '../enums/joke-type.enum';
 import { ImageModel } from '../models/image.model';
+import { JokeApiModel } from '../models/joke-api.model';
+import { CategoryModel, JokeModel } from '../models/joke.model';
+import { FavoriteJokeService } from './favorite-joke.service';
+import { JokesMapperService } from './mapper.service';
 
 @Injectable({
   providedIn: 'root',

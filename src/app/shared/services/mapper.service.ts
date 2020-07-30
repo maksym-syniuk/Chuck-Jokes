@@ -1,6 +1,7 @@
+import { Injectable } from '@angular/core';
+
 import { JokeApiModel } from '../models/joke-api.model';
 import { JokeModel } from '../models/joke.model';
-import { Injectable } from '@angular/core';
 
 @Injectable()
 export class JokesMapperService {

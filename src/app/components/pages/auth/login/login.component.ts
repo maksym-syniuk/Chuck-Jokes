@@ -1,8 +1,10 @@
-import { AuthService } from './../../../../shared/services/auth.service';
-import { FormGroup, Validators, FormBuilder } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
 import { first } from 'rxjs/operators';
+
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+
+import { AuthService } from '../../../../shared/services/auth.service';
 
 @Component({
   selector: 'app-login',
