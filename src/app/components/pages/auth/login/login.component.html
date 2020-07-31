@@ -1,5 +1,5 @@
-<div class="authentication">
-  <div class="modal">
+<div class="authentication" [ngClass]="{'authentication_white': pageIsLoading}">
+  <div *ngIf="!pageIsLoading" class="modal">
     <div class="modal__title">Chuck<span>Jokes</span></div>
     <div class="modal__subtitle">
       <h4>Login to your account</h4>
@@ -9,4 +9,5 @@
     <p>or</p>
     <a routerLink="/register">Register</a>
   </div>
+  <app-square-spinner *ngIf="pageIsLoading"></app-square-spinner>
 </div>

@@ -11,18 +11,24 @@ import { AuthService } from '../../../../shared/services/auth.service';
 })
 export class ForgotPasswordComponent implements OnInit {
   public notificationMessage: string;
+  public errorMessage: string;
 
   constructor(private authService: AuthService) {}
 
   ngOnInit(): void {}
 
   forgotPassword(formValue) {
-    this.authService.resetPassword(formValue.email).subscribe(() => {
-      // const notification = timer(3000);
-      // notification.subscribe(
-      //   (value) => (this.notificationMessage = `Notification ${value}`)
-      // );
-      this.notificationMessage = 'Please, check your email!';
-    });
+    this.authService.resetPassword(formValue.email).subscribe(
+      () => {
+        const notification = timer(3000);
+        notification.subscribe(
+          (value) => (this.notificationMessage = `Notification ${value}`)
+        );
+        this.notificationMessage = 'Please, check your email!';
+      },
+      (error) =>
+        (this.errorMessage =
+          error === 'Bad Request' ? 'You entered invalid email' : error)
+    );
   }
 }

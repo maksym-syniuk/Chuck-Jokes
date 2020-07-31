@@ -16,13 +16,18 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { RouterModule } from '@angular/router';
-
 import { JokeCardComponent } from '../components/joke-card/joke-card.component';
+import { SquareSpinnerComponent } from './../components/square-spinner/square-spinner.component';
 import { DragDropDirective } from './directives/drag-drop.directive';
 import { DateToHoursPipe } from './pipes/date-to-hours.pipe';
 
 @NgModule({
-  declarations: [JokeCardComponent, DateToHoursPipe, DragDropDirective],
+  declarations: [
+    JokeCardComponent,
+    DateToHoursPipe,
+    DragDropDirective,
+    SquareSpinnerComponent,
+  ],
   imports: [
     CommonModule,
     ReactiveFormsModule,
@@ -62,6 +67,7 @@ import { DateToHoursPipe } from './pipes/date-to-hours.pipe';
     MatDividerModule,
     MatExpansionModule,
     MatProgressBarModule,
+    SquareSpinnerComponent,
   ],
 })
 export class SharedModule {}
