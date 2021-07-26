@@ -1,7 +1,9 @@
-import { JokeModel } from './../../../shared/models/joke.model';
 import { JokesService } from 'src/app/shared/services/jokes.service';
-import { ActivatedRoute, Params } from '@angular/router';
+
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Params } from '@angular/router';
+
+import { JokeModel } from '../../../shared/models/joke.model';
 
 @Component({
   selector: 'app-joke',

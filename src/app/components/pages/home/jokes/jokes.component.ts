@@ -1,11 +1,12 @@
+import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { JokeModel } from './../../../../shared/models/joke.model';
-import { JokeTypeEnum } from './../../../../shared/enums/joke-type.enum';
-import { AuthService } from './../../../../shared/services/auth.service';
-import { JokesService } from './../../../../shared/services/jokes.service';
-import { FavoriteJokeService } from './../../../../shared/services/favorite-joke.service';
-import { UserModel } from './../../../../shared/models/user.model';
-import { Component, OnInit, Input } from '@angular/core';
+
+import { JokeTypeEnum } from '../../../../shared/enums/joke-type.enum';
+import { JokeModel } from '../../../../shared/models/joke.model';
+import { UserModel } from '../../../../shared/models/user.model';
+import { AuthService } from '../../../../shared/services/auth.service';
+import { FavoriteJokeService } from '../../../../shared/services/favorite-joke.service';
+import { JokesService } from '../../../../shared/services/jokes.service';
 
 @Component({
   selector: 'app-jokes',

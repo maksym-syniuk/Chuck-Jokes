@@ -1,5 +1,6 @@
-import { FavoriteJokeService } from './../../../shared/services/favorite-joke.service';
 import { Component, OnInit } from '@angular/core';
+
+import { FavoriteJokeService } from '../../../shared/services/favorite-joke.service';
 
 @Component({
   selector: 'app-home',

@@ -1,8 +1,9 @@
-import { SharedModule } from './../../../shared/shared.module';
-import { SidebarModule } from './sidebar/sidebar.module';
-import { JokesModule } from './jokes/jokes.module';
-import { HomeComponent } from './home.component';
 import { NgModule } from '@angular/core';
+
+import { SharedModule } from '../../../shared/shared.module';
+import { HomeComponent } from './home.component';
+import { JokesModule } from './jokes/jokes.module';
+import { SidebarModule } from './sidebar/sidebar.module';
 
 @NgModule({
   declarations: [HomeComponent],

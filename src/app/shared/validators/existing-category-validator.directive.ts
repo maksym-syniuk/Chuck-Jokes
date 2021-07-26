@@ -1,14 +1,12 @@
-import { JokesService } from './../services/jokes.service';
-import { Observable } from 'rxjs';
+import { Observable, timer } from 'rxjs';
+import { map, switchMap } from 'rxjs/operators';
+
 import { Directive } from '@angular/core';
 import {
-  AsyncValidator,
-  NG_ASYNC_VALIDATORS,
-  AbstractControl,
-  ValidationErrors,
+    AbstractControl, AsyncValidator, NG_ASYNC_VALIDATORS, ValidationErrors
 } from '@angular/forms';
-import { map, switchMap } from 'rxjs/operators';
-import { timer } from 'rxjs';
+
+import { JokesService } from '../services/jokes.service';
 
 @Directive({
   selector: '[appExistingCategory]',

@@ -1,8 +1,7 @@
-import { AuthService } from './../../../../shared/services/auth.service';
-import { FormGroup, Validators, FormBuilder } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
-import { first } from 'rxjs/operators';
+import { ActivatedRoute, Router } from '@angular/router';
+import { delay } from 'rxjs/operators';
+import { AuthService } from '../../../../shared/services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -12,6 +11,7 @@ import { first } from 'rxjs/operators';
 export class LoginComponent implements OnInit {
   private returnUrl: string;
   public errorMessage: string;
+  public pageIsLoading: boolean;
 
   constructor(
     private authService: AuthService,
@@ -28,13 +28,22 @@ export class LoginComponent implements OnInit {
   }
 
   public login(formValue) {
-    this.authService.login(formValue).subscribe(
-      () => this.router.navigate([this.returnUrl]),
-      (error) =>
-        (this.errorMessage =
-          error === 'Bad Request'
-            ? 'You entered invalid email or password'
-            : error)
-    );
+    this.pageIsLoading = true;
+    this.authService
+      .login(formValue)
+      .pipe(delay(2000))
+      .subscribe(
+        () => {
+          this.pageIsLoading = false;
+          this.router.navigate([this.returnUrl]);
+        },
+        (error) => {
+          this.pageIsLoading = false;
+          this.errorMessage =
+            error === 'Bad Request'
+              ? 'You entered invalid email or password'
+              : error;
+        }
+      );
   }
 }

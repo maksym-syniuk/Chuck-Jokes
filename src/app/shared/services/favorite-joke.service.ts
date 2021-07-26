@@ -1,11 +1,13 @@
-import { JokeModel } from './../models/joke.model';
-import { JokeApiModel } from './../models/joke-api.model';
-import { environment } from './../../../environments/environment.prod';
-import { JokesMapperService } from './mapper.service';
-import { map } from 'rxjs/operators';
-import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+
+import { environment } from '../../../environments/environment.prod';
+import { JokeApiModel } from '../models/joke-api.model';
+import { JokeModel } from '../models/joke.model';
+import { JokesMapperService } from './mapper.service';
 
 @Injectable({
   providedIn: 'root',

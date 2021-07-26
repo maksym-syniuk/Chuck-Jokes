@@ -1,6 +1,7 @@
-import { HomeComponent } from './components/pages/home/home.component';
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
+
+import { HomeComponent } from './components/pages/home/home.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent, pathMatch: 'full' },
@@ -31,6 +32,20 @@ const routes: Routes = [
       import('./components/pages/auth/register/register.module').then(
         (m) => m.RegisterModule
       ),
+  },
+  {
+    path: 'forgot-password',
+    loadChildren: () =>
+      import(
+        './components/pages/auth/forgot-password/forgot-password.module'
+      ).then((m) => m.ForgotPasswordModule),
+  },
+  {
+    path: 'reset-password',
+    loadChildren: () =>
+      import(
+        './components/pages/auth/reset-password/reset-password.module'
+      ).then((m) => m.ResetPasswordModule),
   },
   {
     path: 'create-joke',

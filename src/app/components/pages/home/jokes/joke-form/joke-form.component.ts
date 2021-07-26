@@ -1,17 +1,16 @@
-import { Role } from 'src/app/shared/models/user.model';
-import { AuthInterface } from './../../../../../shared/interfaces/auth.interface';
-import {
-  CategoryModel,
-  JokeModel,
-} from './../../../../../shared/models/joke.model';
-import { AuthService } from './../../../../../shared/services/auth.service';
-import { JokeCategoryEnum } from './../../../../../shared/enums/joke-category.enum';
-import { JokeTypeEnum } from './../../../../../shared/enums/joke-type.enum';
-import { Component, OnInit, OnDestroy, Input } from '@angular/core';
-import { FormGroup, Validators, FormBuilder } from '@angular/forms';
-import { JokesService } from 'src/app/shared/services/jokes.service';
 import { Subject } from 'rxjs';
-import { takeUntil, map } from 'rxjs/operators';
+import { map, takeUntil } from 'rxjs/operators';
+import { Role } from 'src/app/shared/models/user.model';
+import { JokesService } from 'src/app/shared/services/jokes.service';
+
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+
+import { JokeCategoryEnum } from '../../../../../shared/enums/joke-category.enum';
+import { JokeTypeEnum } from '../../../../../shared/enums/joke-type.enum';
+import { AuthInterface } from '../../../../../shared/interfaces/auth.interface';
+import { CategoryModel, JokeModel } from '../../../../../shared/models/joke.model';
+import { AuthService } from '../../../../../shared/services/auth.service';
 
 @Component({
   selector: 'app-joke-form',

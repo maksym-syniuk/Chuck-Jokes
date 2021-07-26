@@ -1,10 +1,12 @@
-import { SharedModule } from './../../../../shared/shared.module';
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import { AuthGuard } from './../../../../shared/guards/auth.guard';
-import { UpdateJokeComponent } from './update-joke.component';
-import { ModifyJokeFormModule } from './../modify-joke-form/modify-joke-form.module';
 import { Role } from 'src/app/shared/models/user.model';
+
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+
+import { AuthGuard } from '../../../../shared/guards/auth.guard';
+import { SharedModule } from '../../../../shared/shared.module';
+import { ModifyJokeFormModule } from '../modify-joke-form/modify-joke-form.module';
+import { UpdateJokeComponent } from './update-joke.component';
 
 const routes: Routes = [
   {

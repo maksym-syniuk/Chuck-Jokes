@@ -1,6 +1,7 @@
-import { CategoryModel } from './../../../shared/models/joke.model';
-import { JokesService } from './../../../shared/services/jokes.service';
 import { Component } from '@angular/core';
+
+import { CategoryModel } from '../../../shared/models/joke.model';
+import { JokesService } from '../../../shared/services/jokes.service';
 
 @Component({
   selector: 'app-modify-categories',

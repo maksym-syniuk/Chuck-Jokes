@@ -1,11 +1,9 @@
-import { map } from 'rxjs/operators';
-import { Observable, Subscription, zip } from 'rxjs';
-import { ImageModel } from 'src/app/shared/models/image.model';
+import { Observable, zip } from 'rxjs';
 import { JokesService } from 'src/app/shared/services/jokes.service';
 
 import { Component } from '@angular/core';
 
-import { CategoryModel, JokeModel } from '../../../../shared/models/joke.model';
+import { JokeModel } from '../../../../shared/models/joke.model';
 
 @Component({
   selector: 'app-create-joke',
